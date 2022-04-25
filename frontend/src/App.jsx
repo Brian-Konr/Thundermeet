@@ -15,12 +15,10 @@ function App() {
 
   return (
     <>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route exact path='/personal' element={<PersonalPage />} />
-        </Routes>
-        <Routes>
           <Route path='/' element={<Home />} />
         </Routes>
       </BrowserRouter>

@@ -1,24 +1,29 @@
 .nav-bar {
   display: flex;
   justify-content: space-between;
-  height: 70px;
-  background-color: #F0F0F0;
+  height: 8vh;
+  border: 1px solid #C0C0C0;
+  align-items: center;
 }
 
 .logo {
-  vertical-align: top;
   height: 50px;
-  margin-right: 20px;
-  margin-top: 10px; /* if you want it vertically middle of the navbar. */
+  /* margin-top: 10px; */
+  margin-left: 1vw;
 }
 
 .add-event-button {
-  vertical-align: top;
-  margin-top: 14px;
+  margin-left: 3vw;
 }
 
 .user-icon {
-  vertical-align: top;
-  margin-top: 14px;
-  margin-right: 40px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  border-radius: 50%;
+  background-color: #C0C0C0;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  margin-right: 4vw;
 }
