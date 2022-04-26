@@ -1,5 +1,10 @@
+import Navbar from '../components/Navbar/Navbar';
+
 export default function PersonalPage() {
-    return (
-        <h1>PersonalPage</h1>
-    )
+  return (
+    <>
+      <Navbar />
+      <h1>PersonalPage</h1>
+    </>
+  );
 }

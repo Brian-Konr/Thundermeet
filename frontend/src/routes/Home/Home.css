@@ -1,10 +1,7 @@
-.home {
-  display: flex;
-  height: 90vh;
-  justify-content: center;
-  align-items: center;
+
+.home-logo {
+  margin-top: 5vh;
+  width: 42vw;
 }
 
-.home h1 {
-  font-size: 50px;
-}
+

@@ -41,5 +41,6 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
+    'no-console': 'never',
   },
 };
