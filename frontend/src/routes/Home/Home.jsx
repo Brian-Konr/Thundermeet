@@ -1,4 +1,4 @@
-import LoginCard from '../../components/LoginCard.jsx/LoginCard';
+import LoginCard from '../../components/LoginCard/LoginCard';
 import logo from '../../icons/logo.png';
 
 import './Home.css';
