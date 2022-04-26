@@ -56,11 +56,11 @@ export default function LoginCard() {
           </Button>
         </Form.Item>
       </Form>
-      <div style={{ textAlign: 'center', fontSize: '16px', marginTop: '-1vh' }}><a href="">Forgot Password?</a></div>
+      <div style={{ textAlign: 'center', fontSize: '16px', marginTop: '-1vh' }}><a href="/">Forgot Password?</a></div>
       <div style={{ textAlign: 'center', fontSize: '16px', marginTop: '1vh' }}>
         Or
         {' '}
-        <a href="">register now!</a>
+        <a href="/">register now!</a>
       </div>
     </Card>
   );
