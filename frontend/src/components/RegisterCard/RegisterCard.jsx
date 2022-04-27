@@ -3,7 +3,7 @@ import {
   Button, Card, Form, Input,
 } from 'antd';
 
-import './LoginCard.css';
+import './RegisterCard.css';
 
 export default function LoginCard() {
   const onFinish = (values) => {
