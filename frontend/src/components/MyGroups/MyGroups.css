@@ -1,0 +1,33 @@
+.section-title {
+  font-weight: bold;
+  font-size: 48px;
+  margin-bottom: -15px;
+}
+
+.hr {
+  color: black;
+}
+
+.groups {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.card {
+  font-size: 16px;
+  width: 306px;
+  height: 108px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.default-card {
+  background-color: #ffe956;
+}
+
+.custom-card {
+  background-color: #fffada;
+}

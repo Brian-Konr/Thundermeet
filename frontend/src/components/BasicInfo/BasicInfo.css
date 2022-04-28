@@ -1,0 +1,46 @@
+.section-title {
+  font-weight: bold;
+  font-size: 48px;
+  margin-bottom: -15px;
+}
+
+.hr {
+  color: black;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.item-name {
+  font-size: 20px;
+  line-height: 20px;
+  width: 20%;
+}
+
+.item-content {
+  font-size: 20px;
+  line-height: 20px;
+  width: 25%;
+}
+
+.ant-btn.connect {
+  margin-top: -5px;
+  font-size: 20px;
+  color: #56c7bc;
+  background-color: white;
+  border: 1px solid #56c7bc;
+  display: block;
+  line-height: 20px;
+}
+
+.ant-btn.connect:hover {
+  font-size: 20px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  display: block;
+  line-height: 20px;
+}
