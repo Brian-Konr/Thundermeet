@@ -1,17 +1,23 @@
-import LoginCard from '../../components/LoginCard/LoginCard';
+import { useState } from 'react';
+
+import HomeCard from '../../components/HomeCard/HomeCard';
 import logo from '../../icons/logo.png';
 
 import './Home.css';
 
 export default function Home() {
+  const [option, setOption] = useState('login');
   return (
     <div style={{
-      display: 'flex', flexDirection: 'column', 'align-items': 'center', backgroundColor: '#F2F3F4', height: '100vh',
+      display: 'flex', flexDirection: 'column', 'align-items': 'center', backgroundColor: '#F2F3F4', minHeight: '100vh',
     }}
     >
       <img className="home-logo" src={logo} alt="logo" />
       <h2 style={{ marginTop: '-2.2vh' }}>Thundermeet, Faster Meet!</h2>
-      <LoginCard />
+      <HomeCard
+        option={option}
+        setOption={setOption}
+      />
     </div>
   );
 }
