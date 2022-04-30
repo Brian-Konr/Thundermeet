@@ -4,6 +4,7 @@ import {
   Routes,
 } from 'react-router-dom';
 
+import EventTimePage from './routes/EventTimePage/EventTimePage';
 import Home from './routes/Home/Home';
 import PersonalPage from './routes/PersonalPage';
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route exact path="/personal" element={<PersonalPage />} />
         <Route path="/" element={<Home />} />
+        <Route exact path="/event_time" element={<EventTimePage />} />
       </Routes>
     </BrowserRouter>
   );
