@@ -1,35 +1,26 @@
-import Home from './routes/Home/Home';
-import PersonalPage from './routes/PersonalPage';
-import Navbar from './components/Navbar/Navbar';
-import 'antd/dist/antd.css'
-import EventTimePage from './routes/EventTimePage';
-import './App.css'
 import {
   BrowserRouter,
+  Route,
   Routes,
-  Route
-} from "react-router-dom";
+} from 'react-router-dom';
 
+import EventTimePage from './routes/EventTimePage/EventTimePage';
+import Home from './routes/Home/Home';
+import PersonalPage from './routes/PersonalPage';
 
+import 'antd/dist/antd.css';
+import './App.css';
 
 function App() {
-
   return (
-    <>
-      <Navbar />
-      <BrowserRouter>
-        <Routes>
-          <Route exact path='/personal' element={<PersonalPage />} />
-        </Routes>
-        <Routes>
-          <Route path='/' element={<Home />} />
-        </Routes>
-        <Routes>
-          <Route exact path='/event_time' element={<EventTimePage />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/personal" element={<PersonalPage />} />
+        <Route path="/" element={<Home />} />
+        <Route exact path="/event_time" element={<EventTimePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

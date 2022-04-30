@@ -1,6 +1,7 @@
-.center {
-  border: 1px solid black;
-  padding-top: 10px;
-  display: flex;
-  justify-content: center;
+
+.home-logo {
+  margin-top: 5vh;
+  width: 42vw;
 }
+
+
