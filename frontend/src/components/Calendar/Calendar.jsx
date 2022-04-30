@@ -9,7 +9,7 @@ import ScheduleSelector from 'react-schedule-selector';
 export default function Calendar() {
   // params
   const startTime = 0; // form's start hour
-  const endTime = 10; // form's end hour
+  const endTime = 6; // form's end hour
   const enablePriority = true; // creator enable priority or not
   const type = 'date'; // form's display type: weekday or date
   const startDate = new Date(); // form's start date(if weekday, weekday switch to the nearest date)
@@ -89,11 +89,14 @@ export default function Calendar() {
   useEffect(() => {
     console.log('normal:', normalDay);
     console.log('priority:', priorityDay);
-    console.log('selected:', schedule);
+    // console.log('selected:', schedule);
   }, [normalDay, priorityDay]);
 
   return (
-    <div style={{ width: '580px', height: '510px' }}>
+    <div style={{
+      width: '580px', height: '520px', marginLeft: '30px', borderTop: '1px solid #F8F8F8', marginTop: '30px',
+    }}
+    >
       {enablePriority
         ? (
           <>
@@ -103,18 +106,45 @@ export default function Calendar() {
               }}
               onClick={clickPriority}
             />
-            <div style={{ marginLeft: '2vw', marginTop: '1vh' }}>
-              Prefer
-            </div>
+            {priority
+              ? (
+                <div style={{
+                  marginLeft: '1.5vw', marginTop: '1vh', width: '60px', paddingLeft: '10px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
+                }}
+                >
+                  Prefer
+                </div>
+              ) : (
+                <div style={{
+                  marginLeft: '1.5vw', marginTop: '1vh', width: '60px', paddingLeft: '10px',
+                }}
+                >
+                  Prefer
+                </div>
+              )}
+
             <div
               style={{
                 width: '40px', height: '40px', background: '#FFFADA', marginTop: '3vh', marginLeft: '2vw',
               }}
               onClick={clickNormal}
             />
-            <div style={{ marginLeft: '1vw', marginTop: '1vh' }}>
-              Not Prefer
-            </div>
+            {priority
+              ? (
+                <div style={{
+                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '8px',
+                }}
+                >
+                  Not Prefer
+                </div>
+              ) : (
+                <div style={{
+                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '8px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
+                }}
+                >
+                  Not Prefer
+                </div>
+              )}
 
           </>
         )
@@ -128,7 +158,7 @@ export default function Calendar() {
         )}
 
       <div style={{
-        width: '450px', height: '500px', overflow: 'auto', marginTop: '-27vh', marginLeft: '7vw',
+        width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '7vw',
       }}
       >
         <ScheduleSelector
