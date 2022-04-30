@@ -132,14 +132,14 @@ export default function Calendar() {
             {priority
               ? (
                 <div style={{
-                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '8px',
+                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '9px',
                 }}
                 >
                   Not Prefer
                 </div>
               ) : (
                 <div style={{
-                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '8px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
+                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '9px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
                 }}
                 >
                   Not Prefer

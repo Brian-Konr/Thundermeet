@@ -37,7 +37,7 @@ export default function EventTimePage() {
           />
           <span>
             {tagList.map((tag) => (
-              <Tag color="green" className="tag-position">{tag}</Tag>
+              <Tag color="green">{tag}</Tag>
             ))}
           </span>
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
