@@ -8,6 +8,7 @@ import {
 } from 'antd';
 
 import Calendar from '../../components/Calendar/Calendar';
+import CalendarForDisplay from '../../components/CalendarForDisplay/CalendarForDisplay';
 import Navbar from '../../components/Navbar/Navbar';
 
 import './EventTimePage.css';
@@ -42,7 +43,10 @@ export default function EventTimePage() {
           </span>
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
         </div>
-        <Calendar />
+        <div className="container">
+          <Calendar />
+          <CalendarForDisplay />
+        </div>
       </div>
     </>
   );

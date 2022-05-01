@@ -7,13 +7,14 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 
 export default function Calendar() {
-  // params
+  // params start
   const startTime = 0; // form's start hour
   const endTime = 6; // form's end hour
   const enablePriority = true; // creator enable priority or not
   const type = 'date'; // form's display type: weekday or date
   const startDate = new Date(); // form's start date(if weekday, weekday switch to the nearest date)
   const numOfDays = 7; // continue number of days(for both weekday & date)
+  // params end
 
   const [schedule, setSchedule] = useState([]);
   const [format, setFormat] = useState('M/D');
