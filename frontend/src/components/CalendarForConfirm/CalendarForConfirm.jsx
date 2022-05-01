@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable brace-style */
@@ -9,9 +10,9 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import { Switch } from 'antd';
 
-import './CalendarForDisplay.css';
+import './CalendarForConfirm.css';
 
-export default function CalendarForDisplay() {
+export default function CalendarForConfirm({ schedule, setSchedule }) {
   // params start
   const startTime = 0; // form's start hour
   const endTime = 6; // form's end hour
@@ -90,6 +91,11 @@ export default function CalendarForDisplay() {
     setSwitchPriority(checked);
   };
 
+  const handleChange = (newSchedule) => {
+    setSchedule(newSchedule);
+    console.log(newSchedule);
+  };
+
   return (
     <div style={{
       width: '580px', height: '520px', marginLeft: '80px', borderTop: '1px solid #F8F8F8', marginTop: '30px',
@@ -105,7 +111,7 @@ export default function CalendarForDisplay() {
           {memberList.length - removeList.length}
         </p>
         <div
-          className="amount-block"
+          className="amount-block-confirm"
         />
         <p style={{ paddingLeft: '8px' }}>
           {memberList.length - memberList.length}
@@ -130,6 +136,8 @@ export default function CalendarForDisplay() {
       }}
       >
         <ScheduleSelector
+          selection={schedule}
+          onChange={handleChange}
           numDays={numOfDays}
           minTime={startTime}
           maxTime={endTime}
@@ -153,8 +161,8 @@ export default function CalendarForDisplay() {
               (Object.keys(selectedList).findIndex(target) !== -1)
                 ? (
                   <div
-                    className="time-block"
-                    style={size === 0 ? { background: '#FFF' } : { opacity: colorList[size] }}
+                    className="time-block-confirm"
+                    style={selected ? { background: '#FEDD02' } : size === 0 ? { background: '#FFF' } : { opacity: colorList[size] }}
                     onMouseEnter={() => {
                       setStyle({ display: 'none' });
                       setStyleBlock({ display: 'flex' });
@@ -169,8 +177,9 @@ export default function CalendarForDisplay() {
                 ) : (
               // 照理說不會有這裡的情況，每一個都會回傳資料，只是因為尚未串接時，假資料只有幾格，所以會用到這裡
                   <div
-                    className="test"
+                    className="test-confirm"
                     ref={refSetter}
+                    style={selected ? { background: '#FEDD02' } : { background: '#FFF' }}
                   />
                 )
             );
@@ -178,7 +187,7 @@ export default function CalendarForDisplay() {
         />
       </div>
       <div
-        className="name-block"
+        className="name-block-confirm"
         style={style}
       >
         {memberList.map((member) => (
@@ -188,7 +197,7 @@ export default function CalendarForDisplay() {
         ))}
       </div>
       <div
-        className="name-block"
+        className="name-block-confirm"
         style={styleBlock}
       >
         {
