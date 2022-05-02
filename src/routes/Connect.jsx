@@ -6,8 +6,8 @@ export default function Connect() {
   const [login, setLogin] = useState(false);
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
-  const CLIENT_ID = '104458638535-nbip66aqm5t6i2qjruv4ckk1f4uovqmp.apps.googleusercontent.com';
-  const API_KEY = 'AIzaSyCBdwaU7C1Wx0ok92LZNSjvWbqbNEmaE_U';
+  const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const API_KEY = import.meta.env.VITE_GOOGLE_CLIENT_API_KEY;
   const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
   const SCOPES = 'https://www.googleapis.com/auth/calendar profile email';
 
