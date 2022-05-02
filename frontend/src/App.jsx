@@ -4,6 +4,7 @@ import {
   Routes,
 } from 'react-router-dom';
 
+import Connect from './routes/Connect';
 import Home from './routes/Home/Home';
 import PersonalPage from './routes/PersonalPage';
 
@@ -15,6 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/personal" element={<PersonalPage />} />
+        <Route exact path="/connect-test" element={<Connect />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

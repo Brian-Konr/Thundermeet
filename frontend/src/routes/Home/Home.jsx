@@ -9,7 +9,7 @@ export default function Home() {
   const [option, setOption] = useState('login');
   return (
     <div style={{
-      display: 'flex', flexDirection: 'column', 'align-items': 'center', backgroundColor: '#F2F3F4', minHeight: '100vh',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F2F3F4', minHeight: '100vh',
     }}
     >
       <img className="home-logo" src={logo} alt="logo" />
