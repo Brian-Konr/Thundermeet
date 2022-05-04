@@ -13,7 +13,7 @@ export default function HomeCard({ option, setOption }) {
   return (
     <div style={{ marginBottom: '2vh' }}>
       <Card style={{
-        marginTop: '2vh', 'min-width': '30vw', display: 'flex', justifyContent: 'center', borderRadius: '1.6vw', boxShadow: '2px 2px gray',
+        marginTop: '2vh', minWidth: '30vw', display: 'flex', justifyContent: 'center', borderRadius: '1.6vw', boxShadow: '2px 2px gray',
       }}
       >
         <div style={{ textAlign: 'center' }}>
