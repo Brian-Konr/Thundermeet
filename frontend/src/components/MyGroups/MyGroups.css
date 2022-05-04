@@ -1,3 +1,5 @@
+Mygroup.css
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -36,27 +38,18 @@
   margin-top: 25px;
 }
 
-.ant-btn.card {
+.card {
   font-size: 16px;
-  color: black;
-  text-shadow: none;
-  text-align: start;
-  box-shadow: none;
   width: 306px;
   height: 108px;
-  margin-bottom: 25px;
+  padding: 10px;
   border-radius: 10px;
-  border-color: transparent;
 }
 
-.ant-btn.default-card {
+.default-card {
   background-color: #ffe956;
 }
 
-.ant-btn.custom-card {
+.custom-card {
   background-color: #fffada;
-}
-
-.ant-btn.card :hover{
-  background-color: #fedd02;
 }
