@@ -1,0 +1,62 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 48px;
+  margin-bottom: -15px;
+}
+
+.add {
+  font-size: 30px;
+}
+
+.hr {
+  color: black;
+}
+
+.form-title {
+  font-size: 15px;
+  display: inline;
+  margin-inline-end: 20px;
+}
+
+.edit-group-name {
+  font-size: 20px;
+}
+
+.groups {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.ant-btn.card {
+  font-size: 16px;
+  color: black;
+  text-shadow: none;
+  text-align: start;
+  box-shadow: none;
+  width: 306px;
+  height: 108px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  border-color: transparent;
+}
+
+.ant-btn.default-card {
+  background-color: #ffe956;
+}
+
+.ant-btn.custom-card {
+  background-color: #fffada;
+}
+
+.ant-btn.card :hover{
+  background-color: #fedd02;
+}
