@@ -12,43 +12,9 @@ import { Switch } from 'antd';
 
 import './CalendarForConfirm.css';
 
-export default function CalendarForConfirm({ schedule, setSchedule }) {
-  // params start
-  const startTime = 0; // form's start hour
-  const endTime = 6; // form's end hour
-  const type = 'date'; // form's display type: weekday or date
-  const startDate = new Date(); // form's start date(if weekday, weekday switch to the nearest date)
-  const numOfDays = 7; // continue number of days(for both weekday & date)
-  const memberList = ['小陳', '小王', '小葉', '小郭'];
-  const selectedList = {};
-  // fake data
-  selectedList[new Date(2022, 4, 2, 0, 0, 0)] = {
-    normal: ['小陳', '小王'],
-    priority: ['小葉', '小郭'],
-    notAvailable: [],
-  };
-  selectedList[new Date(2022, 4, 2, 0, 30, 0)] = {
-    normal: ['小陳', '小王'],
-    priority: ['小郭'],
-    notAvailable: ['小葉'],
-  };
-  selectedList[new Date(2022, 4, 2, 1, 0, 0)] = {
-    normal: ['小陳'],
-    priority: ['小郭'],
-    notAvailable: ['小王', '小葉'],
-  };
-  selectedList[new Date(2022, 4, 3, 0, 0, 0)] = {
-    normal: [],
-    priority: ['小郭'],
-    notAvailable: ['小陳', '小王', '小葉'],
-  };
-  selectedList[new Date(2022, 4, 3, 0, 30, 0)] = {
-    normal: [],
-    priority: [],
-    notAvailable: ['小陳', '小王', '小葉', '小郭'],
-  };
-  // params end
-
+export default function CalendarForConfirm({
+  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, memberList, selectedList,
+}) {
   const [format, setFormat] = useState('M/D');
   const [removeList, setRemoveList] = useState([]);
   const [colorList, setColorList] = useState([]);
@@ -58,7 +24,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
   const [switchPriority, setSwitchPriority] = useState(true);
 
   useEffect(() => {
-    if (type === 'weekday') {
+    if (type === 'DAYS') {
       setFormat('ddd');
     }
   }, []);
@@ -102,7 +68,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
     }}
     >
       <div style={{
-        display: 'flex', flexDirection: 'column', height: '140px', width: '40px', marginTop: '80px',
+        display: 'flex', flexDirection: 'column', height: '140px', width: '40px', marginTop: '30px',
       }}
       >
         <p style={{ paddingLeft: '8px' }}>
@@ -119,20 +85,31 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
           {memberList.length - removeList.length}
         </p>
       </div>
+      <div
+        style={{
+          width: '40px', height: '40px', background: '#FEDD02', marginTop: '2vh', marginLeft: '0vw',
+        }}
+      />
+      <p style={{
+        marginLeft: '-0.7vw', marginTop: '1vh', width: '60px', textAlign: 'center',
+      }}
+      >
+        Selected Time
+      </p>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Switch
           defaultChecked
           onChange={switchChange}
           style={{
-            marginTop: '-260px',
+            marginTop: '-340px',
             marginLeft: '90px',
             ...(switchPriority ? { background: '#01A494' } : { background: '#B8B8B8' }),
           }}
         />
-        <h4 style={{ marginTop: '-260px', marginLeft: '10px' }}>Consider Preference</h4>
+        <h4 style={{ marginTop: '-340px', marginLeft: '10px' }}>Consider Preference</h4>
       </div>
       <div style={{
-        width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '4vw',
+        width: '450px', height: '520px', overflow: 'auto', marginTop: '-37vh', marginLeft: '4vw',
       }}
       >
         <ScheduleSelector
@@ -203,7 +180,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
         {
         switchPriority ? (
           <>
-            <p style={{ fontSize: '15px' }}><span style={{ background: 'linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #FEDD02 90%,transparent 95%)' }}>Prefer</span></p>
+            <p style={{ fontSize: '15px' }}><span style={{ fontWeight: 'bold' }}>Prefer</span></p>
             {selectedList[chosenDate].priority.map((name) => (
               removeList.includes(name)
                 ? (<></>) : (<p>{name}</p>)
@@ -212,7 +189,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
               marginTop: '20px', width: '90px', fontSize: '15px',
             }}
             >
-              <span style={{ background: 'linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #FFFADA 90%,transparent 95%)' }}>Not Prefer</span>
+              <span style={{ fontWeight: 'bold' }}>Not Prefer</span>
             </p>
             {selectedList[chosenDate].normal.map((name) => (
               removeList.includes(name)
@@ -222,7 +199,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
               marginTop: '20px', width: '110px', fontSize: '15px',
             }}
             >
-              <span style={{ background: 'linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #EDEDED 90%,transparent 95%)' }}>Not Available</span>
+              <span style={{ fontWeight: 'bold' }}>Not Available</span>
             </p>
             {selectedList[chosenDate].notAvailable.map((name) => (
               removeList.includes(name)
@@ -231,7 +208,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
           </>
         ) : (
           <>
-            <p style={{ fontSize: '15px' }}><span style={{ background: 'linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #ECFCFA 90%,transparent 95%)' }}>Available</span></p>
+            <p style={{ fontSize: '15px' }}><span style={{ fontWeight: 'bold' }}>Available</span></p>
             {selectedList[chosenDate].priority.map((name) => (
               removeList.includes(name)
                 ? (<></>) : (<p>{name}</p>)
@@ -244,7 +221,7 @@ export default function CalendarForConfirm({ schedule, setSchedule }) {
               marginTop: '20px', width: '110px', fontSize: '15px',
             }}
             >
-              <span style={{ background: 'linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #EDEDED 90%,transparent 95%)' }}>Not Available</span>
+              <span style={{ fontWeight: 'bold' }}>Not Available</span>
             </p>
             {selectedList[chosenDate].notAvailable.map((name) => (
               removeList.includes(name)

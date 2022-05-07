@@ -1,8 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable import/no-extraneous-dependencies */
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   CopyOutlined, DownloadOutlined, PlusOutlined,
 } from '@ant-design/icons';
@@ -11,12 +9,12 @@ import {
   Button, Tag,
 } from 'antd';
 
-import CalendarForConfirm from '../../components/CalendarForConfirm/CalendarForConfirm';
+import CalendarForFinal from '../../components/CalendarForFinal/CalendarForFinal';
 import Navbar from '../../components/Navbar/Navbar';
 
-import './ConfirmTimePage.css';
+import './FinalTimePage.css';
 
-export default function ConfirmTimePage() {
+export default function FinalTimePage() {
   // params
   const eventTitle = '專題會議';
   const tagList = ['SAD', 'milestone2'];
@@ -53,17 +51,7 @@ export default function ConfirmTimePage() {
     priority: [],
     notAvailable: ['小陳', '小王', '小葉', '小郭'],
   };
-  // output
-  const [schedule, setSchedule] = useState([]);
-
-  const navigate = useNavigate();
-  const cancelAction = () => {
-    navigate('/event_time');
-  };
-
-  const confirmAction = () => {
-    navigate('/final_time');
-  };
+  const schedule = [new Date(2022, 4, 3, 0, 0, 0), new Date(2022, 4, 3, 0, 30, 0)]; // final chosen time list
 
   return (
     <>
@@ -90,28 +78,8 @@ export default function ConfirmTimePage() {
           </span>
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
         </div>
-        <div className="container-confirm">
-          <CalendarForConfirm schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
-          <Button
-            style={{
-              marginTop: '510px', marginLeft: '210px',
-            }}
-            onClick={cancelAction}
-          >
-            Cancel
-          </Button>
-          {schedule.length >= 1 ? (
-            <Button
-              style={{
-                marginTop: '510px', marginLeft: '15px', background: '#01A494', color: 'white',
-              }}
-              onClick={confirmAction}
-            >
-              Confirm
-            </Button>
-          ) : (
-            <></>
-          )}
+        <div className="container-final">
+          <CalendarForFinal schedule={schedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
         </div>
       </div>
     </>

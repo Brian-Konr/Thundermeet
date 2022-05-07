@@ -7,6 +7,7 @@ import {
 import ConfirmTimePage from './routes/ConfirmTimePage/ConfirmTimePage';
 import Connect from './routes/Connect';
 import EventTimePage from './routes/EventTimePage/EventTimePage';
+import FinalTimePage from './routes/FinalTimePage/FinalTimePage';
 import Home from './routes/Home/Home';
 import PersonalPage from './routes/PersonalPage';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route exact path="/event_time" element={<EventTimePage />} />
         <Route exact path="/confirm_time" element={<ConfirmTimePage />} />
+        <Route exact path="/final_time" element={<FinalTimePage />} />
       </Routes>
     </BrowserRouter>
   );

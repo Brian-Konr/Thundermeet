@@ -1,0 +1,14 @@
+.time-block-final {
+  height: 40px;
+  border: 1px solid #E0E0E0;
+}
+.test-final {
+  height: 40px;
+  border: 1px solid #E0E0E0;
+  background: #FFF;
+}
+.name-block-final {
+  flex-direction: column;
+  margin-left: 530px;
+  margin-top: -450px;
+}

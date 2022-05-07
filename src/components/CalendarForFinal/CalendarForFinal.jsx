@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable brace-style */
@@ -9,14 +10,13 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import { Switch } from 'antd';
 
-import './CalendarForDisplay.css';
+import './CalendarForFinal.css';
 
-export default function CalendarForDisplay({
-  startTime, endTime, type, startDate, numOfDays, memberList, selectedList,
+export default function CalendarForFinal({
+  schedule, startTime, endTime, type, startDate, numOfDays, memberList, selectedList,
 }) {
   const [format, setFormat] = useState('M/D');
   const [removeList, setRemoveList] = useState([]);
-  const [colorList, setColorList] = useState([]);
   const [style, setStyle] = useState({ display: 'flex' });
   const [styleBlock, setStyleBlock] = useState({ display: 'none' });
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
@@ -27,19 +27,6 @@ export default function CalendarForDisplay({
       setFormat('ddd');
     }
   }, []);
-
-  useEffect(() => {
-    setColorList([]);
-    const len = memberList.length - removeList.length;
-    if (len !== 0) {
-      for (let i = 0; i <= len; i += 1) {
-        setColorList((oldColorList) => [...oldColorList, (0.1 + (0.9 / len) * i)]);
-      }
-    }
-    else {
-      setColorList([0.1]);
-    }
-  }, [removeList]);
 
   const crossMember = (member) => {
     console.log('cross member');
@@ -61,41 +48,35 @@ export default function CalendarForDisplay({
       width: '580px', height: '520px', marginLeft: '80px', borderTop: '1px solid #F8F8F8', marginTop: '30px',
     }}
     >
-      <div style={{
-        display: 'flex', flexDirection: 'column', height: '140px', width: '40px', marginTop: '80px',
+      <div
+        style={{
+          width: '40px', height: '40px', background: '#FEDD02', marginTop: '5vh', marginLeft: '0vw',
+        }}
+      />
+      <p style={{
+        marginLeft: '-0.7vw', marginTop: '1vh', width: '60px', textAlign: 'center',
       }}
       >
-        <p style={{ paddingLeft: '8px' }}>
-          {memberList.length - removeList.length}
-          /
-          {memberList.length - removeList.length}
-        </p>
-        <div
-          className="amount-block"
-        />
-        <p style={{ paddingLeft: '8px' }}>
-          {memberList.length - memberList.length}
-          /
-          {memberList.length - removeList.length}
-        </p>
-      </div>
+        Selected Time
+      </p>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Switch
           defaultChecked
           onChange={switchChange}
           style={{
-            marginTop: '-260px',
+            marginTop: '-200px',
             marginLeft: '90px',
             ...(switchPriority ? { background: '#01A494' } : { background: '#B8B8B8' }),
           }}
         />
-        <h4 style={{ marginTop: '-260px', marginLeft: '10px' }}>Consider Preference</h4>
+        <h4 style={{ marginTop: '-200px', marginLeft: '10px' }}>Consider Preference</h4>
       </div>
       <div style={{
-        width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '4vw',
+        width: '450px', height: '520px', overflow: 'auto', marginTop: '-20vh', marginLeft: '4vw',
       }}
       >
         <ScheduleSelector
+          selection={schedule}
           numDays={numOfDays}
           minTime={startTime}
           maxTime={endTime}
@@ -107,20 +88,12 @@ export default function CalendarForDisplay({
           hourlyChunks={2}
           renderDateCell={(date, selected, refSetter) => {
             const target = (element) => element.toString() === date.toString();
-            let size;
-            if (Object.keys(selectedList).findIndex(target) !== -1) {
-              const normalSize = selectedList[date].normal
-                .filter((i) => !removeList.includes(i)).length;
-              const prioritySize = selectedList[date].priority
-                .filter((i) => !removeList.includes(i)).length;
-              size = normalSize + prioritySize;
-            }
             return (
               (Object.keys(selectedList).findIndex(target) !== -1)
                 ? (
                   <div
-                    className="time-block"
-                    style={size === 0 ? { background: '#FFF' } : { opacity: colorList[size] }}
+                    className="time-block-final"
+                    style={schedule.findIndex(target) !== -1 ? { background: '#FEDD02' } : { background: '#FFF' }}
                     onMouseEnter={() => {
                       setStyle({ display: 'none' });
                       setStyleBlock({ display: 'flex' });
@@ -135,8 +108,9 @@ export default function CalendarForDisplay({
                 ) : (
               // 照理說不會有這裡的情況，每一個都會回傳資料，只是因為尚未串接時，假資料只有幾格，所以會用到這裡
                   <div
-                    className="test"
+                    className="test-final"
                     ref={refSetter}
+                    style={schedule.findIndex(target) !== -1 ? { background: '#FEDD02' } : { background: '#FFF' }}
                   />
                 )
             );
@@ -144,7 +118,7 @@ export default function CalendarForDisplay({
         />
       </div>
       <div
-        className="name-block"
+        className="name-block-final"
         style={style}
       >
         {memberList.map((member) => (
@@ -154,7 +128,7 @@ export default function CalendarForDisplay({
         ))}
       </div>
       <div
-        className="name-block"
+        className="name-block-final"
         style={styleBlock}
       >
         {
