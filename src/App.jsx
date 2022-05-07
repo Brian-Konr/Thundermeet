@@ -21,11 +21,11 @@ function App() {
       <Routes>
         <Route exact path="/personal" element={<PersonalPage />} />
         <Route exact path="/connect-test" element={<Connect />} />
-        <Route path="/" element={<Home />} />
         <Route exact path="/event_time" element={<EventTimePage />} />
         <Route exact path="/confirm_time" element={<ConfirmTimePage />} />
         <Route exact path="/add_event" element={<AddEventPage />} />
         <Route exact path="/edit_event" element={<EditEventPage />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
