@@ -43,5 +43,6 @@ module.exports = {
     'simple-import-sort/exports': 'error',
     'no-console': 'off',
     'react/prop-types': 'off',
+    'no-param-reassign': ['error', { props: false }],
   },
 };

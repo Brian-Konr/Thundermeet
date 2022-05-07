@@ -1,13 +1,31 @@
 import { LockOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import {
-  Button, Card, Form, Input,
+  Button, Card, Form, Input, message,
 } from 'antd';
+
+import login from '../../utils/login';
+import register from '../../utils/register';
 
 import './HomeCard.css';
 
 export default function HomeCard({ option, setOption }) {
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Received values of form: ', values);
+    if (option === 'login') {
+      const res = await login(values);
+      if (res === 'error') message.error('login failed...', 2);
+      else {
+        // success and direct to personal page
+      }
+    } else if (option === 'register') {
+      const res = await register(values);
+      if (res === 'error') message.error('register failed', 2);
+      else {
+        // success and turn to login page
+      }
+    } else if (option === 'forget') {
+      // handle forget password
+    }
   };
 
   return (
@@ -36,7 +54,7 @@ export default function HomeCard({ option, setOption }) {
         >
           <p style={{ fontSize: '20px' }}>User ID</p>
           <Form.Item
-            name="user_id"
+            name="userId"
             rules={[
               {
                 required: true,
@@ -46,6 +64,20 @@ export default function HomeCard({ option, setOption }) {
           >
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="User ID" />
           </Form.Item>
+
+          {option === 'register' && (
+            <>
+              <p style={{ fontSize: '20px' }}>User Name</p>
+              <Form.Item
+                name="userName"
+              >
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="User Name"
+                />
+              </Form.Item>
+            </>
+          )}
 
           {option !== 'forget' && (
             <>
@@ -70,9 +102,10 @@ export default function HomeCard({ option, setOption }) {
 
           {option === 'register' && (
             <>
-              <p style={{ fontSize: '20px' }}>Question</p>
+              <p style={{ fontSize: '20px' }}>Name of your College?</p>
+              <p style={{ fontSize: '13px', marginTop: '-2vh' }}>(in abbreviation)</p>
               <Form.Item
-                name="q_answer"
+                name="passwordAnswer"
                 rules={[
                   {
                     required: true,
