@@ -1,0 +1,23 @@
+.all {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ant-switch.priority {
+  background-color: #01a494;
+}
+
+.day {
+  width: 55px;
+  font-size: small;
+  border-radius: 0px;
+  box-shadow: none;
+  border-style: none;
+  background-color: white;
+}
