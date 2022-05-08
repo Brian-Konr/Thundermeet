@@ -14,10 +14,13 @@ export default function Home() {
     >
       <img className="home-logo" src={logo} alt="logo" />
       <h2 style={{ marginTop: '-2.2vh' }}>Thundermeet, Faster Meet!</h2>
-      <HomeCard
-        option={option}
-        setOption={setOption}
-      />
+      {!localStorage.getItem('token')
+        && (
+        <HomeCard
+          option={option}
+          setOption={setOption}
+        />
+        )}
     </div>
   );
 }

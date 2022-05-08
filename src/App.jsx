@@ -22,11 +22,11 @@ function App() {
       <Routes>
         <Route exact path="/personal" element={<PersonalPage />} />
         <Route exact path="/connect-test" element={<Connect />} />
-        <Route exact path="/event_time" element={<EventTimePage />} />
-        <Route exact path="/confirm_time" element={<ConfirmTimePage />} />
-        <Route exact path="/final_time" element={<FinalTimePage />} />
-        <Route exact path="/add_event" element={<AddEventPage />} />
-        <Route exact path="/edit_event" element={<EditEventPage />} />
+        <Route exact path="/event-time" element={<EventTimePage />} />
+        <Route exact path="/confirm-time" element={<ConfirmTimePage />} />
+        <Route exact path="/final-time" element={<FinalTimePage />} />
+        <Route exact path="/add-event" element={<AddEventPage />} />
+        <Route exact path="/edit-event" element={<EditEventPage />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

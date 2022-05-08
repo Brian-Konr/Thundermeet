@@ -30,6 +30,7 @@ export default function Navbar() {
     if (e.key === 'profile') navigate('/personal');
     else if (e.key === 'logout') {
       // clear jwt token and back to home screen
+      localStorage.removeItem('token');
       navigate('/');
     }
   };
@@ -40,7 +41,7 @@ export default function Navbar() {
         <Link to="/">
           <img className="logo" src={logo} alt="logo" />
         </Link>
-        <Button className="add-event-button" type="primary" size="large" shape="round" icon={<PlusOutlined />}>Add Event!</Button>
+        <Button onClick={() => navigate('/add-event')} className="add-event-button" type="primary" size="large" shape="round" icon={<PlusOutlined />}>Add Event!</Button>
       </div>
       <Dropdown overlay={<Menu onClick={userOnclick} items={items} />} arrow>
         <div className="user-icon">

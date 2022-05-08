@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
+
 import Avatar from '../components/Avatar/Avatar';
 import BasicInfo from '../components/BasicInfo/BasicInfo';
 import MyGroups from '../components/MyGroups/MyGroups';
 import Navbar from '../components/Navbar/Navbar';
+import getInfo from '../utils/getInfo';
 
 export default function PersonalPage() {
+  useEffect(() => {
+    getInfo();
+  }, []);
   return (
     <div>
       <Navbar />

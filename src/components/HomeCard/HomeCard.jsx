@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { LockOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import {
   Button, Card, Form, Input, message,
@@ -9,12 +10,15 @@ import register from '../../utils/register';
 import './HomeCard.css';
 
 export default function HomeCard({ option, setOption }) {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
     if (option === 'login') {
       const res = await login(values);
-      if (res === 'error') message.error('login failed...', 2);
+      if (res === 'error') message.error('login failed..., ID or password does not exist', 2);
       else {
+        message.success('Welcome to Thundermeet!', 2);
+        navigate('/personal');
         // success and direct to personal page
       }
     } else if (option === 'register') {

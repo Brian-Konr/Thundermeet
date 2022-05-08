@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 import CreateButton from '../../components/CreateButton/CreateButton';
 import CreateSelectTime from '../../components/CreateSelectTime/CreateSelectTime';
@@ -6,6 +8,7 @@ import CreateTitleDescription from '../../components/CreateTitleDescription/Crea
 import Navbar from '../../components/Navbar/Navbar';
 
 export default function AddEventPage() {
+  const navigate = useNavigate();
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescirption] = useState('');
   const [eventTypeIsSpecificDays, setEventTypeIsSpecificDays] = useState(true);
@@ -13,7 +16,15 @@ export default function AddEventPage() {
   const [eventTimeRange, setEventTimeRange] = useState([]);
   const [eventDateRange, setEventDateRange] = useState([]);
 
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      message.error('Please login first!');
+      navigate('/');
+    }
+  }, []);
+
   return (
+    localStorage.getItem('token') && (
     <div>
       <Navbar />
       <div style={{ background: '#F8F8F8', height: '92vh' }}>
@@ -58,5 +69,6 @@ export default function AddEventPage() {
         </div>
       </div>
     </div>
+    )
   );
 }

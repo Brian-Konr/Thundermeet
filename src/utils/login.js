@@ -1,16 +1,13 @@
-import instance from '../instance';
+import axios from 'axios';
 
 export default async (form) => {
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
   try {
-    const res = await instance.post('/v1/users/login', form);
-    return {
-      status: 'success',
-      data: res,
-    };
+    const res = await axios.post(`${baseURL}/v1/users/login`, form);
+    const { token } = res.data;
+    localStorage.setItem('token', token);
+    return res.statusText;
   } catch (error) {
-    return {
-      status: 'fail',
-      data: error,
-    };
+    return 'error';
   }
 };
