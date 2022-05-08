@@ -1,0 +1,27 @@
+.button-round {
+  margin-left: 1vw;
+  margin-top: 3vh;
+}
+.ant-btn.gotit-button {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+}
+.ant-btn.gotit-button:hover {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+}
+.copy {
+  align-self: flex-start;
+}
