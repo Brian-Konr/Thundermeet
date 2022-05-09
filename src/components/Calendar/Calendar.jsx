@@ -8,9 +8,8 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 
 export default function Calendar({
-  startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay,
+  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime,
 }) {
-  const [schedule, setSchedule] = useState([]);
   const [format, setFormat] = useState('M/D');
   const [priority, setPriority] = useState(false);
 
@@ -19,6 +18,11 @@ export default function Calendar({
       setFormat('ddd');
     }
   }, []);
+
+  useEffect(() => {
+    setPriority(priorityDay.filter((item) => !exportTime.includes(item)));
+    setNormalDay(normalDay.filter((item) => !exportTime.includes(item)));
+  }, [exportTime]);
 
   const handleChange = (newSchedule) => {
     let addCell = [];

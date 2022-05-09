@@ -3,21 +3,19 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useState } from 'react';
-import { Icon } from '@iconify/react';
 import {
-  Button, Select, Tag,
+  Tag,
 } from 'antd';
 
 import CalendarForFinal from '../../components/CalendarForFinal/CalendarForFinal';
 import EventAddToGroup from '../../components/EventAddToGroup/EventAddToGroup';
 import EventCopyConfirmLink from '../../components/EventCopyConfirmLink/EventCopyConfirmLink';
+import ExportButton from '../../components/ExportButton/ExportButton';
 import Navbar from '../../components/Navbar/Navbar';
 
 import './FinalTimePage.css';
 
 export default function FinalTimePage() {
-  const { Option } = Select;
-
   // params
   const eventTitle = '專題會議';
   const tagList = ['SAD', 'milestone2'];
@@ -56,17 +54,22 @@ export default function FinalTimePage() {
   };
   const schedule = [new Date(2022, 4, 3, 0, 0, 0), new Date(2022, 4, 3, 0, 30, 0)]; // final chosen time list
   // output for add to category
-  const [selectedGroup, setSelectedGroup] = useState(); // store selected group's key number
+  const [selectedGroup, setSelectedGroup] = useState(''); // store selected group's name
   // params for add to category
-  const groupList = [<Option key="1">SAD course</Option>, <Option key="2">Global Express</Option>,
-    <Option key="3">NTUIM</Option>];
+  const groupList = ['SAD course', 'Global Express', 'NTUIM'];
+  // params for export
+  const eventList = ['SAD-1', 'SAD-2', 'SAD-3'];
+  // output for export
+  const [exportToApple, setExportToApple] = useState(false); // when user chooses to export apple, turns true(export schedule)
+  const [exportToGoogle, setExportToGoogle] = useState(false); // when user chooses to export google, turns true(export schedule)
+  const [exportToEvent, setExportToEvent] = useState(''); // when user chooses to export to event, turns event's name, set EventTimePage's exportTime
 
   return (
     <>
       <Navbar />
       <div style={{ height: '92vh', background: '#F8F8F8' }}>
         <span style={{ marginLeft: '55%' }}>
-          <Button className="button-round" icon={<Icon icon="fe:export" width="15px" style={{ marginRight: '3%' }} />}>Export Calendar</Button>
+          <ExportButton eventList={eventList} setExportToApple={setExportToApple} setExportToGoogle={setExportToGoogle} setExportToEvent={setExportToEvent} />
           <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
           <EventCopyConfirmLink eventName={eventTitle} schedule={schedule} />
         </span>
