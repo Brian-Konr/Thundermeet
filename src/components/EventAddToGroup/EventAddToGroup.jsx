@@ -10,6 +10,11 @@ import {
 import './EventAddToGroup.css';
 
 export default function EventAddToGroup({ setSelectedGroup, groupList }) {
+  const { Option } = Select;
+  const groupOptionList = [];
+  for (let i = 0; i < groupList.length; i += 1) {
+    groupOptionList.push(<Option key={i}>{groupList[i]}</Option>);
+  }
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
@@ -27,8 +32,7 @@ export default function EventAddToGroup({ setSelectedGroup, groupList }) {
         visible={isModalVisible}
         okText="Add"
         onOk={() => {
-          setSelectedGroup(form.getFieldValue('selectGroup'));
-          console.log(form.getFieldValue('selectGroup'));
+          setSelectedGroup(groupList[form.getFieldValue('selectGroup')]);
           setIsModalVisible(false);
           form.resetFields();
         }}
@@ -46,7 +50,7 @@ export default function EventAddToGroup({ setSelectedGroup, groupList }) {
               style={{ width: '70%' }}
               placeholder="Select existing group"
             >
-              {groupList}
+              {groupOptionList}
             </Select>
           </Form.Item>
         </Form>

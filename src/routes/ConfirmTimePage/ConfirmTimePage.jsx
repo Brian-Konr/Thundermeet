@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import {
-  Button, Select, Tag,
+  Button, Tag,
 } from 'antd';
 
 import CalendarForConfirm from '../../components/CalendarForConfirm/CalendarForConfirm';
@@ -17,8 +17,6 @@ import Navbar from '../../components/Navbar/Navbar';
 import './ConfirmTimePage.css';
 
 export default function ConfirmTimePage() {
-  const { Option } = Select;
-
   // params
   const eventTitle = '專題會議';
   const tagList = ['SAD', 'milestone2'];
@@ -59,10 +57,9 @@ export default function ConfirmTimePage() {
   // output
   const [schedule, setSchedule] = useState([]);
   // output for add to category
-  const [selectedGroup, setSelectedGroup] = useState(); // store selected group's key number
+  const [selectedGroup, setSelectedGroup] = useState(); // store selected group's name
   // params for add to category
-  const groupList = [<Option key="1">SAD course</Option>, <Option key="2">Global Express</Option>,
-    <Option key="3">NTUIM</Option>];
+  const groupList = ['SAD course', 'Global Express', 'NTUIM'];
 
   const navigate = useNavigate();
   const cancelAction = () => {
