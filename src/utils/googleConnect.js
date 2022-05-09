@@ -32,7 +32,7 @@ export default async function GetGoogleCalendarResponse() {
             },
           });
           request.execute((res) => {
-            resolve([res, basicProfile]);
+            resolve([res.items, basicProfile]);
           });
         });
       });

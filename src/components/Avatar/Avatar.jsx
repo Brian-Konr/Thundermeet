@@ -1,11 +1,11 @@
 import './Avatar.css';
 
-export default function Avatar() {
+export default function Avatar({ userName, userID }) {
   return (
     <div className="box">
-      <p className="avatar">C</p>
-      <p className="user-name">Christine Wang</p>
-      <p className="user-id">christine891225</p>
+      <p className="avatar">{userName.charAt(0)}</p>
+      <p className="user-name">{userName}</p>
+      <p className="user-id">{userID}</p>
     </div>
   );
 }

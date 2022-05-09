@@ -4,11 +4,24 @@ import {
   Button, Input,
 } from 'antd';
 
+import changeName from '../../utils/changeName';
+
 import './BasicInfo.css';
 
-export default function BasicInfo() {
+export default function BasicInfo({
+  userName, setUserName, passwordAnswer, userID,
+}) {
+  const [revisedName, setRevisedName] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-  const [userName, setUserName] = useState('Christine Wang');
+
+  const onSubmit = () => {
+    (async () => {
+      await changeName(revisedName);
+      setUserName(revisedName);
+      setIsEdit(false);
+    })();
+    // call api to change name
+  };
 
   if (isEdit === true) {
     return (
@@ -26,12 +39,12 @@ export default function BasicInfo() {
           </span>
           <span className="item-content">
             <Input.Group style={{ width: '100%' }} compact>
-              <Input className="edit-input" style={{ width: '25%' }} defaultValue={userName} onChange={(e) => { setUserName(e.target.value); }} />
-              <Button className="submit-button" type="primary" onClick={() => { setIsEdit(false); }}>Submit</Button>
+              <Input className="edit-input" style={{ width: '25%' }} defaultValue={userName} onChange={(e) => { setRevisedName(e.target.value); }} />
+              <Button className="submit-button" type="primary" disabled={!revisedName || revisedName === userName} onClick={onSubmit}>Submit</Button>
             </Input.Group>
-            <p>christine891225</p>
+            <p>{userID}</p>
             <p>What&apos;s your undergraduate name?</p>
-            <p>National Taiwan University</p>
+            <p>{passwordAnswer}</p>
           </span>
         </div>
       </div>
@@ -53,9 +66,9 @@ export default function BasicInfo() {
         </span>
         <span className="item-content">
           <p style={{ textDecoration: 'underline 1px' }}>{userName}</p>
-          <p>christine891225</p>
+          <p>{userID}</p>
           <p>What&apos;s your undergraduate name?</p>
-          <p>National Taiwan University</p>
+          <p>{passwordAnswer}</p>
         </span>
       </div>
     </div>

@@ -7,25 +7,15 @@ export default async () => {
         accept: 'application/json',
       },
     });
-    console.log(res);
+    return {
+      status: 'success',
+      data: res.data,
+    };
   } catch (error) {
     console.log(error);
+    return {
+      status: 'error',
+      data: error,
+    };
   }
 };
-
-// import axios from 'axios';
-
-// export default async () => {
-//   const baseURL = import.meta.env.VITE_BACKEND_URL;
-//   const token = localStorage.getItem('token');
-//   try {
-//     const res = await axios.get(`${baseURL}/v1/users/`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     console.log(res);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };

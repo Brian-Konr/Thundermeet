@@ -23,7 +23,8 @@ export default function HomeCard({ option, setOption }) {
       }
     } else if (option === 'register') {
       const res = await register(values);
-      if (res === 'error') message.error('register failed', 2);
+      console.log(res);
+      if (res.status === 'fail') message.error('register failed', 2);
       else {
         // success and turn to login page
       }
