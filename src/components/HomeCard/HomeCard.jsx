@@ -27,6 +27,8 @@ export default function HomeCard({ option, setOption }) {
       if (res.status === 'fail') message.error('register failed', 2);
       else {
         // success and turn to login page
+        message.success('successfully registered!', 2);
+        setOption('login');
       }
     } else if (option === 'forget') {
       // handle forget password

@@ -8,6 +8,7 @@ export default async (form) => {
     localStorage.setItem('token', token);
     return res.statusText;
   } catch (error) {
+    console.log(error);
     return 'error';
   }
 };
