@@ -1,0 +1,77 @@
+.ant-btn.edit-button {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  width: 120px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+  text-shadow: none;
+}
+
+.ant-btn.edit-button:hover {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  width: 120px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+  text-shadow: none;
+}
+
+.ant-btn.confirm-button {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  margin-right: 0px;
+  height: 30px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+  text-shadow: none;
+}
+
+.ant-btn.confirm-button:hover {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  margin-right: 0px;
+  height: 30px;
+  color: white;
+  background-color: #56c7bc;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+  text-shadow: none;
+}
+
+.ant-btn.cancel-button {
+  margin-top: -5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  height: 30px;
+  color: #56c7bc;
+  background-color: white;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+  text-shadow: none;
+}
+
+.ant-btn.cancel-button:hover {
+  margin-top: -5px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  height: 30px;
+  color: #56c7bc;
+  background-color: white;
+  border: 1px solid #56c7bc;
+  font-size: 18px;
+  line-height: 20px;
+  text-shadow: none;
+}

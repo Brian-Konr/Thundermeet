@@ -1,0 +1,35 @@
+.deleteTitle {
+  color: #f722b6;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.deleteContent {
+  color: #f722b6;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: -15px;
+}
+
+.ant-btn.delete-button {
+  margin-top: -10px;
+  margin-right: 10px;
+  height: 30px;
+  color: white;
+  background-color: #f722b6;
+  border: 1px solid #f722b6;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.ant-btn.delete-button:hover {
+  margin-top: -10px;
+  margin-right: 10px;
+  height: 30px;
+  color: white;
+  background-color: #f722b6;
+  border: 1px solid #f722b6;
+  font-size: 18px;
+  line-height: 20px;
+}
