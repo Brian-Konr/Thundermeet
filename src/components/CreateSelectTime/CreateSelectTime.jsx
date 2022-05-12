@@ -11,8 +11,8 @@ export default function CreateSelectTime({
   eventTypeIsSpecificDays, setEventTypeIsSpecificDays, eventPriority, setEventPriority,
   eventTimeRange, setEventTimeRange, eventDateRange, setEventDateRange,
 }) {
-  const typeOptions = [<Radio value>Specific Dates</Radio>,
-    <Radio value={false}>Days of the week</Radio>];
+  const typeOptions = [<Radio value key="specific">Specific Dates</Radio>,
+    <Radio value={false} key="daysOfTheWeek">Days of the week</Radio>];
 
   const onChangePriority = (e) => {
     console.log('Event Priority:', e);
@@ -61,11 +61,11 @@ export default function CreateSelectTime({
           <p className="header">Type</p>
           <Form.Item
             name="eventType"
+            initialValue
           >
             <Radio.Group
               onChange={onChange}
               value={eventTypeIsSpecificDays}
-              defaultValue
             >
               {typeOptions}
             </Radio.Group>
@@ -108,11 +108,11 @@ export default function CreateSelectTime({
         <p className="header">Type</p>
         <Form.Item
           name="eventType"
+          initialValue
         >
           <Radio.Group
             onChange={onChange}
             value={eventTypeIsSpecificDays}
-            defaultValue
           >
             {typeOptions}
           </Radio.Group>

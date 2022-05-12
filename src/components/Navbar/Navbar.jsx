@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   PlusOutlined, ProfileFilled, UserOutlined, UserSwitchOutlined,
 } from '@ant-design/icons';
@@ -12,6 +12,7 @@ import './Navbar.css';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const items = [
     {
@@ -29,9 +30,11 @@ export default function Navbar() {
   const userOnclick = (e) => {
     if (e.key === 'profile') navigate('/personal');
     else if (e.key === 'logout') {
+      console.log(location);
       // clear jwt token and back to home screen
       localStorage.removeItem('token');
-      navigate('/');
+      if (location.pathname === '/') window.location.reload();
+      else navigate('/');
     }
   };
 

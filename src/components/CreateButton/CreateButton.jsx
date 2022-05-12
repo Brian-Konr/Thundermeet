@@ -38,7 +38,7 @@ export default function CreateButton({
   };
 
   const goToEvent = () => {
-    navigate('/event_time');
+    navigate('/event-time');
   };
 
   return (
