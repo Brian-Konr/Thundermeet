@@ -19,8 +19,9 @@ import CalendarForImport from '../CalendarForImport/CalendarForImport';
 import './ImportButton.css';
 
 export default function ImportButton({
-  appleSchedule, googleSchedule, eventList, startTime, endTime, type, startDate, numOfDays,
+  appleSchedule, googleSchedule, eventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setEventConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm,
 }) {
+  const [eventChosen, setEventChosen] = useState(Object.keys(eventList)[0]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAppleVisible, setIsAppleVisible] = useState(false);
   const [isGoogleVisible, setIsGoogleVisible] = useState(false);
@@ -40,16 +41,19 @@ export default function ImportButton({
   const clickApple = () => {
     setIsModalVisible(false);
     setIsAppleVisible(true);
+    setAppleConnect(true);
   };
 
   const clickGoogle = () => {
     setIsModalVisible(false);
     setIsGoogleVisible(true);
+    setGoogleConnect(true);
   };
 
   const clickEvent = () => {
     setIsModalVisible(false);
     setIsEventVisible(true);
+    setEventConnect(true);
   };
 
   const changeEvent = (event) => {
@@ -59,6 +63,7 @@ export default function ImportButton({
     }
     colorList[event] = '#1F5A18';
     setTextColorList(colorList);
+    setEventChosen(event);
   };
 
   return (
@@ -112,6 +117,7 @@ export default function ImportButton({
         }}
         onOk={() => {
           setIsAppleVisible(false);
+          setAppleConfirm(true);
         }}
         width={600}
       >
@@ -125,6 +131,7 @@ export default function ImportButton({
         }}
         onOk={() => {
           setIsGoogleVisible(false);
+          setGoogleConfirm(true);
         }}
         width={600}
       >
@@ -138,6 +145,7 @@ export default function ImportButton({
         }}
         onOk={() => {
           setIsEventVisible(false);
+          setEventConfirm(eventChosen);
         }}
         width={700}
       >

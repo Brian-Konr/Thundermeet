@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 
 export default function Calendar({
-  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime,
+  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList,
 }) {
   const [format, setFormat] = useState('M/D');
   const [priority, setPriority] = useState(false);
@@ -86,6 +86,11 @@ export default function Calendar({
     console.log('priority:', priorityDay);
     // console.log('selected:', schedule);
   }, [normalDay, priorityDay]);
+
+  const arr = [];
+  useEffect(() => {
+    setTimeList(arr);
+  }, []);
 
   return (
     <div style={{
@@ -169,6 +174,7 @@ export default function Calendar({
           rowGap="0px"
           hourlyChunks={2}
           renderDateCell={(date, selected, refSetter) => {
+            arr.push(date);
             const filter = (element) => element.getTime() === date.getTime();
             return (
               (priorityDay.findIndex(filter) !== -1)

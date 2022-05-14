@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowRightOutlined,
@@ -75,10 +75,13 @@ export default function EventTimePage() {
     notAvailable: ['小陳', '小王', '小葉', '小郭'],
   };
   // params for import from apple calendar
-  const appleSchedule = [new Date(2022, 4, 5, 0, 0, 0), new Date(2022, 4, 5, 0, 30, 0)];
+  const [appleConnect, setAppleConnect] = useState(false); // set true when user click apple import, @郭 接完以後設成 false
+  const appleSchedule = [new Date(2022, 4, 2, 0, 0, 0), new Date(2022, 4, 2, 0, 30, 0)];
   // params for import from google calendar
+  const [googleConnect, setGoogleConnect] = useState(false); // set true when user click google import, @郭 接完以後設成 false
   const googleSchedule = [new Date(2022, 4, 5, 2, 0, 0), new Date(2022, 4, 5, 2, 30, 0)];
   // params for import from event
+  const [eventConnect, setEventConnect] = useState(false); // set true when user click event import, @郭 接完以後設成 false
   const eventList = {};
   eventList['SAD-1'] = [new Date(2022, 4, 4, 0, 0, 0), new Date(2022, 4, 4, 0, 30, 0)];
   eventList['SAD-2'] = [new Date(2022, 4, 8, 0, 0, 0), new Date(2022, 4, 8, 0, 30, 0)];
@@ -93,12 +96,68 @@ export default function EventTimePage() {
     navigate('/edit-event');
   };
 
+  const [appleConfirm, setAppleConfirm] = useState(false);
+  const [googleConfirm, setGoogleConfirm] = useState(false);
+  const [eventConfirm, setEventConfirm] = useState('');
+
+  const [timeList, setTimeList] = useState([]);
+  useEffect(() => {
+    if (appleConfirm) {
+      for (let i = 0; i < appleSchedule.length; i += 1) {
+        appleSchedule[i] = appleSchedule[i].getTime();
+      }
+      if (schedule.length === 0) {
+        setSchedule(timeList.filter((item) => !appleSchedule.includes(item.getTime())));
+        setPriorityDay(timeList.filter((item) => !appleSchedule.includes(item.getTime())));
+        setAppleConfirm(false);
+      } else {
+        setSchedule(schedule.filter((item) => !appleSchedule.includes(item.getTime())));
+        setPriorityDay(schedule.filter((item) => !appleSchedule.includes(item.getTime())));
+        setAppleConfirm(false);
+      }
+    }
+  }, [appleConfirm]);
+
+  useEffect(() => {
+    if (googleConfirm) {
+      for (let i = 0; i < googleSchedule.length; i += 1) {
+        googleSchedule[i] = googleSchedule[i].getTime();
+      }
+      if (schedule.length === 0) {
+        setSchedule(timeList.filter((item) => !googleSchedule.includes(item.getTime())));
+        setPriorityDay(timeList.filter((item) => !googleSchedule.includes(item.getTime())));
+        setGoogleConfirm(false);
+      } else {
+        setSchedule(schedule.filter((item) => !googleSchedule.includes(item.getTime())));
+        setPriorityDay(schedule.filter((item) => !googleSchedule.includes(item.getTime())));
+        setGoogleConfirm(false);
+      }
+    }
+  }, [googleConfirm]);
+
+  useEffect(() => {
+    if (eventConfirm.length !== 0) {
+      for (let i = 0; i < eventList[eventConfirm].length; i += 1) {
+        eventList[eventConfirm][i] = eventList[eventConfirm][i].getTime();
+      }
+      if (schedule.length === 0) {
+        setSchedule(timeList.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
+        setPriorityDay(timeList.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
+        setEventConfirm('');
+      } else {
+        setSchedule(schedule.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
+        setPriorityDay(schedule.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
+        setEventConfirm('');
+      }
+    }
+  }, [eventConfirm]);
+
   return (
     <>
       <Navbar />
       <div style={{ height: '92vh', background: '#F8F8F8' }}>
         <span style={{ marginLeft: '55%' }}>
-          <ImportButton appleSchedule={appleSchedule} googleSchedule={googleSchedule} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
+          <ImportButton appleSchedule={appleSchedule} googleSchedule={googleSchedule} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} />
           <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
           <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
         </span>
@@ -119,7 +178,7 @@ export default function EventTimePage() {
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
         </div>
         <div className="container">
-          <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} />
+          <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} />
           <CalendarForDisplay startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
           <Button
             style={{

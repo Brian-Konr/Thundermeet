@@ -62,7 +62,7 @@ export default function FinalTimePage() {
   // output for export
   const [exportToApple, setExportToApple] = useState(false); // when user chooses to export apple, turns true(export schedule)
   const [exportToGoogle, setExportToGoogle] = useState(false); // when user chooses to export google, turns true(export schedule)
-  const [exportToEvent, setExportToEvent] = useState(''); // when user chooses to export to event, turns event's name, set EventTimePage's exportTime
+  const [exportToEvent, setExportToEvent] = useState(''); // when user chooses to export to event, turns event's name, @ 郭 用 shedule 去 set EventTimePage's exportTime
 
   return (
     <>
