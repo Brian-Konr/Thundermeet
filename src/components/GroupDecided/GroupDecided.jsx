@@ -6,26 +6,30 @@ import {
 import './GroupDecided.css';
 
 export default function GroupDecided({
-  isEdit, decidedEvents, setDecidedEvents,
+  isEdit, decidedEvents, editDecidedEvents, setEditDecidedEvents,
 }) {
   function enterEvent(e) {
     console.log(`selected ${e.key}`);
   }
 
   function removeEvent(e) {
-    setDecidedEvents(decidedEvents.filter((event) => event.key !== e.key));
+    setEditDecidedEvents(editDecidedEvents.filter((event) => event.key !== e.key));
     console.log(`removed ${e.key}`);
   }
 
   function CustomEventGroup() {
-    return Object.values(decidedEvents).map((group) => <Card className="decided-card" type="primary" onClick={() => { enterEvent(group); }}>{group}</Card>);
+    return Object.values(decidedEvents).map((group) => (
+      <Card className="decided-card" type="primary" key={group.key} value={group.title} onClick={() => { enterEvent(group); }}>
+        {group.title}
+      </Card>
+    ));
   }
 
   function CustomEventGroupEdit() {
-    return Object.values(decidedEvents).map((group) => (
+    return Object.values(editDecidedEvents).map((group) => (
       <div>
-        <Card className="decided-card-edit" type="primary">
-          {group}
+        <Card className="decided-card-edit" type="primary" key={group.key} value={group.title}>
+          {group.title}
           <CloseOutlined role="button" className="remove" onClick={() => { removeEvent(group); }} />
         </Card>
       </div>

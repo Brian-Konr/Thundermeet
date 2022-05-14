@@ -6,26 +6,30 @@ import {
 import './GroupOngoing.css';
 
 export default function GroupOngoing({
-  isEdit, ongoingEvents, setOngoingEvents, setIsAddEvent,
+  isEdit, ongoingEvents, editOngoingEvents, setEditOngoingEvents, setIsAddEvent,
 }) {
   function enterEvent(e) {
     console.log(`selected ${e.key}`);
   }
 
   function removeEvent(e) {
-    setOngoingEvents(ongoingEvents.filter((event) => event.key !== e.key));
+    setEditOngoingEvents(editOngoingEvents.filter((event) => event.key !== e.key));
     console.log(`removed ${e.key}`);
   }
 
   function CustomEventGroup() {
-    return Object.values(ongoingEvents).map((group) => <Card className="ongoing-card" type="primary" onClick={() => { enterEvent(group); }}>{group}</Card>);
+    return Object.values(ongoingEvents).map((group) => (
+      <Card className="ongoing-card" type="primary" key={group.key} value={group.title} onClick={() => { enterEvent(group); }}>
+        {group.title}
+      </Card>
+    ));
   }
 
   function CustomEventGroupEdit() {
-    return Object.values(ongoingEvents).map((group) => (
+    return Object.values(editOngoingEvents).map((group) => (
       <div>
-        <Card className="ongoing-card-edit" type="primary">
-          {group}
+        <Card className="ongoing-card-edit" type="primary" key={group.key} value={group.title}>
+          {group.title}
           <CloseOutlined role="button" className="remove" onClick={() => { removeEvent(group); }} />
         </Card>
       </div>
