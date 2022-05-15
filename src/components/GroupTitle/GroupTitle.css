@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.group-title {
+  font-weight: bold;
+  font-size: 48px;
+  margin-bottom: -15px;
+}
+
+.group-name {
+  font-weight: bold;
+  font-size: 36px;
+  margin-bottom: -15px;
+}
+
+.ant-input.edit-title {
+  margin-top: 5px;
+  height: 30px;
+  font-size: 12px;
+  /* line-height: 20px; */
+}
