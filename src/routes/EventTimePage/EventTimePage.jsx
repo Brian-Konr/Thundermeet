@@ -27,7 +27,7 @@ export default function EventTimePage() {
   const eventDescription = '請大家算好交通時間';
   const startTime = 0; // start hour
   const endTime = 6; // end hour
-  const type = 'DATE'; // display type: DATE or DAYS
+  const type = 'DATE'; // display type: DATE or DAYS @ 郭 這裡就不需要接
   const startDate = new Date(2022, 4, 2); // start date(if weekday, weekday switch to the nearest date)
   const numOfDays = 7; // continue number of days(for both weekday & date)
   const copyLink = 'https://thundermeet.com/demolink123';
@@ -39,8 +39,9 @@ export default function EventTimePage() {
   const [priorityDay, setPriorityDay] = useState([]);
   // -----
   const [schedule, setSchedule] = useState([]);
-  // 這段比較特別：若要讓左邊拖曳記住狀態：setSchedule(normalDay+priorityDay) 並 setPriorityDay(priorityDay)，不需要setNormalDay
+  // 這段比較特別：若要讓左邊拖曳記住狀態：setSchedule(normalDay+priorityDay) ，setPriorityDay(priorityDay)，setNormalDay(normalDay)
   // 因為邏輯是 schedule 代表所有選取時間，priority 則是我加顏色上去的時間
+  // schedule(所選時間) = normal + priority
   // -----
   // output for add to category
   const [selectedGroup, setSelectedGroup] = useState(); // store selected group's name
@@ -76,16 +77,26 @@ export default function EventTimePage() {
   };
   // params for import from apple calendar
   const [appleConnect, setAppleConnect] = useState(false); // set true when user click apple import, @郭 接完以後設成 false
-  const appleSchedule = [new Date(2022, 4, 2, 0, 0, 0), new Date(2022, 4, 2, 0, 30, 0)];
+  // const appleSchedule = [new Date(2022, 4, 5, 2, 0, 0), new Date(2022, 4, 4, 1, 30, 0), new Date(2022, 4, 6, 1, 30, 0), new Date(2022, 4, 3, 2, 0, 0), new Date(2022, 4, 3, 2, 30, 0), new Date(2022, 4, 7, 2, 0, 0), new Date(2022, 4, 7, 2, 30, 0), new Date(2022, 4, 4, 3, 0, 0), new Date(2022, 4, 4, 3, 30, 0), new Date(2022, 4, 6, 3, 0, 0), new Date(2022, 4, 6, 3, 30, 0), new Date(2022, 4, 5, 4, 0, 0)]; // heart style
+  const appleSchedule = [new Date(2022, 4, 6, 1, 0, 0), new Date(2022, 4, 5, 1, 30, 0), new Date(2022, 4, 4, 2, 0, 0), new Date(2022, 4, 4, 2, 30, 0), new Date(2022, 4, 5, 2, 30, 0), new Date(2022, 4, 6, 2, 30, 0), new Date(2022, 4, 6, 3, 0, 0), new Date(2022, 4, 5, 3, 30, 0), new Date(2022, 4, 4, 4, 0, 0)];
   // params for import from google calendar
   const [googleConnect, setGoogleConnect] = useState(false); // set true when user click google import, @郭 接完以後設成 false
   const googleSchedule = [new Date(2022, 4, 5, 2, 0, 0), new Date(2022, 4, 5, 2, 30, 0)];
   // params for import from event
   const [eventConnect, setEventConnect] = useState(false); // set true when user click event import, @郭 接完以後設成 false
   const eventList = {};
-  eventList['SAD-1'] = [new Date(2022, 4, 4, 0, 0, 0), new Date(2022, 4, 4, 0, 30, 0)];
-  eventList['SAD-2'] = [new Date(2022, 4, 8, 0, 0, 0), new Date(2022, 4, 8, 0, 30, 0)];
-  eventList['SAD-3'] = [new Date(2022, 4, 5, 0, 0, 0), new Date(2022, 4, 5, 0, 30, 0)];
+  eventList['SAD-1'] = {
+    normal: [new Date(2022, 4, 4, 0, 0, 0), new Date(2022, 4, 4, 0, 30, 0)],
+    priority: [new Date(2022, 4, 4, 1, 0, 0), new Date(2022, 4, 4, 1, 30, 0)],
+  };
+  eventList['SAD-2'] = {
+    normal: [new Date(2022, 4, 8, 0, 0, 0), new Date(2022, 4, 8, 0, 30, 0)],
+    priority: [new Date(2022, 4, 8, 1, 0, 0), new Date(2022, 4, 8, 1, 30, 0)],
+  };
+  eventList['SAD-3'] = {
+    normal: [new Date(2022, 4, 5, 0, 0, 0), new Date(2022, 4, 5, 0, 30, 0)],
+    priority: [new Date(2022, 4, 5, 1, 0, 0), new Date(2022, 4, 5, 1, 30, 0)],
+  };
 
   const navigate = useNavigate();
   const confirmDate = () => {
@@ -100,55 +111,68 @@ export default function EventTimePage() {
   const [googleConfirm, setGoogleConfirm] = useState(false);
   const [eventConfirm, setEventConfirm] = useState('');
 
+  const [appleReverse, setAppleReverse] = useState([]);
+  const [googleReverse, setGoogleReverse] = useState([]);
+
   const [timeList, setTimeList] = useState([]);
+
+  useEffect(() => {
+    // @ 郭 接在這裡(用 setGoogleSchedule)
+    const arr = [];
+    for (let i = 0; i < googleSchedule.length; i += 1) {
+      arr[i] = googleSchedule[i].getTime();
+    }
+    if (googleConnect) {
+      setGoogleReverse(timeList.filter((item) => !arr.includes(item.getTime())));
+    }
+    // @ 郭 接完後 setGoogleConnect(false);
+  }, [googleConnect]);
+
+  useEffect(() => {
+    const arr = [];
+    for (let i = 0; i < appleSchedule.length; i += 1) {
+      arr[i] = appleSchedule[i].getTime();
+    }
+    if (appleConnect) {
+      setAppleReverse(timeList.filter((item) => !arr.includes(item.getTime())));
+    }
+    setAppleConnect(false);
+  }, [appleConnect]);
+
   useEffect(() => {
     if (appleConfirm) {
+      const arr = [];
       for (let i = 0; i < appleSchedule.length; i += 1) {
-        appleSchedule[i] = appleSchedule[i].getTime();
+        arr[i] = appleSchedule[i].getTime();
       }
-      if (schedule.length === 0) {
-        setSchedule(timeList.filter((item) => !appleSchedule.includes(item.getTime())));
-        setPriorityDay(timeList.filter((item) => !appleSchedule.includes(item.getTime())));
-        setAppleConfirm(false);
-      } else {
-        setSchedule(schedule.filter((item) => !appleSchedule.includes(item.getTime())));
-        setPriorityDay(schedule.filter((item) => !appleSchedule.includes(item.getTime())));
-        setAppleConfirm(false);
-      }
+      setSchedule(timeList.filter((item) => !arr.includes(item.getTime())));
+      if (enablePriority) setPriorityDay(timeList.filter((item) => !arr.includes(item.getTime())));
+      else setNormalDay(timeList.filter((item) => !arr.includes(item.getTime())));
+      setAppleConfirm(false);
     }
   }, [appleConfirm]);
 
   useEffect(() => {
     if (googleConfirm) {
+      const arr = [];
       for (let i = 0; i < googleSchedule.length; i += 1) {
-        googleSchedule[i] = googleSchedule[i].getTime();
+        arr[i] = googleSchedule[i].getTime();
       }
-      if (schedule.length === 0) {
-        setSchedule(timeList.filter((item) => !googleSchedule.includes(item.getTime())));
-        setPriorityDay(timeList.filter((item) => !googleSchedule.includes(item.getTime())));
-        setGoogleConfirm(false);
-      } else {
-        setSchedule(schedule.filter((item) => !googleSchedule.includes(item.getTime())));
-        setPriorityDay(schedule.filter((item) => !googleSchedule.includes(item.getTime())));
-        setGoogleConfirm(false);
-      }
+      setSchedule(timeList.filter((item) => !arr.includes(item.getTime())));
+      if (enablePriority) setPriorityDay(timeList.filter((item) => !arr.includes(item.getTime())));
+      else setNormalDay(timeList.filter((item) => !arr.includes(item.getTime())));
+      setGoogleConfirm(false);
     }
   }, [googleConfirm]);
 
   useEffect(() => {
     if (eventConfirm.length !== 0) {
-      for (let i = 0; i < eventList[eventConfirm].length; i += 1) {
-        eventList[eventConfirm][i] = eventList[eventConfirm][i].getTime();
-      }
-      if (schedule.length === 0) {
-        setSchedule(timeList.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
-        setPriorityDay(timeList.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
-        setEventConfirm('');
-      } else {
-        setSchedule(schedule.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
-        setPriorityDay(schedule.filter((item) => !eventList[eventConfirm].includes(item.getTime())));
-        setEventConfirm('');
-      }
+      setSchedule(eventList[eventConfirm].normal.concat(eventList[eventConfirm].priority));
+      if (enablePriority) {
+        setPriorityDay(eventList[eventConfirm].priority);
+        setNormalDay(eventList[eventConfirm].normal);
+      } else setNormalDay(eventList[eventConfirm].normal.concat(eventList[eventConfirm].priority));
+      setEventConfirm('');
     }
   }, [eventConfirm]);
 
@@ -157,7 +181,7 @@ export default function EventTimePage() {
       <Navbar />
       <div style={{ height: '92vh', background: '#F8F8F8' }}>
         <span style={{ marginLeft: '55%' }}>
-          <ImportButton appleSchedule={appleSchedule} googleSchedule={googleSchedule} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} />
+          <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />
           <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
           <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
         </span>

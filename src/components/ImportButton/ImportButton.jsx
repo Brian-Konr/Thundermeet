@@ -19,14 +19,15 @@ import CalendarForImport from '../CalendarForImport/CalendarForImport';
 import './ImportButton.css';
 
 export default function ImportButton({
-  appleSchedule, googleSchedule, eventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setEventConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm,
+  appleSchedule, googleSchedule, eventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setEventConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm, enablePriority,
 }) {
   const [eventChosen, setEventChosen] = useState(Object.keys(eventList)[0]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAppleVisible, setIsAppleVisible] = useState(false);
   const [isGoogleVisible, setIsGoogleVisible] = useState(false);
   const [isEventVisible, setIsEventVisible] = useState(false);
-  const [eventSchedule, setEventSchedule] = useState(eventList[Object.keys(eventList)[0]]);
+  const [eventScheduleNormal, setEventScheduleNormal] = useState(eventList[Object.keys(eventList)[0]].normal);
+  const [eventSchedulePriority, setEventSchedulePriority] = useState(eventList[Object.keys(eventList)[0]].priority);
   const colorList = {};
   colorList[Object.keys(eventList)[0]] = '#1F5A18';
   for (let i = 1; i < Object.keys(eventList).length; i += 1) {
@@ -57,7 +58,8 @@ export default function ImportButton({
   };
 
   const changeEvent = (event) => {
-    setEventSchedule(eventList[event]);
+    setEventScheduleNormal(eventList[event].normal);
+    setEventSchedulePriority(eventList[event].priority);
     for (let i = 0; i < Object.keys(eventList).length; i += 1) {
       colorList[Object.keys(eventList)[i]] = '#01A494';
     }
@@ -121,7 +123,10 @@ export default function ImportButton({
         }}
         width={600}
       >
-        <CalendarForImport schedule={appleSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
+        { enablePriority
+          ? <CalendarForImport schedulePriority={appleSchedule} scheduleNormal={[]} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
+          : <CalendarForImport scheduleNormal={appleSchedule} schedulePriority={[]} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />}
+        <p style={{ marginLeft: '400px' }}>coming soon...</p>
       </Modal>
       <Modal
         visible={isGoogleVisible}
@@ -135,7 +140,9 @@ export default function ImportButton({
         }}
         width={600}
       >
-        <CalendarForImport schedule={googleSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
+        { enablePriority
+          ? <CalendarForImport schedulePriority={googleSchedule} scheduleNormal={[]} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
+          : <CalendarForImport scheduleNormal={googleSchedule} schedulePriority={[]} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />}
       </Modal>
       <Modal
         visible={isEventVisible}
@@ -162,7 +169,7 @@ export default function ImportButton({
             border: '1px solid #EDEDED', height: '520px', width: '1px', marginTop: '33px',
           }}
           />
-          <CalendarForImport schedule={eventSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
+          <CalendarForImport scheduleNormal={eventScheduleNormal} schedulePriority={eventSchedulePriority} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
         </div>
       </Modal>
     </>

@@ -17,10 +17,13 @@ export default function Calendar({
     if (type === 'DAYS') {
       setFormat('ddd');
     }
+    if (enablePriority) {
+      setPriority(true);
+    }
   }, []);
 
   useEffect(() => {
-    setPriority(priorityDay.filter((item) => !exportTime.includes(item)));
+    setPriorityDay(priorityDay.filter((item) => !exportTime.includes(item)));
     setNormalDay(normalDay.filter((item) => !exportTime.includes(item)));
   }, [exportTime]);
 
@@ -149,11 +152,20 @@ export default function Calendar({
           </>
         )
         : (
-          <div
-            style={{
-              width: '40px', height: '40px', background: '#FFF', marginTop: '23vh', marginLeft: '2vw',
+          <>
+            <div
+              style={{
+                width: '40px', height: '40px', background: '#FFFADA', marginTop: '15vh', marginLeft: '2vw',
+              }}
+              onClick={clickNormal}
+            />
+            <div style={{
+              marginLeft: '1vw', marginTop: '1vh', width: '85px', paddingLeft: '9px',
             }}
-          />
+            >
+              Available
+            </div>
+          </>
 
         )}
 

@@ -12,7 +12,7 @@ import ScheduleSelector from 'react-schedule-selector';
 import './CalendarForImport.css';
 
 export default function CalendarForImport({
-  schedule, startTime, endTime, type, startDate, numOfDays,
+  scheduleNormal, schedulePriority, startTime, endTime, type, startDate, numOfDays,
 }) {
   const [format, setFormat] = useState('M/D');
 
@@ -32,7 +32,7 @@ export default function CalendarForImport({
       }}
       >
         <ScheduleSelector
-          selection={schedule}
+          // selection={schedule}
           numDays={numOfDays}
           minTime={startTime}
           maxTime={endTime}
@@ -48,7 +48,7 @@ export default function CalendarForImport({
               <div
                 className="time-block-import"
                 ref={refSetter}
-                style={schedule.findIndex(target) !== -1 ? { background: '#FEDD02' } : { background: '#FFF' }}
+                style={schedulePriority.findIndex(target) !== -1 ? { background: '#FEDD02' } : scheduleNormal.findIndex(target) !== -1 ? { background: '#FFFADA' } : { background: '#FFF' }}
               />
             );
           }}
