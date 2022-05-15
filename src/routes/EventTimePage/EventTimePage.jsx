@@ -2,13 +2,13 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowRightOutlined,
 } from '@ant-design/icons';
 import { Icon } from '@iconify/react';
 import {
-  Button, Tag,
+  Button, Spin, Tag,
 } from 'antd';
 
 import Calendar from '../../components/Calendar/Calendar';
@@ -17,22 +17,28 @@ import EventAddToGroup from '../../components/EventAddToGroup/EventAddToGroup';
 import EventCopyLink from '../../components/EventCopyLink/EventCopyLink';
 import ImportButton from '../../components/ImportButton/ImportButton';
 import Navbar from '../../components/Navbar/Navbar';
+import getEvent from '../../utils/getEvent';
+import getNumberOfDays from '../../utils/getNumberOfDays';
 
 import './EventTimePage.css';
 
 export default function EventTimePage() {
+  const { eventID } = useParams();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   // params
-  const eventTitle = '專題會議';
-  const tagList = ['SAD', 'milestone2'];
-  const eventDescription = '請大家算好交通時間';
-  const startTime = 0; // start hour
-  const endTime = 6; // end hour
+  const [adminID, setAdminID] = useState('');
+  const [eventTitle, setEventTitle] = useState('Title');
+  const tagList = ['SAD', 'milestone2']; // 這個可能要想一下怎麼拿 因為 GET event 不會回傳這個 event 屬於這個人的哪些 group
+  const [eventDescription, setEventDescription] = useState('description');
+  const [startTime, setStartTime] = useState(0); // start hour
+  const [endTime, setEndTime] = useState(6); // end hour
   const type = 'DATE'; // display type: DATE or DAYS @ 郭 這裡就不需要接
-  const startDate = new Date(2022, 4, 2); // start date(if weekday, weekday switch to the nearest date)
-  const numOfDays = 7; // continue number of days(for both weekday & date)
-  const copyLink = 'https://thundermeet.com/demolink123';
+  const [startDate, setStartDate] = useState(new Date(2022, 4, 2));
+  const [numOfDays, setNumOfDays] = useState(7); // continue number of days(for both weekday & date)
+  const [copyLink, setCopyLink] = useState('');
   // params for left
-  const enablePriority = true; // creator enable priority or not
+  const [enablePriority, setEnablePriority] = useState(true); // creator enable priority or not
   const [exportTime, setExportTime] = useState([new Date(2022, 4, 3, 0, 0, 0), new Date(2022, 4, 3, 0, 30, 0)]); // when user export other event's specific time here
   // output for left(2 arrays & user_id)
   const [normalDay, setNormalDay] = useState([]);
@@ -98,7 +104,25 @@ export default function EventTimePage() {
     priority: [new Date(2022, 4, 5, 1, 0, 0), new Date(2022, 4, 5, 1, 30, 0)],
   };
 
-  const navigate = useNavigate();
+  // when loading into this page, 接此 event 的基本資訊
+  useEffect(() => {
+    (async () => {
+      const { data } = await getEvent(eventID);
+      setLoading(false);
+      console.log(data);
+      setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
+      setStartDate(new Date(data.start_date));
+      // setEventDescription();
+      setStartTime(Number(data.start_time.substring(0, 2)));
+      setEndTime(Number(data.end_time.substring(0, 2)));
+      setEventDescription(data.event_description);
+      setEventTitle(data.event_name);
+      setCopyLink(`Please fill in avaliable time for ${eventTitle} in the follwing link! http://localhost:3000/edit-event/${eventID}`);
+      setEnablePriority(data.is_priority_enabled);
+      setAdminID(data.admin_id);
+    })();
+  }, []);
+
   const confirmDate = () => {
     navigate('/confirm-time');
   };
@@ -179,42 +203,48 @@ export default function EventTimePage() {
   return (
     <>
       <Navbar />
-      <div style={{ height: '92vh', background: '#F8F8F8' }}>
-        <span style={{ marginLeft: '55%' }}>
-          <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />
-          <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
-          <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
-        </span>
-        <div style={{ width: '92%', marginLeft: '4%' }}>
-          <span>
-            <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
-            <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '85%' }} onClick={editButton} />
+      {/* Spin 要放到螢幕的正中間 */}
+      {loading ? <Spin className="spin" /> : (
+        <div style={{ height: '92vh', background: '#F8F8F8' }}>
+          <span style={{ marginLeft: '55%' }}>
+            <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />
+            <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
+            <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
           </span>
-          <div style={{
-            background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
-          }}
-          />
-          <span>
-            {tagList.map((tag) => (
-              <Tag color="green">{tag}</Tag>
-            ))}
-          </span>
-          <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
-        </div>
-        <div className="container">
-          <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} />
-          <CalendarForDisplay startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
-          <Button
-            style={{
-              marginTop: '510px', marginLeft: '-30px', background: '#01A494', color: 'white',
+          <div style={{ width: '92%', marginLeft: '4%' }}>
+            <span>
+              <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
+              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '85%' }} onClick={editButton} />
+            </span>
+            <div style={{
+              background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
             }}
-            icon={<ArrowRightOutlined />}
-            onClick={confirmDate}
-          >
-            Confirm Date
-          </Button>
+            />
+            <span>
+              {tagList.map((tag) => (
+                <Tag color="green">{tag}</Tag>
+              ))}
+            </span>
+            <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
+          </div>
+          <div className="container">
+            <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} />
+            <CalendarForDisplay startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+            {adminID === localStorage.getItem('userID')
+              && (
+              <Button
+                style={{
+                  marginTop: '510px', marginLeft: '-30px', background: '#01A494', color: 'white',
+                }}
+                icon={<ArrowRightOutlined />}
+                onClick={confirmDate}
+              >
+                Confirm Date
+              </Button>
+              )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

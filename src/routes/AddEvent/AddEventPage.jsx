@@ -65,7 +65,6 @@ export default function AddEventPage() {
             eventName={eventName}
             eventDescription={eventDescription}
             eventPriority={eventPriority}
-            eventTypeIsSpecificDays={eventTypeIsSpecificDays}
             eventDateRange={eventDateRange}
             startTime={startTime}
             endTime={endTime}

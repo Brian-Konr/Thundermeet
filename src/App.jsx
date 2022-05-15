@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route exact path="/personal" element={<PersonalPage />} />
         <Route exact path="/connect-test" element={<Connect />} />
-        <Route exact path="/event-time" element={<EventTimePage />} />
+        <Route exact path="/event-time/:eventID" element={<EventTimePage />} />
         <Route exact path="/confirm-time" element={<ConfirmTimePage />} />
         <Route exact path="/final-time" element={<FinalTimePage />} />
         <Route exact path="/add-event" element={<AddEventPage />} />

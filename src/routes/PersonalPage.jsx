@@ -5,6 +5,7 @@ import BasicInfo from '../components/BasicInfo/BasicInfo';
 import MyGroups from '../components/MyGroups/MyGroups';
 import Navbar from '../components/Navbar/Navbar';
 import getInfo from '../utils/getInfo';
+import getMyEvents from '../utils/getMyEvents';
 
 export default function PersonalPage() {
   const [passwordAnswer, setPasswordAnswer] = useState('');
@@ -19,6 +20,8 @@ export default function PersonalPage() {
         setUserID(res.data.user_id);
         setUserName(res.data.username);
       }
+      const myEvents = await getMyEvents();
+      console.log(myEvents);
     })();
   }, []);
 
