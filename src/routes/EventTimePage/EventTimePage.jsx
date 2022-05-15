@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { Icon } from '@iconify/react';
 import {
-  Button, Spin, Tag,
+  Button, message, Spin, Tag,
 } from 'antd';
 
 import Calendar from '../../components/Calendar/Calendar';
@@ -17,6 +17,7 @@ import EventAddToGroup from '../../components/EventAddToGroup/EventAddToGroup';
 import EventCopyLink from '../../components/EventCopyLink/EventCopyLink';
 import ImportButton from '../../components/ImportButton/ImportButton';
 import Navbar from '../../components/Navbar/Navbar';
+import fillTimeBlocks from '../../utils/fillTimeBlocks';
 import getEvent from '../../utils/getEvent';
 import getNumberOfDays from '../../utils/getNumberOfDays';
 
@@ -112,7 +113,6 @@ export default function EventTimePage() {
       console.log(data);
       setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
       setStartDate(new Date(data.start_date));
-      // setEventDescription();
       setStartTime(Number(data.start_time.substring(0, 2)));
       setEndTime(Number(data.end_time.substring(0, 2)));
       setEventDescription(data.event_description);
@@ -120,8 +120,23 @@ export default function EventTimePage() {
       setCopyLink(`Please fill in avaliable time for ${eventTitle} in the follwing link! http://localhost:3000/edit-event/${eventID}`);
       setEnablePriority(data.is_priority_enabled);
       setAdminID(data.admin_id);
+      // 要 set 左邊最近一次的填寫狀況 (maybe call preview?)
     })();
   }, []);
+
+  // POST when user fills timeblocks
+  useEffect(() => {
+    if (normalDay.length > 0 || priorityDay.length > 0) {
+      (async () => {
+        const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
+        if (res.status === 'success') message.success('已成功更新填寫狀況！', 1.2);
+        else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
+      })();
+    }
+    console.log('normal:', normalDay);
+    console.log('priority:', priorityDay);
+    // console.log('selected:', schedule);
+  }, [normalDay, priorityDay]);
 
   const confirmDate = () => {
     navigate('/confirm-time');

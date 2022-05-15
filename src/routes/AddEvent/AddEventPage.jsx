@@ -45,7 +45,7 @@ export default function AddEventPage() {
         >
           <CreateTitleDescription
             setEventName={setEventName}
-            setEventDescirption={setEventDescirption}
+            setEventDescription={setEventDescirption}
           />
           <CreateSelectTime
             eventTypeIsSpecificDays={eventTypeIsSpecificDays}

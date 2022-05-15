@@ -84,11 +84,11 @@ export default function Calendar({
     setPriority(false);
   };
 
-  useEffect(() => {
-    console.log('normal:', normalDay);
-    console.log('priority:', priorityDay);
-    // console.log('selected:', schedule);
-  }, [normalDay, priorityDay]);
+  // useEffect(() => {
+  //   console.log('normal:', normalDay);
+  //   console.log('priority:', priorityDay);
+  //   // console.log('selected:', schedule);
+  // }, [normalDay, priorityDay]);
 
   const arr = [];
   useEffect(() => {
