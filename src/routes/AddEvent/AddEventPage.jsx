@@ -13,8 +13,11 @@ export default function AddEventPage() {
   const [eventDescription, setEventDescirption] = useState('');
   const [eventTypeIsSpecificDays, setEventTypeIsSpecificDays] = useState(true);
   const [eventPriority, setEventPriority] = useState(false);
-  const [eventTimeRange, setEventTimeRange] = useState([]);
   const [eventDateRange, setEventDateRange] = useState([]);
+
+  // store startTime and endTime
+  const [startTime, setStartTime] = useState('10');
+  const [endTime, setEndTime] = useState('22');
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
@@ -49,10 +52,10 @@ export default function AddEventPage() {
             setEventTypeIsSpecificDays={setEventTypeIsSpecificDays}
             eventPriority={eventPriority}
             setEventPriority={setEventPriority}
-            eventTimeRange={eventTimeRange}
-            setEventTimeRange={setEventTimeRange}
             eventDateRange={eventDateRange}
             setEventDateRange={setEventDateRange}
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
           />
         </div>
         <br />
@@ -63,8 +66,9 @@ export default function AddEventPage() {
             eventDescription={eventDescription}
             eventPriority={eventPriority}
             eventTypeIsSpecificDays={eventTypeIsSpecificDays}
-            eventTimeRange={eventTimeRange}
             eventDateRange={eventDateRange}
+            startTime={startTime}
+            endTime={endTime}
           />
         </div>
       </div>

@@ -1,15 +1,20 @@
 import {
-  DatePicker, Form, Radio, Switch, TimePicker,
+  DatePicker, Form, Radio, Select, Switch,
 } from 'antd';
-import ButtonGroup from 'antd/lib/button/button-group';
 
 import './CreateSelectTime.css';
 
 const { RangePicker } = DatePicker;
+const { Option } = Select;
+
+const periodOptions = Array.from(Array(25).keys()).map((ele) => {
+  if (ele < 10) return `0${ele}`;
+  return ele.toString();
+});
 
 export default function CreateSelectTime({
   eventTypeIsSpecificDays, setEventTypeIsSpecificDays, eventPriority, setEventPriority,
-  eventTimeRange, setEventTimeRange, eventDateRange, setEventDateRange,
+  eventDateRange, setEventDateRange, setStartTime, setEndTime,
 }) {
   const typeOptions = [<Radio value key="specific">Specific Dates</Radio>,
     <Radio value={false} key="daysOfTheWeek">Days of the week</Radio>];
@@ -23,89 +28,33 @@ export default function CreateSelectTime({
     console.log('Event Type is Specific Date:', e.target.value);
     setEventTypeIsSpecificDays(e.target.value);
   };
-
-  const onChangeTime = (value, dateString) => {
-    // console.log('Selected Date Range1:', value);
-    console.log('Selected Time Range:', dateString);
-    setEventTimeRange(dateString);
-  };
-
   const onChangeDate = (value, dateString) => {
     // console.log('Selected Date Range1:', value);
     console.log('Selected Date Range:', dateString);
     setEventDateRange(dateString);
   };
 
-  if (eventTypeIsSpecificDays === true) {
-    return (
-      <Form>
-        <div className="all">
-          <p className="header">Time Period</p>
-          <Form.Item
-            name="timePeriod"
-            rules={[
-              {
-                required: true,
-                message: 'Please select time period!',
-              },
-            ]}
-          >
-            <TimePicker.RangePicker format="HH:00" style={{ width: '385px' }} defaultPickerValue={eventTimeRange} onChange={onChangeTime} />
-          </Form.Item>
-          <p className="header">Priority</p>
-          <Form.Item
-            name="enablePriority"
-          >
-            <Switch className="priority" checkedChildren="Enabled" defaultChecked={eventPriority} onChange={onChangePriority} />
-          </Form.Item>
-          <p className="header">Type</p>
-          <Form.Item
-            name="eventType"
-            initialValue
-          >
-            <Radio.Group
-              onChange={onChange}
-              value={eventTypeIsSpecificDays}
-            >
-              {typeOptions}
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item
-            rules={[
-              {
-                required: true,
-                message: 'Please select event date range!',
-              },
-            ]}
-          >
-            <RangePicker style={{ width: '385px' }} defaultPickerValue={eventDateRange} onChange={onChangeDate} />
-          </Form.Item>
-        </div>
-      </Form>
-    );
-  }
   return (
     <Form>
       <div className="all">
         <p className="header">Time Period</p>
-        <Form.Item
-          name="timePeriod"
-          rules={[
-            {
-              required: true,
-              message: 'Please select time period!',
-            },
-          ]}
-        >
-          <TimePicker.RangePicker format="HH:00" style={{ width: '385px' }} onChange={onChangeTime} />
+        {/* 5/15 15:53 下面是新改的 select time period 的 div，再麻煩 @王亭勻 修一下這邊的 css */}
+        <Form.Item>
+          <div>
+            <p>Start from ...</p>
+            <Select defaultValue="10" onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+            <p>No later than ...</p>
+            <Select defaultValue="22" onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+          </div>
         </Form.Item>
         <p className="header">Priority</p>
         <Form.Item
           name="enablePriority"
         >
-          <Switch className="priority" checkedChildren="Enabled" defaultChecked={eventPriority} onChange={onChangePriority} />
+          <Switch className="priority" checked={eventPriority} checkedChildren="Enabled" defaultChecked={eventPriority} onChange={onChangePriority} />
         </Form.Item>
         <p className="header">Type</p>
+        {/* 5/15 15:53 因為沒有要做 weekday 的功能，所以也麻煩 @王亭勻 把有關 weekday 判斷、render 的東西刪一刪～ */}
         <Form.Item
           name="eventType"
           initialValue
@@ -121,19 +70,11 @@ export default function CreateSelectTime({
           rules={[
             {
               required: true,
-              message: 'Please select at least one day!',
+              message: 'Please select event date range!',
             },
           ]}
         >
-          <ButtonGroup>
-            <button className="day" type="button">Sun</button>
-            <button className="day" type="button">Mon</button>
-            <button className="day" type="button">Tue</button>
-            <button className="day" type="button">Wed</button>
-            <button className="day" type="button">Thu</button>
-            <button className="day" type="button">Fri</button>
-            <button className="day" type="button">Sat</button>
-          </ButtonGroup>
+          <RangePicker style={{ width: '385px' }} defaultPickerValue={eventDateRange} onChange={onChangeDate} />
         </Form.Item>
       </div>
     </Form>
