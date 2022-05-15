@@ -1,6 +1,6 @@
 .box {
   text-align: center;
-  background-color: white;
+  background-color: #F8F8F8;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +12,7 @@
   background-color: #56c7bc;
   width: 93px;
   height: 93px;
-  padding-top: 16px;
+  margin-top: 54px;
 }
 
 .user-name {

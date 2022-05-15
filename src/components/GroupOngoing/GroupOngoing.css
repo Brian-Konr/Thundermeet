@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .ant-card.ongoing-card {
@@ -30,6 +30,7 @@
   width: 306px;
   height: 108px;
   margin-bottom: 25px;
+  margin-right: 44px;
   border-radius: 10px;
   border-color: transparent;
   background-color: #fffada;
@@ -47,6 +48,7 @@
   width: 306px;
   height: 108px;
   margin-bottom: 25px;
+  margin-right: 44px;
   border-radius: 10px;
   border-color: transparent;
   background-color: #fffada;

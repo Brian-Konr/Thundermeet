@@ -12,55 +12,84 @@ export default function GroupPage() {
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEvent, setIsAddEvent] = useState(false);
   const [groupTitle, setGroupTitle] = useState('SAD');
-  const [ongoingEvents, setOngoingEvents] = useState([<p key="1" className="ongoing">SAD1</p>, <p key="2" className="ongoing">SAD2</p>, <p key="3" className="ongoing">SAD3</p>]);
-  const [decidedEvents, setDecidedEvents] = useState([<p key="4" className="decided">Milestone1</p>, <p key="5" className="decided">Milestone2</p>]);
-  const allEvents = [[<p key="1" className="ongoing">SAD1</p>, <p key="2" className="ongoing">SAD2</p>, <p key="3" className="ongoing">SAD3</p>,
-    <p key="4" className="decided">Milestone1</p>, <p key="5" className="decided">Milestone2</p>,
-  ]];
+  const [editTitle, setEditTitle] = useState(groupTitle);
+  const [ongoingEvents, setOngoingEvents] = useState([{ title: 'SAD1', key: 1 }, { title: 'SAD2', key: 2 }, { title: 'SAD3', key: 3 }]);
+  const [editOngoingEvents, setEditOngoingEvents] = useState(ongoingEvents);
+  const [decidedEvents, setDecidedEvents] = useState([{ title: 'Milestone1', key: 6 }, { title: 'Milestone2', key: 7 }]);
+  const [editDecidedEvents, setEditDecidedEvents] = useState(decidedEvents);
+  const allEvents = [
+    { title: 'SAD1', key: 1 },
+    { title: 'SAD2', key: 2 },
+    { title: 'SAD3', key: 3 },
+    { title: 'SAD hi', key: 4 },
+    { title: 'SAD hello', key: 5 },
+    { title: 'Milestone1', key: 6 },
+    { title: 'Milestone2', key: 7 },
+    { title: 'Interview', key: 8 },
+    { title: 'Bug Discussion', key: 9 },
+    { title: 'Lunch', key: 10 },
+  ];
 
   return (
     <div>
       <Navbar />
-      <div style={{ margin: '38px' }}>
-        <div style={{ textAlign: 'right' }}>
-          <EditGroup
-            isEdit={isEdit}
-            setIsEdit={setIsEdit}
-          />
-        </div>
-        <AddEventToGroup
-          isAddEvent={isAddEvent}
-          setIsAddEvent={setIsAddEvent}
-          ongoingEvents={ongoingEvents}
-          setOngoingEvents={setOngoingEvents}
-          decidedEvents={decidedEvents}
-          setDecidedEvents={setDecidedEvents}
-          allEvents={allEvents}
-        />
+      <div style={{ background: '#F8F8F8', height: '92vh' }}>
         <div style={{
-          display: 'flex', flexDirection: 'column', paddingBottom: '16px', marginTop: '-10px',
+          marginLeft: '38px', marginRight: '38px', marginBottom: '38px', paddingTop: '38px',
         }}
         >
-          <GroupTitle
-            isEdit={isEdit}
-            groupTitle={groupTitle}
-            setGroupTitle={setGroupTitle}
-          />
-          <br />
-          <GroupOngoing
-            isEdit={isEdit}
-            ongoingEvents={ongoingEvents}
-            setOngoingEvents={setOngoingEvents}
+          <div style={{ textAlign: 'right' }}>
+            <EditGroup
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+              editTitle={editTitle}
+              setGroupTitle={setGroupTitle}
+              ongoingEvents={ongoingEvents}
+              editOngoingEvents={editOngoingEvents}
+              setOngoingEvents={setOngoingEvents}
+              setEditOngoingEvents={setEditOngoingEvents}
+              decidedEvents={decidedEvents}
+              editDecidedEvents={editDecidedEvents}
+              setDecidedEvents={setDecidedEvents}
+              setEditDecidedEvents={setEditDecidedEvents}
+            />
+          </div>
+          <AddEventToGroup
+            isAddEvent={isAddEvent}
             setIsAddEvent={setIsAddEvent}
+            editOngoingEvents={editOngoingEvents}
+            setEditOngoingEvents={setEditOngoingEvents}
+            editDecidedEvents={editDecidedEvents}
+            setEditDecidedEvents={setEditDecidedEvents}
+            allEvents={allEvents}
           />
-          <GroupDecided
-            isEdit={isEdit}
-            decidedEvents={decidedEvents}
-            setDecidedEvents={setDecidedEvents}
-          />
-          <DeleteGroup
-            isEdit={isEdit}
-          />
+          <div style={{
+            display: 'flex', flexDirection: 'column', paddingBottom: '16px', marginTop: '-10px',
+          }}
+          >
+            <GroupTitle
+              isEdit={isEdit}
+              groupTitle={groupTitle}
+              setEditTitle={setEditTitle}
+            />
+            <br />
+            <GroupOngoing
+              isEdit={isEdit}
+              ongoingEvents={ongoingEvents}
+              editOngoingEvents={editOngoingEvents}
+              setEditOngoingEvents={setEditOngoingEvents}
+              setIsAddEvent={setIsAddEvent}
+            />
+            <GroupDecided
+              isEdit={isEdit}
+              decidedEvents={decidedEvents}
+              editDecidedEvents={editDecidedEvents}
+              setEditDecidedEvents={setEditDecidedEvents}
+            />
+            <DeleteGroup
+              isEdit={isEdit}
+            />
+          </div>
         </div>
       </div>
     </div>
