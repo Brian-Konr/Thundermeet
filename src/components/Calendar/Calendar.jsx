@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 
 export default function Calendar({
-  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList,
+  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList, setClick,
 }) {
   const [format, setFormat] = useState('M/D');
   const [priority, setPriority] = useState(false);
@@ -169,9 +169,11 @@ export default function Calendar({
 
         )}
 
-      <div style={{
-        width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '7vw',
-      }}
+      <div
+        style={{
+          width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '7vw',
+        }}
+        onMouseDown={() => { setClick(true); }}
       >
         <ScheduleSelector
           selection={schedule}

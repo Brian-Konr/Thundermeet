@@ -42,6 +42,7 @@ export default function EventTimePage() {
   const [enablePriority, setEnablePriority] = useState(true); // creator enable priority or not
   const [exportTime, setExportTime] = useState([new Date(2022, 4, 3, 0, 0, 0), new Date(2022, 4, 3, 0, 30, 0)]); // when user export other event's specific time here
   // output for left(2 arrays & user_id)
+  const [click, setClick] = useState(false);
   const [normalDay, setNormalDay] = useState([]);
   const [priorityDay, setPriorityDay] = useState([]);
   // -----
@@ -243,7 +244,7 @@ export default function EventTimePage() {
             <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
           </div>
           <div className="container">
-            <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} />
+            <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} setClick={setClick} />
             <CalendarForDisplay startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
             {adminID === localStorage.getItem('userID')
               && (
