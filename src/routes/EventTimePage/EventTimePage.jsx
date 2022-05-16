@@ -34,7 +34,6 @@ export default function EventTimePage() {
   const [eventDescription, setEventDescription] = useState('description');
   const [startTime, setStartTime] = useState(0); // start hour
   const [endTime, setEndTime] = useState(6); // end hour
-  const type = 'DATE'; // display type: DATE or DAYS @ 郭 這裡就不需要接
   const [startDate, setStartDate] = useState(new Date(2022, 4, 2));
   const [numOfDays, setNumOfDays] = useState(7); // continue number of days(for both weekday & date)
   const [copyLink, setCopyLink] = useState('');
@@ -219,11 +218,10 @@ export default function EventTimePage() {
   return (
     <>
       <Navbar />
-      {/* Spin 要放到螢幕的正中間 */}
-      {loading ? <Spin className="spin" /> : (
+      {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh' }} /> : (
         <div style={{ height: '92vh', background: '#F8F8F8' }}>
           <span style={{ marginLeft: '55%' }}>
-            <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />
+            <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />
             <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
             <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
           </span>
@@ -244,8 +242,8 @@ export default function EventTimePage() {
             <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
           </div>
           <div className="container">
-            <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} setClick={setClick} />
-            <CalendarForDisplay startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+            <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} setClick={setClick} />
+            <CalendarForDisplay startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
             {adminID === localStorage.getItem('userID')
               && (
               <Button

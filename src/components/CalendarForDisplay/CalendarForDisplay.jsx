@@ -8,25 +8,19 @@
 import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import { Switch } from 'antd';
+import { format } from 'date-fns';
 
 import './CalendarForDisplay.css';
 
 export default function CalendarForDisplay({
-  startTime, endTime, type, startDate, numOfDays, memberList, selectedList,
+  startTime, endTime, startDate, numOfDays, memberList, selectedList,
 }) {
-  const [format, setFormat] = useState('M/D');
   const [removeList, setRemoveList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [style, setStyle] = useState({ display: 'flex' });
   const [styleBlock, setStyleBlock] = useState({ display: 'none' });
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
   const [switchPriority, setSwitchPriority] = useState(true);
-
-  useEffect(() => {
-    if (type === 'DAYS') {
-      setFormat('ddd');
-    }
-  }, []);
 
   useEffect(() => {
     setColorList([]);
@@ -100,11 +94,25 @@ export default function CalendarForDisplay({
           minTime={startTime}
           maxTime={endTime}
           startDate={startDate}
-          dateFormat={format}
+          dateFormat="M/D"
           timeFormat="H:mm"
           columnGap="0px"
           rowGap="0px"
           hourlyChunks={2}
+          renderDateLabel={(date) => (
+            (numOfDays < 11)
+              ? (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px' }}>{format(date, 'M/d')}</div>
+                  <div style={{ fontSize: '10px' }}>{format(date, 'E')}</div>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div style={{ fontSize: '5px' }}>{format(date, 'd')}</div>
+                  <div style={{ fontSize: '5px' }}>{format(date, 'E')}</div>
+                </div>
+              )
+          )}
           renderDateCell={(date, selected, refSetter) => {
             const target = (element) => element.toString() === date.toString();
             let size;

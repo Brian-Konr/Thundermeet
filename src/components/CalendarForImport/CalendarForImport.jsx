@@ -6,22 +6,14 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
+import { format } from 'date-fns';
 
 import './CalendarForImport.css';
 
 export default function CalendarForImport({
-  scheduleNormal, schedulePriority, startTime, endTime, type, startDate, numOfDays,
+  scheduleNormal, schedulePriority, startTime, endTime, startDate, numOfDays,
 }) {
-  const [format, setFormat] = useState('M/D');
-
-  useEffect(() => {
-    if (type === 'DAYS') {
-      setFormat('ddd');
-    }
-  }, []);
-
   return (
     <div style={{
       width: '580px', height: '520px', marginLeft: '80px', marginTop: '30px',
@@ -37,11 +29,25 @@ export default function CalendarForImport({
           minTime={startTime}
           maxTime={endTime}
           startDate={startDate}
-          dateFormat={format}
+          dateFormat="M/D"
           timeFormat="H:mm"
           columnGap="0px"
           rowGap="0px"
           hourlyChunks={2}
+          renderDateLabel={(date) => (
+            (numOfDays < 11)
+              ? (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px' }}>{format(date, 'M/d')}</div>
+                  <div style={{ fontSize: '10px' }}>{format(date, 'E')}</div>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div style={{ fontSize: '5px' }}>{format(date, 'd')}</div>
+                  <div style={{ fontSize: '5px' }}>{format(date, 'E')}</div>
+                </div>
+              )
+          )}
           renderDateCell={(date, selected, refSetter) => {
             const target = (element) => element.toString() === date.toString();
             return (

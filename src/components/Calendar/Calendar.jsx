@@ -6,17 +6,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
+import { format } from 'date-fns';
 
 export default function Calendar({
-  schedule, setSchedule, startTime, endTime, type, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList, setClick,
+  schedule, setSchedule, startTime, endTime, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList, setClick,
 }) {
-  const [format, setFormat] = useState('M/D');
   const [priority, setPriority] = useState(false);
 
   useEffect(() => {
-    if (type === 'DAYS') {
-      setFormat('ddd');
-    }
     if (enablePriority) {
       setPriority(true);
     }
@@ -181,12 +178,26 @@ export default function Calendar({
           minTime={startTime}
           maxTime={endTime}
           startDate={startDate}
-          dateFormat={format}
+          dateFormat="M/D"
           timeFormat="H:mm"
           onChange={handleChange}
           columnGap="0px"
           rowGap="0px"
           hourlyChunks={2}
+          renderDateLabel={(date) => (
+            (numOfDays < 11)
+              ? (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div style={{ fontSize: '10px' }}>{format(date, 'M/d')}</div>
+                  <div style={{ fontSize: '10px' }}>{format(date, 'E')}</div>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div style={{ fontSize: '5px' }}>{format(date, 'd')}</div>
+                  <div style={{ fontSize: '5px' }}>{format(date, 'E')}</div>
+                </div>
+              )
+          )}
           renderDateCell={(date, selected, refSetter) => {
             arr.push(date);
             const filter = (element) => element.getTime() === date.getTime();

@@ -23,7 +23,6 @@ export default function ConfirmTimePage() {
   const eventDescription = '請大家算好交通時間';
   const startTime = 0; // start hour
   const endTime = 6; // end hour
-  const type = 'DATE'; // display type: DATE or DAYS
   const startDate = new Date(2022, 4, 2); // start date(if weekday, weekday switch to the nearest date)
   const numOfDays = 7; // continue number of days(for both weekday & date)
   const copyLink = 'https://thundermeet.com/demolink123';
@@ -99,7 +98,7 @@ export default function ConfirmTimePage() {
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
         </div>
         <div className="container-confirm">
-          <CalendarForConfirm schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+          <CalendarForConfirm schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
           <Button
             style={{
               marginTop: '510px', marginLeft: '210px',

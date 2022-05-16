@@ -22,7 +22,6 @@ export default function FinalTimePage() {
   const eventDescription = '請大家算好交通時間';
   const startTime = 0; // start hour
   const endTime = 6; // end hour
-  const type = 'DATE'; // display type: DATE or DAYS
   const startDate = new Date(2022, 4, 2); // start date(if weekday, weekday switch to the nearest date)
   const numOfDays = 7; // continue number of days(for both weekday & date)
   const memberList = ['小陳', '小王', '小葉', '小郭'];
@@ -89,7 +88,7 @@ export default function FinalTimePage() {
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
         </div>
         <div className="container-final">
-          <CalendarForFinal schedule={schedule} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+          <CalendarForFinal schedule={schedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
         </div>
       </div>
     </>

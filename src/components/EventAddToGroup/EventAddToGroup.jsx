@@ -25,10 +25,10 @@ export default function EventAddToGroup({ setSelectedGroup, groupList }) {
   return (
     <>
       <Button className="button-round" icon={<PlusOutlined />} onClick={clickButton}>
-        Add to Category
+        Add to Group
       </Button>
       <Modal
-        title="Add Group"
+        title="Add to Group"
         visible={isModalVisible}
         okText="Add"
         onOk={() => {
