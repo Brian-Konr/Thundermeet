@@ -8,8 +8,10 @@ import {
 import {
   Button, message, Modal,
 } from 'antd';
+import { format } from 'date-fns';
 
 import instance from '../../instance';
+import getNumberOfDays from '../../utils/getNumberOfDays';
 
 import './CreateButton.css';
 
@@ -23,15 +25,19 @@ export default function CreateButton({
 
   const submitEvent = async () => {
     // POST event
+
+    console.log(`${format(new Date(eventDateRange[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`);
+    console.log(`${format(new Date(eventDateRange[1]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`);
+
     try {
       const res = await instance.post('/v1/events/', {
         dateOrDays: true,
-        endDate: new Date(eventDateRange[1]).toISOString(),
+        endDate: `${format(new Date(eventDateRange[1]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`,
         endTime: `${endTime}00`,
         eventName,
         eventDescription,
         isPriorityEnabled: eventPriority,
-        startDate: new Date(eventDateRange[0]).toISOString(),
+        startDate: `${format(new Date(eventDateRange[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`,
         startTime: `${startTime}00`,
       });
       setIsModalVisible(true);
@@ -42,11 +48,10 @@ export default function CreateButton({
       console.log(error);
       message.error('failed to create event...', 2);
     }
-    // if succeeded, navigate to event-time page with event id
   };
   const check = () => {
     if (!eventName.trim()) {
-      message.error('eventName cannot be empty!', 2);
+      message.error('Title cannot be empty!', 2);
       return;
     }
     if (Number(startTime) >= Number(endTime)) {
@@ -56,6 +61,9 @@ export default function CreateButton({
     if (eventDateRange.length === 0) {
       message.error('please select date ranges!', 2);
       return;
+    }
+    if (getNumberOfDays(eventDateRange[0], eventDateRange[1]) > 14) {
+      message.error('Date ranges cannot be larger than 2 weeks!', 2);
     }
     submitEvent();
   };

@@ -10,6 +10,7 @@ import { Icon } from '@iconify/react';
 import {
   Button, message, Spin, Tag,
 } from 'antd';
+import { format } from 'date-fns';
 
 import Calendar from '../../components/Calendar/Calendar';
 import CalendarForDisplay from '../../components/CalendarForDisplay/CalendarForDisplay';
@@ -127,11 +128,12 @@ export default function EventTimePage() {
   // POST when user fills timeblocks
   useEffect(() => {
     if (normalDay.length > 0 || priorityDay.length > 0) {
-      (async () => {
-        const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
-        if (res.status === 'success') message.success('已成功更新填寫狀況！', 1.2);
-        else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
-      })();
+      // (async () => {
+      //   const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
+      //   if (res.status === 'success') message.success('已成功更新填寫狀況！', 1.2);
+      //   else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
+      // })();
+      console.log(`${format(new Date(normalDay[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`);
     }
     console.log('normal:', normalDay);
     console.log('priority:', priorityDay);

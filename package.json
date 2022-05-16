@@ -16,7 +16,6 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "gapi-script": "^1.2.0",
     "global": "^4.4.0",
-    "moment": "^2.29.3",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.0.0",
