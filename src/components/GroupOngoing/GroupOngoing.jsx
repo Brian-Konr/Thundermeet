@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Card,
@@ -8,9 +9,7 @@ import './GroupOngoing.css';
 export default function GroupOngoing({
   isEdit, ongoingEvents, editOngoingEvents, setEditOngoingEvents, setIsAddEvent,
 }) {
-  function enterEvent(e) {
-    console.log(`selected ${e.key}`);
-  }
+  const navigate = useNavigate();
 
   function removeEvent(e) {
     setEditOngoingEvents(editOngoingEvents.filter((event) => event.key !== e.key));
@@ -19,7 +18,7 @@ export default function GroupOngoing({
 
   function CustomEventGroup() {
     return Object.values(ongoingEvents).map((group) => (
-      <Card className="ongoing-card" type="primary" key={group.key} value={group.title} onClick={() => { enterEvent(group); }}>
+      <Card className="ongoing-card" type="primary" key={group.key} value={group.title} onClick={() => navigate(`/event-time/${group.key}`)}>
         {group.title}
       </Card>
     ));

@@ -21,6 +21,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import fillTimeBlocks from '../../utils/fillTimeBlocks';
 import getEvent from '../../utils/getEvent';
 import getNumberOfDays from '../../utils/getNumberOfDays';
+import getPreviewTimeblocks from '../../utils/getPreviewTimeblocks';
 
 import './EventTimePage.css';
 
@@ -122,21 +123,22 @@ export default function EventTimePage() {
       setEnablePriority(data.is_priority_enabled);
       setAdminID(data.admin_id);
       // 要 set 左邊最近一次的填寫狀況 (maybe call preview?)
+      getPreviewTimeblocks(eventID);
     })();
   }, []);
 
   // POST when user fills timeblocks
   useEffect(() => {
-    if (normalDay.length > 0 || priorityDay.length > 0) {
-      // (async () => {
-      //   const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
-      //   if (res.status === 'success') message.success('已成功更新填寫狀況！', 1.2);
-      //   else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
-      // })();
-      console.log(`${format(new Date(normalDay[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`);
+    if (click && (normalDay.length > 0 || priorityDay.length > 0)) {
+      (async () => {
+        const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
+        if (res.status === 'success') {
+          console.log('normal', normalDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
+          console.log('priority', priorityDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
+        } else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
+      })();
+      setClick(false);
     }
-    console.log('normal:', normalDay);
-    console.log('priority:', priorityDay);
     // console.log('selected:', schedule);
   }, [normalDay, priorityDay]);
 

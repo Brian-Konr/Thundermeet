@@ -1,34 +1,57 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import AddEventToGroup from '../components/AddEventToGroup/AddEventToGroup';
-import DeleteGroup from '../components/DeleteGroup/DeleteGroup';
-import EditGroup from '../components/EditGroup/EditGroup';
-import GroupDecided from '../components/GroupDecided/GroupDecided';
-import GroupOngoing from '../components/GroupOngoing/GroupOngoing';
-import GroupTitle from '../components/GroupTitle/GroupTitle';
-import Navbar from '../components/Navbar/Navbar';
+import AddEventToGroup from '../../components/AddEventToGroup/AddEventToGroup';
+import DeleteGroup from '../../components/DeleteGroup/DeleteGroup';
+import EditGroup from '../../components/EditGroup/EditGroup';
+import GroupDecided from '../../components/GroupDecided/GroupDecided';
+import GroupOngoing from '../../components/GroupOngoing/GroupOngoing';
+import GroupTitle from '../../components/GroupTitle/GroupTitle';
+import Navbar from '../../components/Navbar/Navbar';
+import getGroupEvents from '../../utils/getGroupEvents';
 
 export default function GroupPage() {
+  const { groupID } = useParams();
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEvent, setIsAddEvent] = useState(false);
   const [groupTitle, setGroupTitle] = useState('SAD');
   const [editTitle, setEditTitle] = useState(groupTitle);
-  const [ongoingEvents, setOngoingEvents] = useState([{ title: 'SAD1', key: 1 }, { title: 'SAD2', key: 2 }, { title: 'SAD3', key: 3 }]);
+  const [ongoingEvents, setOngoingEvents] = useState([]);
   const [editOngoingEvents, setEditOngoingEvents] = useState(ongoingEvents);
-  const [decidedEvents, setDecidedEvents] = useState([{ title: 'Milestone1', key: 6 }, { title: 'Milestone2', key: 7 }]);
+  const [decidedEvents, setDecidedEvents] = useState([]);
   const [editDecidedEvents, setEditDecidedEvents] = useState(decidedEvents);
-  const allEvents = [
-    { title: 'SAD1', key: 1 },
-    { title: 'SAD2', key: 2 },
-    { title: 'SAD3', key: 3 },
-    { title: 'SAD hi', key: 4 },
-    { title: 'SAD hello', key: 5 },
-    { title: 'Milestone1', key: 6 },
-    { title: 'Milestone2', key: 7 },
-    { title: 'Interview', key: 8 },
-    { title: 'Bug Discussion', key: 9 },
-    { title: 'Lunch', key: 10 },
-  ];
+  const [allEvents, setAllEvents] = useState([]);
+  // const allEvents = [
+  //   { title: 'SAD1', key: 1 },
+  //   { title: 'SAD2', key: 2 },
+  //   { title: 'SAD3', key: 3 },
+  //   { title: 'SAD hi', key: 4 },
+  //   { title: 'SAD hello', key: 5 },
+  //   { title: 'Milestone1', key: 6 },
+  //   { title: 'Milestone2', key: 7 },
+  //   { title: 'Interview', key: 8 },
+  //   { title: 'Bug Discussion', key: 9 },
+  //   { title: 'Lunch', key: 10 },
+  // ];
+
+  useEffect(() => {
+    (async () => {
+      const events = await getGroupEvents(groupID);
+      console.log(events);
+      setAllEvents(events.map((event) => ({
+        title: event.event_name,
+        key: event.event_id,
+        isConfirmed: event.is_confirmed,
+      })));
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (allEvents.length > 0) {
+      setOngoingEvents(allEvents.filter((event) => !event.isConfirmed));
+      setDecidedEvents(allEvents.filter((event) => event.isConfirmed));
+    }
+  }, [allEvents]);
 
   return (
     <div>

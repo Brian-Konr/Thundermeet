@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 import instance from '../instance';
 
 export default async (eventId, enablePriority, normal, priority) => {
@@ -5,8 +7,8 @@ export default async (eventId, enablePriority, normal, priority) => {
     try {
       const res = await instance.post('/v1/timeblocks/', {
         eventId,
-        normal: normal.map((ele) => ele.toISOString()),
-        priority: priority.map((ele) => ele.toISOString()),
+        normal: normal.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`),
+        priority: priority.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`),
       });
       console.log(res);
       return {
@@ -22,7 +24,7 @@ export default async (eventId, enablePriority, normal, priority) => {
     try {
       const res = await instance.post('/v1/timeblocks/', {
         eventId,
-        normal: normal.map((ele) => ele.toISOString()),
+        normal: normal.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`),
       });
       console.log(res);
       return {

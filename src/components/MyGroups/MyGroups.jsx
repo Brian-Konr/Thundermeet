@@ -1,33 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import {
-  Button, Form, Input, Modal, Select,
+  Button, Form, Input, message, Modal, Select,
 } from 'antd';
+
+import createGroup from '../../utils/createGroup';
+import getMyEvents from '../../utils/getMyEvents';
+import getMyGroups from '../../utils/getMyGroups';
 
 import './MyGroups.css';
 
 export default function MyGroups() {
+  const navigate = useNavigate();
   const { Option } = Select;
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const eventList = [<Option key="1">SAD meeting</Option>, <Option key="2">SPM meeting</Option>,
-    <Option key="3">Have fun</Option>];
+  const [eventList, setEventList] = useState([]);
   const [groupList, setGroupList] = useState([]);
+  const [selected, setSelected] = useState([]);
   const [form] = Form.useForm();
 
-  const onCreate = (values) => {
-    console.log('Received values of form: ', values);
-    setIsFormVisible(false);
+  const fetchGroups = async () => {
+    const { groups } = await getMyGroups();
+    setGroupList(groups);
   };
 
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+  useEffect(() => {
+    (async () => {
+      const { data } = await getMyEvents();
+      setEventList(data.map((event) => (
+        <Option
+          key={event.event_id}
+          value={event.event_id}
+        >
+          {event.event_name}
+        </Option>
+      )));
+      fetchGroups();
+    })();
+  }, []);
 
-  function CustomButtonGroup() {
-    return groupList.map((group) => <Button className="card custom-card" type="primary">{group}</Button>);
-  }
+  const onCreate = ({ groupName }) => {
+    if (selected.length === 0) {
+      message.error('Please select at least one event!', 2);
+      return;
+    }
+    (async () => {
+      const res = await createGroup(selected, groupName);
+      if (res.status === 'success') {
+        message.success('group created successfully!', 2);
+        setIsFormVisible(false);
+      }
+      fetchGroups();
+    })();
+  };
 
-  if (isFormVisible === true) {
+  if (isFormVisible) {
     return (
       <div>
         <div className="header">
@@ -38,11 +66,10 @@ export default function MyGroups() {
             visible={isFormVisible}
             okText="Add"
             onOk={() => {
-              setGroupList((oldArray) => [...oldArray, form.getFieldValue('groupName')]);
               form
                 .validateFields()
                 .then((values) => {
-                  form.resetFields();
+                  // form.resetFields();
                   onCreate(values);
                 })
                 .catch((info) => {
@@ -74,8 +101,8 @@ export default function MyGroups() {
                 <Select
                   mode="multiple"
                   style={{ width: '70%' }}
-                  placeholder="Select existing events (not required)"
-                  onChange={() => { handleChange(); }}
+                  placeholder="Select existing events (required)"
+                  onChange={(value) => setSelected(value)}
                 >
                   {eventList}
                 </Select>
@@ -85,10 +112,10 @@ export default function MyGroups() {
         </div>
         <hr />
         <div className="groups">
-          <Button className="card default-card" type="primary">已參與 Participated</Button>
-          <Button className="card default-card" type="primary">已確認 Confirmed</Button>
-          <Button className="card default-card" type="primary">已發起 Created</Button>
-          <CustomButtonGroup />
+          <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>已參與 Participated</Button>
+          <Button className="card default-card" type="primary" onClick={() => navigate('/group/confirmed')}>已確認 Confirmed</Button>
+          <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>已發起 Created</Button>
+          {groupList.map((group) => <Button className="card custom-card" type="primary" onClick={() => navigate(`/group/${group.group_id}`)}>{group.group_name}</Button>)}
         </div>
       </div>
     );
@@ -101,10 +128,10 @@ export default function MyGroups() {
       </div>
       <hr />
       <div className="groups">
-        <Button className="card default-card" type="primary">已參與 Participated</Button>
-        <Button className="card default-card" type="primary">已確認 Confirmed</Button>
-        <Button className="card default-card" type="primary">已發起 Created</Button>
-        <CustomButtonGroup />
+        <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>已參與 Participated</Button>
+        <Button className="card default-card" type="primary" onClick={() => navigate('/group/confirmed')}>已確認 Confirmed</Button>
+        <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>已發起 Created</Button>
+        {groupList.map((group) => <Button className="card custom-card" type="primary" onClick={() => navigate(`/group/${group.group_id}`)}>{group.group_name}</Button>)}
       </div>
     </div>
   );
