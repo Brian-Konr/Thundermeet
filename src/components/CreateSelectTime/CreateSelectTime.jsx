@@ -1,5 +1,5 @@
 import {
-  DatePicker, Form, Radio, Select, Switch,
+  DatePicker, Form, Select, Switch,
 } from 'antd';
 
 import './CreateSelectTime.css';
@@ -13,21 +13,14 @@ const periodOptions = Array.from(Array(25).keys()).map((ele) => {
 });
 
 export default function CreateSelectTime({
-  eventTypeIsSpecificDays, setEventTypeIsSpecificDays, eventPriority, setEventPriority,
+  eventPriority, setEventPriority,
   eventDateRange, setEventDateRange, setStartTime, setEndTime,
 }) {
-  const typeOptions = [<Radio value key="specific">Specific Dates</Radio>,
-    <Radio value={false} key="daysOfTheWeek">Days of the week</Radio>];
-
   const onChangePriority = (e) => {
     console.log('Event Priority:', e);
     setEventPriority(e);
   };
 
-  const onChange = (e) => {
-    console.log('Event Type is Specific Date:', e.target.value);
-    setEventTypeIsSpecificDays(e.target.value);
-  };
   const onChangeDate = (value, dateString) => {
     // console.log('Selected Date Range1:', value);
     console.log('Selected Date Range:', dateString);
@@ -53,19 +46,7 @@ export default function CreateSelectTime({
         >
           <Switch className="priority" checked={eventPriority} checkedChildren="Enabled" defaultChecked={eventPriority} onChange={onChangePriority} />
         </Form.Item>
-        <p className="header">Type</p>
-        {/* 5/15 15:53 因為沒有要做 weekday 的功能，所以也麻煩 @王亭勻 把有關 weekday 判斷、render 的東西刪一刪～ */}
-        <Form.Item
-          name="eventType"
-          initialValue
-        >
-          <Radio.Group
-            onChange={onChange}
-            value={eventTypeIsSpecificDays}
-          >
-            {typeOptions}
-          </Radio.Group>
-        </Form.Item>
+        <p className="header">Date Range</p>
         <Form.Item
           rules={[
             {

@@ -11,7 +11,6 @@ export default function AddEventPage() {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescirption] = useState('');
-  const [eventTypeIsSpecificDays, setEventTypeIsSpecificDays] = useState(true);
   const [eventPriority, setEventPriority] = useState(false);
   const [eventDateRange, setEventDateRange] = useState([]);
 
@@ -48,8 +47,6 @@ export default function AddEventPage() {
             setEventDescription={setEventDescirption}
           />
           <CreateSelectTime
-            eventTypeIsSpecificDays={eventTypeIsSpecificDays}
-            setEventTypeIsSpecificDays={setEventTypeIsSpecificDays}
             eventPriority={eventPriority}
             setEventPriority={setEventPriority}
             eventDateRange={eventDateRange}

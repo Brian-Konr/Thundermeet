@@ -1,15 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import {
-  Button, Form, Input, TimePicker,
+  Button, Form, Input,
 } from 'antd';
-import moment from 'moment';
 
 import './EditEvent.css';
 
 const { TextArea } = Input;
 
 export default function EditEvent({
-  eventName, setEventName, eventDescription, setEventDescription, eventTimeRange, setEventTimeRange,
+  eventName, setEventName, eventDescription, setEventDescription,
 }) {
   const navigate = useNavigate();
 
@@ -21,12 +20,6 @@ export default function EditEvent({
   const handleChangeDescription = (e) => {
     setEventDescription(e.target.value);
     console.log('Description:', e.target.value);
-  };
-
-  const onChangeTime = (value, dateString) => {
-    // console.log('Selected Date Range1:', value);
-    console.log('Selected Time Range:', dateString);
-    setEventTimeRange(dateString);
   };
 
   const deleteEvent = () => {
@@ -44,13 +37,9 @@ export default function EditEvent({
       eventName,
       '\nDescription:',
       eventDescription,
-      '\nTime Range:',
-      eventTimeRange,
     );
     navigate('/event_time');
   };
-
-  const format = 'HH:00';
 
   return (
     <Form
@@ -62,10 +51,6 @@ export default function EditEvent({
         {
           name: ['eventDescription'],
           value: eventDescription,
-        },
-        {
-          name: ['timePeriod'],
-          value: [moment(eventTimeRange[0], format), moment(eventTimeRange[1], format)],
         },
       ]}
     >
@@ -87,18 +72,6 @@ export default function EditEvent({
           name="eventDescription"
         >
           <TextArea className="input" type="eventDescription" placeholder="Enter event description (not required)" autoSize={{ minRows: 4, maxRows: 10 }} onChange={handleChangeDescription} />
-        </Form.Item>
-        <p className="header">Time Period</p>
-        <Form.Item
-          name="timePeriod"
-          rules={[
-            {
-              required: true,
-              message: 'Please select time period!',
-            },
-          ]}
-        >
-          <TimePicker.RangePicker format={format} style={{ width: '385px' }} defaultPickerValue={eventTimeRange} onChange={onChangeTime} />
         </Form.Item>
         <Form.Item>
           <Button className="confirm-button" type="primary" htmlType="submit" onClick={submitChange}>
