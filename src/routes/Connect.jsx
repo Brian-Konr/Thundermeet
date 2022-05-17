@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import exampleResponse from '../utils/googleCalendarResponse';
 // import GoogleLogin from 'react-google-login';
-import GetGoogleCalendarResponse from '../utils/googleConnect';
+import getGoogleCalendarResponse from '../utils/googleConnect';
 
 export default function Connect() {
   const [login, setLogin] = useState(false);
@@ -16,7 +16,7 @@ export default function Connect() {
   }, []);
   const handleClick = async () => {
     /* google calendar response will return two values, calendar events and basicProfile method */
-    const res = await GetGoogleCalendarResponse();
+    const res = await getGoogleCalendarResponse();
     setLogin(true);
     console.log('User calendar response: ', res[0]);
     // setCalendarResponse(res[0]);

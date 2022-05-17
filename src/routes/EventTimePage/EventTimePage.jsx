@@ -18,10 +18,12 @@ import EventAddToGroup from '../../components/EventAddToGroup/EventAddToGroup';
 import EventCopyLink from '../../components/EventCopyLink/EventCopyLink';
 import ImportButton from '../../components/ImportButton/ImportButton';
 import Navbar from '../../components/Navbar/Navbar';
+import calendarToTimeblocks from '../../utils/calendarToTimeblocks';
 import fillTimeBlocks from '../../utils/fillTimeBlocks';
 import getEvent from '../../utils/getEvent';
 import getNumberOfDays from '../../utils/getNumberOfDays';
 import getPreviewTimeblocks from '../../utils/getPreviewTimeblocks';
+import getGoogleCalendarResponse from '../../utils/googleConnect';
 
 import './EventTimePage.css';
 
@@ -36,7 +38,8 @@ export default function EventTimePage() {
   const [eventDescription, setEventDescription] = useState('description');
   const [startTime, setStartTime] = useState(0); // start hour
   const [endTime, setEndTime] = useState(6); // end hour
-  const [startDate, setStartDate] = useState(new Date(2022, 4, 2));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [numOfDays, setNumOfDays] = useState(7); // continue number of days(for both weekday & date)
   const [copyLink, setCopyLink] = useState('');
   // params for left
@@ -90,7 +93,7 @@ export default function EventTimePage() {
   const appleSchedule = [new Date(2022, 4, 6, 1, 0, 0), new Date(2022, 4, 5, 1, 30, 0), new Date(2022, 4, 4, 2, 0, 0), new Date(2022, 4, 4, 2, 30, 0), new Date(2022, 4, 5, 2, 30, 0), new Date(2022, 4, 6, 2, 30, 0), new Date(2022, 4, 6, 3, 0, 0), new Date(2022, 4, 5, 3, 30, 0), new Date(2022, 4, 4, 4, 0, 0)];
   // params for import from google calendar
   const [googleConnect, setGoogleConnect] = useState(false); // set true when user click google import, @郭 接完以後設成 false
-  const googleSchedule = [new Date(2022, 4, 5, 2, 0, 0), new Date(2022, 4, 5, 2, 30, 0)];
+  const [googleSchedule, setGoogleSchedule] = useState([]);
   // params for import from event
   const [eventConnect, setEventConnect] = useState(false); // set true when user click event import, @郭 接完以後設成 false
   const eventList = {};
@@ -115,6 +118,7 @@ export default function EventTimePage() {
       console.log(data);
       setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
       setStartDate(new Date(data.start_date));
+      setEndDate(new Date(data.end_date));
       setStartTime(Number(data.start_time.substring(0, 2)));
       setEndTime(Number(data.end_time.substring(0, 2)));
       setEventDescription(data.event_description);
@@ -160,16 +164,29 @@ export default function EventTimePage() {
   const [timeList, setTimeList] = useState([]);
 
   useEffect(() => {
-    // @ 郭 接在這裡(用 setGoogleSchedule)
-    const arr = [];
-    for (let i = 0; i < googleSchedule.length; i += 1) {
-      arr[i] = googleSchedule[i].getTime();
-    }
+    console.log(googleConnect);
     if (googleConnect) {
-      setGoogleReverse(timeList.filter((item) => !arr.includes(item.getTime())));
+      (async () => {
+        const res = await getGoogleCalendarResponse(startDate.toISOString(), endDate.toISOString()); // 要傳 min, max 日期
+        console.log('original google response: ', res);
+        console.log('after transformation: ', calendarToTimeblocks(res));
+        setGoogleSchedule(calendarToTimeblocks(res));
+      })();
+      // @ 郭 接在這裡(用 setGoogleSchedule)
     }
     // @ 郭 接完後 setGoogleConnect(false);
   }, [googleConnect]);
+
+  useEffect(() => {
+    if (googleConnect) setGoogleConnect(false);
+    if (googleSchedule.length > 0) {
+      const arr = [];
+      for (let i = 0; i < googleSchedule.length; i += 1) {
+        arr[i] = googleSchedule[i].getTime();
+      }
+      setGoogleReverse(timeList.filter((item) => !arr.includes(item.getTime())));
+    }
+  }, [googleSchedule]);
 
   useEffect(() => {
     const arr = [];
@@ -205,6 +222,7 @@ export default function EventTimePage() {
       if (enablePriority) setPriorityDay(timeList.filter((item) => !arr.includes(item.getTime())));
       else setNormalDay(timeList.filter((item) => !arr.includes(item.getTime())));
       setGoogleConfirm(false);
+      setClick(true);
     }
   }, [googleConfirm]);
 
