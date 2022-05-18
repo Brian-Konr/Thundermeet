@@ -58,7 +58,6 @@ export default function EventTimePage() {
   // 因為邏輯是 schedule 代表所有選取時間，priority 則是我加顏色上去的時間
   // schedule(所選時間) = normal + priority
   // -----
-
   // params for right
   const [memberList, setMemberList] = useState([]);
   const [selectedList, setSelectedList] = useState({}); // should include all time block(here for display only few timeblocks)
