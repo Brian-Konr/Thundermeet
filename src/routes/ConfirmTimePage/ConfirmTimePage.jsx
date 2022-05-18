@@ -56,7 +56,7 @@ export default function ConfirmTimePage() {
   // output
   const [schedule, setSchedule] = useState([]);
   // output for add to category
-  const [selectedGroup, setSelectedGroup] = useState(); // store selected group's name
+  const [selectedGroup, setSelectedGroup] = useState(''); // store selected group's name
   // params for add to category
   const groupList = ['SAD course', 'Global Express', 'NTUIM'];
 

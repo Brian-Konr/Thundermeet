@@ -129,13 +129,18 @@ export default function HomeCard({ option, setOption }) {
           )}
 
           <Form.Item style={{ textAlign: 'center', fontSize: '16px' }}>
-            <Button type="primary" shape="round" style={{ height: '46px', width: '50%' }} htmlType="submit">
+            <Button
+              style={{
+                height: '46px', background: '#01A494', color: '#FFF', fontSize: '20px', borderRadius: '10px',
+              }}
+              htmlType="submit"
+            >
               {(() => {
                 switch (option) {
-                  case 'login': return 'Login!';
-                  case 'register': return 'Register!';
+                  case 'login': return 'Login';
+                  case 'register': return 'Register';
                   case 'forget': return 'Submit';
-                  default: return 'Login!';
+                  default: return 'Login';
                 }
               })()}
             </Button>
@@ -143,12 +148,12 @@ export default function HomeCard({ option, setOption }) {
         </Form>
 
         {option === 'login' && (
-          <div className="forget-button" style={{ textAlign: 'center', fontSize: '16px', marginTop: '-1vh' }}><Button style={{ background: 'none', borderColor: 'white', boxShadow: 'none' }} onClick={() => setOption('forget')}>Forgot Password?</Button></div>
+          <div className="forget-button" style={{ textAlign: 'center', fontSize: '15px', marginTop: '-1vh' }}><Button style={{ background: 'none', borderColor: 'white', boxShadow: 'none' }} onClick={() => setOption('forget')}>Forgot Password?</Button></div>
         )}
         <div style={{ textAlign: 'center', marginTop: '1vh' }}>
           <Button
             style={{
-              borderColor: 'white', boxShadow: 'none', color: 'lightBlue', fontSize: '17px',
+              borderColor: 'white', boxShadow: 'none', color: '#01A494', fontSize: '15px',
             }}
             type="secondary"
             onClick={() => setOption((prev) => (prev === 'login' ? 'register' : 'login'))}

@@ -4,7 +4,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import {
-  Button, Form, Modal, Select,
+  Button, Form, message, Modal, Select,
 } from 'antd';
 
 import './EventAddToGroup.css';
@@ -32,6 +32,9 @@ export default function EventAddToGroup({ setSelectedGroup, groupList }) {
         visible={isModalVisible}
         okText="Add"
         onOk={() => {
+          if (groupList[form.getFieldValue('selectGroup')] === undefined) {
+            message.warning('please choose a group to add to!');
+          }
           setSelectedGroup(groupList[form.getFieldValue('selectGroup')]);
           setIsModalVisible(false);
           form.resetFields();
