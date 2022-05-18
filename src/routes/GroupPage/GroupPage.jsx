@@ -14,42 +14,41 @@ export default function GroupPage() {
   const { groupID } = useParams();
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEvent, setIsAddEvent] = useState(false);
-  const [groupTitle, setGroupTitle] = useState('SAD');
+  const [groupTitle, setGroupTitle] = useState('');
   const [editTitle, setEditTitle] = useState(groupTitle);
   const [ongoingEvents, setOngoingEvents] = useState([]);
   const [editOngoingEvents, setEditOngoingEvents] = useState(ongoingEvents);
   const [decidedEvents, setDecidedEvents] = useState([]);
   const [editDecidedEvents, setEditDecidedEvents] = useState(decidedEvents);
   const [allEvents, setAllEvents] = useState([]);
-  // const allEvents = [
-  //   { title: 'SAD1', key: 1 },
-  //   { title: 'SAD2', key: 2 },
-  //   { title: 'SAD3', key: 3 },
-  //   { title: 'SAD hi', key: 4 },
-  //   { title: 'SAD hello', key: 5 },
-  //   { title: 'Milestone1', key: 6 },
-  //   { title: 'Milestone2', key: 7 },
-  //   { title: 'Interview', key: 8 },
-  //   { title: 'Bug Discussion', key: 9 },
-  //   { title: 'Lunch', key: 10 },
-  // ];
 
   useEffect(() => {
     (async () => {
-      const events = await getGroupEvents(groupID);
+      const { events, groupName, isDefault } = await getGroupEvents(groupID);
       console.log(events);
-      setAllEvents(events.map((event) => ({
-        title: event.event_name,
-        key: event.event_id,
-        isConfirmed: event.is_confirmed,
-      })));
+      setGroupTitle(groupName);
+      if (isDefault) {
+        setAllEvents(events.map((event) => ({
+          title: event.event_name,
+          key: event.event_id,
+          isConfirmed: event.is_confirmed,
+        })));
+      } else {
+        setAllEvents(events.map((event) => ({
+          title: event.Event_name,
+          key: event.Event_id,
+          isConfirmed: event.Is_confirmed,
+        })));
+      }
     })();
   }, []);
 
   useEffect(() => {
     if (allEvents.length > 0) {
       setOngoingEvents(allEvents.filter((event) => !event.isConfirmed));
+      setEditOngoingEvents(allEvents.filter((event) => !event.isConfirmed));
       setDecidedEvents(allEvents.filter((event) => event.isConfirmed));
+      setEditDecidedEvents(allEvents.filter((event) => event.isConfirmed));
     }
   }, [allEvents]);
 

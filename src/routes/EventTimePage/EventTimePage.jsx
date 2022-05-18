@@ -152,6 +152,8 @@ export default function EventTimePage() {
 
   // POST when user fills timeblocks
   useEffect(() => {
+    console.log('normalDay: ', normalDay);
+    console.log('priorityDay: ', priorityDay);
     if (click && (normalDay.length > 0 || priorityDay.length > 0)) {
       (async () => {
         const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
