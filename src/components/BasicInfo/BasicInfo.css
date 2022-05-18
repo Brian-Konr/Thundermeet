@@ -32,13 +32,23 @@
   box-shadow: none;
 }
 
+.ant-input.edit-input:focus {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  font-size: 20px;
+  line-height: 20px;
+  border: 1px solid #56c7bc;
+  box-shadow: none;
+}
+
 .ant-btn.submit-button {
   margin-top: -5px;
   margin-bottom: 15px;
   height: 30px;
-  color: #56c7bc;
+  color: white;
   border: 1px solid #56c7bc;
-  background-color: white;
+  background-color: #56c7bc;
   font-size: 20px;
   line-height: 20px;
   text-shadow: none;
@@ -53,6 +63,32 @@
   border: 1px solid #56c7bc;
   font-size: 20px;
   line-height: 20px;
+}
+
+.ant-btn.cancelButton {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  color: #56c7bc;
+  border: 1px solid #56c7bc;
+  background-color: white;
+  font-size: 20px;
+  line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.ant-btn.cancelButton:hover {
+  margin-top: -5px;
+  margin-bottom: 15px;
+  height: 30px;
+  color: #56c7bc;
+  background-color: white;
+  border: 1px solid #56c7bc;
+  font-size: 20px;
+  line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }
 
 .hr {

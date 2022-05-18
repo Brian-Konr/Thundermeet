@@ -22,3 +22,19 @@
   font-size: 12px;
   /* line-height: 20px; */
 }
+
+.ant-input.edit-title:hover {
+  margin-top: 5px;
+  height: 30px;
+  font-size: 12px;
+  border: 1px solid #56c7bc;
+  box-shadow: none;
+}
+
+.ant-input.edit-title:focus {
+  margin-top: 5px;
+  height: 30px;
+  font-size: 12px;
+  border: 1px solid #56c7bc;
+  box-shadow: none;
+}

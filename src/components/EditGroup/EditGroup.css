@@ -9,6 +9,7 @@
   font-size: 18px;
   line-height: 20px;
   text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-btn.edit-button:hover {
@@ -22,6 +23,7 @@
   font-size: 18px;
   line-height: 20px;
   text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-btn.confirm-button {
@@ -35,6 +37,7 @@
   font-size: 18px;
   line-height: 20px;
   text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-btn.confirm-button:hover {
@@ -48,6 +51,7 @@
   font-size: 18px;
   line-height: 20px;
   text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-btn.cancel-button {
@@ -61,6 +65,7 @@
   font-size: 18px;
   line-height: 20px;
   text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-btn.cancel-button:hover {
@@ -74,4 +79,5 @@
   font-size: 18px;
   line-height: 20px;
   text-shadow: none;
+  box-shadow: none;
 }

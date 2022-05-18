@@ -35,7 +35,7 @@ export default function AddEventPage() {
             fontSize: '48px', fontWeight: 'bold', textAlign: 'center', paddingTop: '40px',
           }}
           >
-            CREATE A MEETING
+            CREATE AN EVENT
           </h1>
         </div>
         <div style={{

@@ -8,3 +8,12 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
+
+.ant-input.input:hover {
+  border: 1px solid #56c7bc;
+}
+
+.ant-input.input:focus {
+  border: 1px solid #56c7bc;
+  box-shadow: none;
+}

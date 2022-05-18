@@ -54,10 +54,18 @@
   background-color: #ffe956;
 }
 
+.ant-btn.default-card:hover {
+  background-color: #fedd02;
+  color: black;
+  border-color: transparent;
+}
+
 .ant-btn.custom-card {
   background-color: #fffada;
 }
 
-.ant-btn.card :hover{
-  background-color: #fedd02;
+.ant-btn.custom-card:hover {
+  background-color: #ffe956;
+  color: black;
+  border-color: transparent;
 }

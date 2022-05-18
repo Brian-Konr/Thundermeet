@@ -34,10 +34,10 @@ export default function CreateSelectTime({
         {/* 5/15 15:53 下面是新改的 select time period 的 div，再麻煩 @王亭勻 修一下這邊的 css */}
         <Form.Item>
           <div>
-            <p>Start from ...</p>
-            <Select defaultValue="10" onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+            <p>Starting from ...</p>
+            <Select className="inputTime" defaultValue="10" onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
             <p>No later than ...</p>
-            <Select defaultValue="22" onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+            <Select className="inputTime" defaultValue="22" onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
           </div>
         </Form.Item>
         <p className="header">Priority</p>
@@ -55,7 +55,7 @@ export default function CreateSelectTime({
             },
           ]}
         >
-          <RangePicker style={{ width: '385px' }} defaultPickerValue={eventDateRange} onChange={onChangeDate} />
+          <RangePicker className="inputTime" style={{ width: '385px' }} defaultPickerValue={eventDateRange} onChange={onChangeDate} />
         </Form.Item>
       </div>
     </Form>

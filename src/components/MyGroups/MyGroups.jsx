@@ -99,11 +99,21 @@ export default function MyGroups() {
               >
                 <Input placeholder="Enter group name" type="groupName" />
               </Form.Item>
-              <Form.Item label="Select Events">
+              <Form.Item
+                label="Select Events"
+                name="selectEvents"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select at least one event!',
+                  },
+                ]}
+              >
                 <Select
+                  type="selectEvents"
                   mode="multiple"
                   style={{ width: '70%' }}
-                  placeholder="Select existing events (required)"
+                  placeholder="Select existing events"
                   onChange={(value) => setSelected(value)}
                 >
                   {eventList}

@@ -23,6 +23,11 @@ export default function BasicInfo({
     // call api to change name
   };
 
+  const onCancel = () => {
+    setRevisedName('');
+    setIsEdit(false);
+  };
+
   if (isEdit === true) {
     return (
       <div>
@@ -40,6 +45,7 @@ export default function BasicInfo({
           <span className="item-content">
             <Input.Group style={{ width: '100%' }} compact>
               <Input className="edit-input" style={{ width: '25%' }} defaultValue={userName} onChange={(e) => { setRevisedName(e.target.value); }} />
+              <Button className="cancelButton" type="primary" onClick={onCancel}>Cancel</Button>
               <Button className="submit-button" type="primary" disabled={!revisedName || revisedName === userName} onClick={onSubmit}>Submit</Button>
             </Input.Group>
             <p>{userID}</p>

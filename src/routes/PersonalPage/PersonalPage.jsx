@@ -29,8 +29,8 @@ export default function PersonalPage() {
   return (
     <>
       <Navbar />
-      {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh' }} /> : (
-        <div style={{ background: '#F8F8F8', height: '92vh' }}>
+      {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
+        <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
           <div style={{
             display: 'flex', flexDirection: 'column', paddingBottom: '16px', marginLeft: '38px', marginRight: '38px', marginBottom: '38px',
           }}

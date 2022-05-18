@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import {
-  Card,
+  Button, Card,
 } from 'antd';
 
 import './GroupOngoing.css';
@@ -18,9 +18,9 @@ export default function GroupOngoing({
 
   function CustomEventGroup() {
     return Object.values(ongoingEvents).map((group) => (
-      <Card className="ongoing-card" type="primary" key={group.key} value={group.title} onClick={() => navigate(`/event-time/${group.key}`)}>
+      <Button className="ongoing-card" type="primary" key={group.key} value={group.title} onClick={() => navigate(`/event-time/${group.key}`)}>
         {group.title}
-      </Card>
+      </Button>
     ));
   }
 

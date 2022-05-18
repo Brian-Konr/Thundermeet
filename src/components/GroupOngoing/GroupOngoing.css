@@ -21,7 +21,7 @@
   justify-content: flex-start;
 }
 
-.ant-card.ongoing-card {
+.ant-btn.ongoing-card {
   font-size: 16px;
   color: black;
   text-shadow: none;
@@ -37,6 +37,12 @@
   display: inline-block;
   align-items: center; 
   display: flex;
+}
+
+.ant-btn.ongoing-card:hover {
+  background-color: #ffe956;
+  color: black;
+  border-color: transparent;
 }
 
 .ant-card.ongoing-card-edit {

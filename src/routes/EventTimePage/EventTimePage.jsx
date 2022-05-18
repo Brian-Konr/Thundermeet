@@ -262,7 +262,7 @@ export default function EventTimePage() {
     localStorage.getItem('token') ? (
       <>
         <Navbar />
-        {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh' }} /> : (
+        {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
           <div style={{ height: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '55%' }}>
               <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />

@@ -1,6 +1,6 @@
 import { CloseOutlined } from '@ant-design/icons';
 import {
-  Card,
+  Button, Card,
 } from 'antd';
 
 import './GroupDecided.css';
@@ -19,9 +19,9 @@ export default function GroupDecided({
 
   function CustomEventGroup() {
     return Object.values(decidedEvents).map((group) => (
-      <Card className="decided-card" type="primary" key={group.key} value={group.title} onClick={() => { enterEvent(group); }}>
+      <Button className="decided-card" type="primary" key={group.key} value={group.title} onClick={() => { enterEvent(group); }}>
         {group.title}
-      </Card>
+      </Button>
     ));
   }
 

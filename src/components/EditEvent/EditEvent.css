@@ -25,6 +25,8 @@
   border: 1px solid #f722b6;
   font-size: 18px;
   line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-btn.delete-button:hover {
@@ -36,46 +38,56 @@
   border: 1px solid #f722b6;
   font-size: 18px;
   line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }
 
-.ant-btn.confirm-button {
-  margin-top: 20px;
-  margin-right: 10px;
+.ant-btn.confirmbutton {
+  margin-top: 10px;
   height: 30px;
   color: white;
   background-color: #56c7bc;
   border: 1px solid #56c7bc;
   font-size: 18px;
   line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }
 
-.ant-btn.confirm-button:hover {
-  margin-top: 20px;
-  margin-right: 10px;
+.ant-btn.confirmbutton:hover {
+  margin-top: 10px;
   height: 30px;
   color: white;
   background-color: #56c7bc;
   border: 1px solid #56c7bc;
   font-size: 18px;
   line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }
 
-.ant-btn.cancel-button {
-  margin-top: 20px;
+.ant-btn.cancelbutton {
+  margin-top: 10px;
+  margin-right: 10px;
   height: 30px;
   color: #56c7bc;
   background-color: white;
   border: 1px solid #56c7bc;
   font-size: 18px;
   line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }
 
-.ant-btn.cancel-button:hover {
-  margin-top: 20px;
+.ant-btn.cancelbutton:hover {
+  margin-top: 10px;
+  margin-right: 10px;
   height: 30px;
   color: #56c7bc;
   background-color: white;
   border: 1px solid #56c7bc;
   font-size: 18px;
   line-height: 20px;
+  text-shadow: none;
+  box-shadow: none;
 }

@@ -55,7 +55,7 @@ export default function GroupPage() {
   return (
     <div>
       <Navbar />
-      <div style={{ background: '#F8F8F8', height: '92vh' }}>
+      <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
         <div style={{
           marginLeft: '38px', marginRight: '38px', marginBottom: '38px', paddingTop: '38px',
         }}

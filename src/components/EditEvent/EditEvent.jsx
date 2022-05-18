@@ -74,11 +74,11 @@ export default function EditEvent({
           <TextArea className="input" type="eventDescription" placeholder="Enter event description (not required)" autoSize={{ minRows: 4, maxRows: 10 }} onChange={handleChangeDescription} />
         </Form.Item>
         <Form.Item>
-          <Button className="confirm-button" type="primary" htmlType="submit" onClick={submitChange}>
-            Confirm
-          </Button>
-          <Button className="cancel-button" htmlType="button" onClick={goToEvent}>
+          <Button className="cancelbutton" htmlType="button" onClick={goToEvent}>
             Cancel
+          </Button>
+          <Button className="confirmbutton" type="primary" htmlType="submit" onClick={submitChange}>
+            Confirm
           </Button>
         </Form.Item>
         <p className="deleteTitle">Delete Event</p>

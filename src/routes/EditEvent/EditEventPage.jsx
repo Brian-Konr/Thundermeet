@@ -10,9 +10,9 @@ export default function EditEventPage() {
   return (
     <div>
       <Navbar />
-      <div style={{ background: '#F8F8F8', height: '92vh' }}>
+      <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
         <div style={{
-          display: 'flex', flexDirection: 'row', margin: '38px', padding: '60px',
+          display: 'flex', flexDirection: 'row', marginLeft: '38px', marginRight: '38px', marginBottom: '38px', padding: '60px',
         }}
         >
           <EditEvent

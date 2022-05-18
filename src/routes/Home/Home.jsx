@@ -13,7 +13,14 @@ export default function Home() {
   return (
     <>
       {localStorage.getItem('token') && <Navbar />}
-      {loading && <Spin />}
+      {loading && (
+      <Spin
+        className="spin"
+        style={{
+          position: 'fixed', backgroundColor: '#F2F3F4',
+        }}
+      />
+      )}
       <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F2F3F4', minHeight: '100vh',
       }}
