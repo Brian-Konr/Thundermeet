@@ -146,11 +146,15 @@ export default function HomeCard({ option, setOption }) {
             </Button>
           </Form.Item>
         </Form>
-
-        {option === 'login' && (
-          <div className="forget-button" style={{ textAlign: 'center', fontSize: '15px', marginTop: '-1vh' }}><Button style={{ background: 'none', borderColor: 'white', boxShadow: 'none' }} onClick={() => setOption('forget')}>Forgot Password?</Button></div>
-        )}
-        <div style={{ textAlign: 'center', marginTop: '1vh' }}>
+        <div style={{
+          textAlign: 'center', marginTop: '-1vh', display: 'flex', flexDirection: 'row',
+        }}
+        >
+          {option === 'login' ? (
+            <p style={{ marginTop: '0.5vh', fontSize: '15px' }}>Don’t have the account?</p>
+          ) : (
+            <p style={{ marginTop: '0.5vh', fontSize: '15px', marginLeft: '1vw' }}>Already have the account?</p>
+          )}
           <Button
             style={{
               borderColor: 'white', boxShadow: 'none', color: '#01A494', fontSize: '15px',
@@ -158,9 +162,27 @@ export default function HomeCard({ option, setOption }) {
             type="secondary"
             onClick={() => setOption((prev) => (prev === 'login' ? 'register' : 'login'))}
           >
-            {option === 'login' ? 'or register now!' : 'already have an account?'}
+            {option === 'login' ? 'Sign Up!' : 'Login!'}
           </Button>
         </div>
+        {option === 'login' && (
+          <div
+            className="forget-button"
+            style={{
+              textAlign: 'center', fontSize: '15px', marginTop: '-1vh', display: 'flex', flexDirection: 'row',
+            }}
+          >
+            <p style={{ marginTop: '-0.4vh' }}>Forgot your password?</p>
+            <Button
+              style={{
+                background: 'none', borderColor: 'white', boxShadow: 'none', color: '#01A494', marginTop: '-1vh', fontSize: '15px',
+              }}
+              onClick={() => setOption('forget')}
+            >
+              Click to get it now!
+            </Button>
+          </div>
+        )}
       </Card>
     </div>
   );

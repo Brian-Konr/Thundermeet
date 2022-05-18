@@ -44,7 +44,7 @@ export default function Navbar() {
         <Link to="/">
           <img className="logo" src={logo} alt="logo" />
         </Link>
-        <Button onClick={() => navigate('/add-event')} className="add-event-button" type="primary" size="large" shape="round" icon={<PlusOutlined />}>Add Event!</Button>
+        <Button onClick={() => navigate('/add-event')} className="add-event-button" size="large" icon={<PlusOutlined />} style={{ color: '#01A494', borderRadius: '10px', borderColor: '#01A494' }}>Add Event!</Button>
       </div>
       <Dropdown overlay={<Menu onClick={userOnclick} items={items} />} arrow>
         <div className="user-icon">
