@@ -7,12 +7,10 @@ const { TextArea } = Input;
 export default function CreateTitleDescription({ setEventName, setEventDescription }) {
   const handleChangeName = (e) => {
     setEventName(e.target.value);
-    console.log('Title:', e.target.value);
   };
 
   const handleChangeDescription = (e) => {
     setEventDescription(e.target.value);
-    console.log('Description:', e.target.value);
   };
 
   return (

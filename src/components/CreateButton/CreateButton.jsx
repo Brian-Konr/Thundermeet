@@ -40,9 +40,9 @@ export default function CreateButton({
         startDate: `${format(new Date(eventDateRange[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`,
         startTime: `${startTime}00`,
       });
+      setEventID(res.data.event_id);
       setIsModalVisible(true);
       // store event id
-      setEventID(res.data.event_id);
       setIsModalVisible(true);
     } catch (error) {
       console.log(error);
@@ -64,6 +64,7 @@ export default function CreateButton({
     }
     if (getNumberOfDays(eventDateRange[0], eventDateRange[1]) > 14) {
       message.error('Date ranges cannot be larger than 2 weeks!', 2);
+      return;
     }
     submitEvent();
   };

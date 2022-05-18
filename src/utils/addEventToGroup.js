@@ -1,15 +1,13 @@
-/* eslint-disable camelcase */
 import instance from '../instance';
 
-export default async (event_ids, group_name) => {
+export default async (eventID, groupID) => {
   try {
-    const res = await instance.post('/v1/groups/', {
-      event_ids,
-      group_name,
+    const res = await instance.post(`/v1/groups/${groupID}`, {
+      event_ids: [Number(eventID)],
     });
-    console.log(res);
     return {
       status: 'success',
+      msg: res,
     };
   } catch (error) {
     console.log(error);

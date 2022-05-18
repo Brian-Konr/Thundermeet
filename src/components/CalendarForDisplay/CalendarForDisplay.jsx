@@ -23,6 +23,11 @@ export default function CalendarForDisplay({
   const [switchPriority, setSwitchPriority] = useState(true);
 
   useEffect(() => {
+    console.log(selectedList);
+    console.log(memberList);
+  }, []);
+
+  useEffect(() => {
     setColorList([]);
     const len = memberList.length - removeList.length;
     if (len !== 0) {

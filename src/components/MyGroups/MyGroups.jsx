@@ -50,6 +50,8 @@ export default function MyGroups() {
       if (res.status === 'success') {
         message.success('group created successfully!', 2);
         setIsFormVisible(false);
+      } else {
+        message.error(res.error.response.data.msg, 2);
       }
       fetchGroups();
     })();
