@@ -5,6 +5,7 @@ export default async (eventID) => {
   try {
     const ans = {};
     const res = await instance.get(`/v1/timeblocks/${eventID}`);
+    console.log(res);
     let memberList = [];
     console.log(res.data[0]);
     if (res.data[0].normal) memberList = memberList.concat(res.data[0].normal.map((userObj) => userObj.UserName));

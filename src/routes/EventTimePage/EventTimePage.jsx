@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';
@@ -60,7 +59,6 @@ export default function EventTimePage() {
   // 因為邏輯是 schedule 代表所有選取時間，priority 則是我加顏色上去的時間
   // schedule(所選時間) = normal + priority
   // -----
-  // params for right
   const [memberList, setMemberList] = useState([]);
   const [selectedList, setSelectedList] = useState({}); // should include all time block(here for display only few timeblocks)
   // params for import from apple calendar
@@ -71,20 +69,23 @@ export default function EventTimePage() {
   const [googleConnect, setGoogleConnect] = useState(false); // set true when user click google import, @郭 接完以後設成 false
   const [googleSchedule, setGoogleSchedule] = useState([]);
   // params for import from event
+  const [eventList, setEventList] = useState({});
   const [eventConnect, setEventConnect] = useState(false); // set true when user click event import, @郭 接完以後設成 false
-  const eventList = {};
-  eventList['SAD-1'] = {
-    normal: [new Date(2022, 4, 4, 0, 0, 0), new Date(2022, 4, 4, 0, 30, 0)],
-    priority: [new Date(2022, 4, 4, 1, 0, 0), new Date(2022, 4, 4, 1, 30, 0)],
+
+  const fetchRight = async () => {
+    setRightLoading(true);
+    const timeblocksRes = await getAllTimeBlocksInfo(eventID);
+    console.log(timeblocksRes.info);
+    if (timeblocksRes.status === 'success') {
+      setSelectedList(timeblocksRes.info);
+      setMemberList(timeblocksRes.memberList);
+    } else message.error('無法取得各填寫者的填寫資訊！', 2);
+    setRightLoading(false);
   };
-  eventList['SAD-2'] = {
-    normal: [new Date(2022, 4, 8, 0, 0, 0), new Date(2022, 4, 8, 0, 30, 0)],
-    priority: [new Date(2022, 4, 8, 1, 0, 0), new Date(2022, 4, 8, 1, 30, 0)],
-  };
-  eventList['SAD-3'] = {
-    normal: [new Date(2022, 4, 5, 0, 0, 0), new Date(2022, 4, 5, 0, 30, 0)],
-    priority: [new Date(2022, 4, 5, 1, 0, 0), new Date(2022, 4, 5, 1, 30, 0)],
-  };
+
+  // params for POST timeblocks check
+  const [startDateParam, setStartDateParam] = useState('');
+  const [endDateParam, setEndDateParam] = useState('');
 
   // when loading into this page, 接此 event 的基本資訊
   useEffect(() => {
@@ -93,7 +94,9 @@ export default function EventTimePage() {
         const { data } = await getEvent(eventID);
         console.log(data);
         setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
+        setStartDateParam(data.start_date);
         setStartDate(new Date(data.start_date));
+        setEndDateParam(data.end_date);
         setEndDate(new Date(data.end_date));
         setStartTime(Number(data.start_time.substring(0, 2)));
         setEndTime(Number(data.end_time.substring(0, 2)));
@@ -114,27 +117,20 @@ export default function EventTimePage() {
           if (data.is_priority_enabled && (res.priority.length > 0)) setPriorityDay(res.priority.map((timeblock) => new Date(timeblock)));
           setSchedule(res.concat.map((timeblock) => new Date(timeblock)));
         } else message.error('無法取得最近一次填寫資訊！', 2);
-        const timeblocksRes = await getAllTimeBlocksInfo(eventID);
-        setRightLoading(false);
-        console.log(timeblocksRes.info);
-        if (timeblocksRes.status === 'success') {
-          setSelectedList(timeblocksRes.info);
-          setMemberList(timeblocksRes.memberList);
-        } else message.error('無法取得各填寫者的填寫資訊！', 2);
+        fetchRight();
       })();
     }
   }, []);
 
   // POST when user fills timeblocks
   useEffect(() => {
-    console.log('normalDay: ', normalDay);
-    console.log('priorityDay: ', priorityDay);
     if (click && (normalDay.length > 0 || priorityDay.length > 0)) {
       (async () => {
-        const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay);
+        const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay, startDateParam, startTime, endDateParam, endTime);
         if (res.status === 'success') {
           console.log('normal', normalDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
           console.log('priority', priorityDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
+          fetchRight();
         } else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
       })();
       setClick(false);
@@ -219,13 +215,14 @@ export default function EventTimePage() {
   }, [googleConfirm]);
 
   useEffect(() => {
-    if (eventConfirm.length !== 0) {
+    console.log(eventConfirm);
+    if (eventConfirm.length > 0) {
       setSchedule(eventList[eventConfirm].normal.concat(eventList[eventConfirm].priority));
       if (enablePriority) {
         setPriorityDay(eventList[eventConfirm].priority);
         setNormalDay(eventList[eventConfirm].normal);
       } else setNormalDay(eventList[eventConfirm].normal.concat(eventList[eventConfirm].priority));
-      setEventConfirm('');
+      setClick(true);
     }
   }, [eventConfirm]);
 
@@ -236,7 +233,24 @@ export default function EventTimePage() {
         {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
           <div style={{ height: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '50%' }}>
-              <ImportButton appleSchedule={appleReverse} googleSchedule={googleReverse} eventList={eventList} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} setAppleConnect={setAppleConnect} setGoogleConnect={setGoogleConnect} setEventConnect={setEventConnect} setAppleConfirm={setAppleConfirm} setGoogleConfirm={setGoogleConfirm} setEventConfirm={setEventConfirm} enablePriority={enablePriority} />
+              <ImportButton
+                appleSchedule={appleReverse}
+                googleSchedule={googleReverse}
+                eventList={eventList}
+                setEventList={setEventList}
+                startTime={startTime}
+                endTime={endTime}
+                startDate={startDate}
+                numOfDays={numOfDays}
+                setAppleConnect={setAppleConnect}
+                setGoogleConnect={setGoogleConnect}
+                setEventConnect={setEventConnect}
+                setAppleConfirm={setAppleConfirm}
+                setGoogleConfirm={setGoogleConfirm}
+                setEventConfirm={setEventConfirm}
+                enablePriority={enablePriority}
+                eventID={eventID}
+              />
               <EventAddToGroup eventID={eventID} groupsAlreadyIn={groups} setTagList={setTagList} setGroups={setGroups} />
               <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
             </span>

@@ -4,36 +4,56 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/jsx-one-expression-per-line */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AppleFilled, DownloadOutlined,
 } from '@ant-design/icons';
 import { Icon } from '@iconify/react';
 import {
-  Button, Modal,
+  Button, message, Modal,
 } from 'antd';
 
 import logo from '../../icons/logo.png';
+import getImportEventsInfo from '../../utils/getImportEventsInfo';
 import CalendarForImport from '../CalendarForImport/CalendarForImport';
 
 import './ImportButton.css';
 
 export default function ImportButton({
-  appleSchedule, googleSchedule, eventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setEventConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm, enablePriority,
+  appleSchedule, googleSchedule, eventList, setEventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setEventConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm, enablePriority, eventID,
 }) {
-  const [eventChosen, setEventChosen] = useState(Object.keys(eventList)[0]);
+  const [eventChosen, setEventChosen] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAppleVisible, setIsAppleVisible] = useState(false);
   const [isGoogleVisible, setIsGoogleVisible] = useState(false);
   const [isEventVisible, setIsEventVisible] = useState(false);
-  const [eventScheduleNormal, setEventScheduleNormal] = useState(eventList[Object.keys(eventList)[0]].normal);
-  const [eventSchedulePriority, setEventSchedulePriority] = useState(eventList[Object.keys(eventList)[0]].priority);
-  const colorList = {};
-  colorList[Object.keys(eventList)[0]] = '#1F5A18';
-  for (let i = 1; i < Object.keys(eventList).length; i += 1) {
-    colorList[Object.keys(eventList)[i]] = '#01A494';
-  }
+  const [eventScheduleNormal, setEventScheduleNormal] = useState([]);
+  const [eventSchedulePriority, setEventSchedulePriority] = useState([]);
+  const [colorList, setColorList] = useState({});
+
   const [textColorList, setTextColorList] = useState(colorList);
+
+  useEffect(() => {
+    setEventList({
+      'SAD-1': {
+        normal: [new Date()],
+        priority: [new Date()],
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(eventList).length > 0) {
+      setEventScheduleNormal(eventList[Object.keys(eventList)[0]].normal);
+      setEventSchedulePriority(eventList[Object.keys(eventList)[0]].priority);
+      const tempColorList = {};
+      tempColorList[Object.keys(eventList)[0]] = '#1F5A18';
+      for (let i = 1; i < Object.keys(eventList).length; i += 1) {
+        tempColorList[Object.keys(eventList)[i]] = '#01A494';
+      }
+      setColorList(tempColorList);
+    }
+  }, [eventList]);
 
   const clickButton = () => {
     setIsModalVisible(true);
@@ -51,13 +71,28 @@ export default function ImportButton({
     setGoogleConnect(true);
   };
 
-  const clickEvent = () => {
-    setIsModalVisible(false);
-    setIsEventVisible(true);
-    setEventConnect(true);
+  const clickEvent = async () => {
+    // 接後端所有 events preview 狀況並 setEventList
+    message.warning('正在取得各活動資訊...', 1);
+    const res = await getImportEventsInfo();
+    if (res.status === 'success') {
+      setEventList(Object.assign({}, ...res.data.filter((event) => event.event_id !== Number(eventID)).map((event) => ({
+        [event.event_id]: {
+          normal: event.normal ? event.normal.map((timeblock) => new Date(timeblock)) : [],
+          priority: event.priority ? event.priority.map((timeblock) => new Date(timeblock)) : [],
+          name: event.event_name,
+        },
+      }))));
+      if (res.data.length > 0) {
+        setIsModalVisible(false);
+        setIsEventVisible(true);
+        setEventConnect(true);
+      } else message.error('目前沒有其它活動的填寫狀況！', 1.5);
+    }
   };
 
   const changeEvent = (event) => {
+    console.log(event, eventList[event].normal, eventList[event].priority);
     setEventScheduleNormal(eventList[event].normal);
     setEventSchedulePriority(eventList[event].priority);
     for (let i = 0; i < Object.keys(eventList).length; i += 1) {
@@ -162,7 +197,7 @@ export default function ImportButton({
           }}
           >
             {Object.keys(eventList).map((event) => (
-              <p style={{ marginTop: '5px', color: textColorList[event], fontWeight: 'bold' }} onClick={() => changeEvent(event)}>{event}</p>
+              <p style={{ marginTop: '5px', color: textColorList[event], fontWeight: 'bold' }} onClick={() => changeEvent(event)}>{eventList[event].name}</p>
             ))}
           </div>
           <div style={{
