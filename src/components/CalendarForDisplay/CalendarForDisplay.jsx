@@ -22,12 +22,18 @@ export default function CalendarForDisplay({
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
   const [switchPriority, setSwitchPriority] = useState(true);
   const [displayPriority, setDisplayPriority] = useState('flex');
+  const [position, setPosition] = useState('-27vh');
 
   useEffect(() => {
     console.log(selectedList);
     console.log(memberList);
-    if (enablePriority) setDisplayPriority('flex');
-    else setDisplayPriority('none');
+    if (enablePriority) {
+      setDisplayPriority('flex');
+      setPosition('-27vh');
+    } else {
+      setDisplayPriority('none');
+      setPosition('-30vh');
+    }
   }, []);
 
   useEffect(() => {
@@ -94,7 +100,7 @@ export default function CalendarForDisplay({
         <h4 style={{ marginTop: '-250px', marginLeft: '10px' }}>Consider Preference</h4>
       </div>
       <div style={{
-        width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '4vw',
+        width: '450px', height: '520px', overflow: 'auto', marginTop: position, marginLeft: '4vw',
       }}
       >
         <ScheduleSelector
