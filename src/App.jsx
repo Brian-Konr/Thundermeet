@@ -6,7 +6,6 @@ import {
 
 import AddEventPage from './routes/AddEvent/AddEventPage';
 import ConfirmTimePage from './routes/ConfirmTimePage/ConfirmTimePage';
-import Connect from './routes/Connect';
 import EditEventPage from './routes/EditEvent/EditEventPage';
 import EventTimePage from './routes/EventTimePage/EventTimePage';
 import FinalTimePage from './routes/FinalTimePage/FinalTimePage';
@@ -22,12 +21,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/personal" element={<PersonalPage />} />
-        <Route exact path="/connect-test" element={<Connect />} />
         <Route exact path="/event-time/:eventID" element={<EventTimePage />} />
-        <Route exact path="/confirm-time" element={<ConfirmTimePage />} />
+        <Route exact path="/confirm-time/:eventID" element={<ConfirmTimePage />} />
         <Route exact path="/final-time" element={<FinalTimePage />} />
         <Route exact path="/add-event" element={<AddEventPage />} />
-        <Route exact path="/edit-event" element={<EditEventPage />} />
+        <Route exact path="/edit-event/:eventID" element={<EditEventPage />} />
         <Route exact path="/group/:groupID" element={<GroupPage />} />
         <Route path="/" element={<Home />} />
       </Routes>

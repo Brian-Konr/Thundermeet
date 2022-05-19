@@ -1,14 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import {
-  Button, Form, Input,
+  Button, Form, Input, message,
 } from 'antd';
+
+import editEvent from '../../utils/editEvent';
 
 import './EditEvent.css';
 
 const { TextArea } = Input;
 
 export default function EditEvent({
-  eventName, setEventName, eventDescription, setEventDescription,
+  eventName, setEventName, eventDescription, setEventDescription, eventID,
 }) {
   const navigate = useNavigate();
 
@@ -28,17 +30,19 @@ export default function EditEvent({
   };
 
   const goToEvent = () => {
-    navigate('/event_time');
+    navigate(`/event-time/${eventID}`);
   };
 
-  const submitChange = () => {
-    console.log(
-      'Title:',
-      eventName,
-      '\nDescription:',
-      eventDescription,
-    );
-    navigate('/event_time');
+  const submitChange = async () => {
+    if (!eventName.trim()) {
+      message.error('Title 不得為空！', 1.5);
+      return;
+    }
+    const status = await editEvent(eventID, eventName.trim() /* eventDescription */);
+    if (status === 'success') {
+      message.success('成功更新！', 1.5);
+      navigate(`/event-time/${eventID}`);
+    } else message.error('無法更新！', 2);
   };
 
   return (

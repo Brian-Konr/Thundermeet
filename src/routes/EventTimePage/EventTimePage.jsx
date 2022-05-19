@@ -33,6 +33,7 @@ export default function EventTimePage() {
   const navigate = useNavigate();
   const [homeCardLoading, setHomeCardLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [rightLoading, setRightLoading] = useState(true);
   // params
   const [adminID, setAdminID] = useState('');
   const [groups, setGroups] = useState([]);
@@ -61,31 +62,6 @@ export default function EventTimePage() {
   // params for right
   const [memberList, setMemberList] = useState([]);
   const [selectedList, setSelectedList] = useState({}); // should include all time block(here for display only few timeblocks)
-  // selectedList[new Date(2022, 4, 2, 0, 0, 0)] = {
-  //   normal: ['小陳', '小王'],
-  //   priority: ['小葉', '小郭'],
-  //   notAvailable: [],
-  // };
-  // selectedList[new Date(2022, 4, 2, 0, 30, 0)] = {
-  //   normal: ['小陳', '小王'],
-  //   priority: ['小郭'],
-  //   notAvailable: ['小葉'],
-  // };
-  // selectedList[new Date(2022, 4, 2, 1, 0, 0)] = {
-  //   normal: ['小陳'],
-  //   priority: ['小郭'],
-  //   notAvailable: ['小王', '小葉'],
-  // };
-  // selectedList[new Date(2022, 4, 3, 0, 0, 0)] = {
-  //   normal: [],
-  //   priority: ['小郭'],
-  //   notAvailable: ['小陳', '小王', '小葉'],
-  // };
-  // selectedList[new Date(2022, 4, 3, 0, 30, 0)] = {
-  //   normal: [],
-  //   priority: [],
-  //   notAvailable: ['小陳', '小王', '小葉', '小郭'],
-  // };
   // params for import from apple calendar
   const [appleConnect, setAppleConnect] = useState(false); // set true when user click apple import, @郭 接完以後設成 false
   // const appleSchedule = [new Date(2022, 4, 5, 2, 0, 0), new Date(2022, 4, 4, 1, 30, 0), new Date(2022, 4, 6, 1, 30, 0), new Date(2022, 4, 3, 2, 0, 0), new Date(2022, 4, 3, 2, 30, 0), new Date(2022, 4, 7, 2, 0, 0), new Date(2022, 4, 7, 2, 30, 0), new Date(2022, 4, 4, 3, 0, 0), new Date(2022, 4, 4, 3, 30, 0), new Date(2022, 4, 6, 3, 0, 0), new Date(2022, 4, 6, 3, 30, 0), new Date(2022, 4, 5, 4, 0, 0)]; // heart style
@@ -111,43 +87,41 @@ export default function EventTimePage() {
 
   // when loading into this page, 接此 event 的基本資訊
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      // haven't logined
-      message.error('you have not logged in!');
+    if (localStorage.getItem('token')) {
+      (async () => {
+        const { data } = await getEvent(eventID);
+        console.log(data);
+        setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
+        setStartDate(new Date(data.start_date));
+        setEndDate(new Date(data.end_date));
+        setStartTime(Number(data.start_time.substring(0, 2)));
+        setEndTime(Number(data.end_time.substring(0, 2)));
+        setEventDescription(data.event_description);
+        setEventTitle(data.event_name);
+        setCopyLink(`http://localhost:3000/event-time/${eventID}`);
+        setEnablePriority(data.is_priority_enabled);
+        if (data.groups) {
+          setTagList(data.groups.map((groupObj) => groupObj.GroupName));
+          setGroups(data.groups.map((groupObj) => groupObj.GroupId));
+        }
+        setAdminID(data.admin_id);
+        const res = await getPreviewTimeblocks(eventID);
+        setLoading(false);
+        if (res.status === 'success') {
+          // 要 set 左邊最近一次的填寫狀況
+          if (res.normal.length > 0) setNormalDay(res.normal.map((timeblock) => new Date(timeblock)));
+          if (data.is_priority_enabled && (res.priority.length > 0)) setPriorityDay(res.priority.map((timeblock) => new Date(timeblock)));
+          setSchedule(res.concat.map((timeblock) => new Date(timeblock)));
+        } else message.error('無法取得最近一次填寫資訊！', 2);
+        const timeblocksRes = await getAllTimeBlocksInfo(eventID);
+        setRightLoading(false);
+        console.log(timeblocksRes.info);
+        if (timeblocksRes.status === 'success') {
+          setSelectedList(timeblocksRes.info);
+          setMemberList(timeblocksRes.memberList);
+        } else message.error('無法取得各填寫者的填寫資訊！', 2);
+      })();
     }
-
-    (async () => {
-      const { data } = await getEvent(eventID);
-      console.log(data);
-      setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
-      setStartDate(new Date(data.start_date));
-      setEndDate(new Date(data.end_date));
-      setStartTime(Number(data.start_time.substring(0, 2)));
-      setEndTime(Number(data.end_time.substring(0, 2)));
-      setEventDescription(data.event_description);
-      setEventTitle(data.event_name);
-      setCopyLink(`http://localhost:3000/event-time/${eventID}`);
-      setEnablePriority(data.is_priority_enabled);
-      if (data.groups) {
-        setTagList(data.groups.map((groupObj) => groupObj.GroupName));
-        setGroups(data.groups.map((groupObj) => groupObj.GroupId));
-      }
-      setAdminID(data.admin_id);
-      const res = await getPreviewTimeblocks(eventID);
-      if (res.status === 'success') {
-        // 要 set 左邊最近一次的填寫狀況
-        if (res.normal.length > 0) setNormalDay(res.normal.map((timeblock) => new Date(timeblock)));
-        if (data.is_priority_enabled && (res.priority.length > 0)) setPriorityDay(res.priority.map((timeblock) => new Date(timeblock)));
-        setSchedule(res.concat.map((timeblock) => new Date(timeblock)));
-      } else message.error('無法取得最近一次填寫資訊！', 2);
-      const timeblocksRes = await getAllTimeBlocksInfo(eventID);
-      console.log(timeblocksRes.info);
-      if (timeblocksRes.status === 'success') {
-        setSelectedList(timeblocksRes.info);
-        setMemberList(timeblocksRes.memberList);
-      } else message.error('無法取得各填寫者的填寫資訊！', 2);
-      setLoading(false);
-    })();
   }, []);
 
   // POST when user fills timeblocks
@@ -167,12 +141,8 @@ export default function EventTimePage() {
     // console.log('selected:', schedule);
   }, [normalDay, priorityDay]);
 
-  const confirmDate = () => {
-    navigate('/confirm-time');
-  };
-
   const editButton = () => {
-    navigate('/edit-event');
+    navigate(`/edit-event/${eventID}`);
   };
 
   const [appleConfirm, setAppleConfirm] = useState(false);
@@ -287,7 +257,7 @@ export default function EventTimePage() {
             </div>
             <div className="container">
               <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} setClick={setClick} />
-              <CalendarForDisplay startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+              {rightLoading ? <Spin /> : <CalendarForDisplay startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />}
               {adminID === localStorage.getItem('userID')
                 && (
                 <Button
@@ -295,7 +265,7 @@ export default function EventTimePage() {
                     marginTop: '510px', marginLeft: '-30px', background: '#01A494', color: 'white',
                   }}
                   icon={<ArrowRightOutlined />}
-                  onClick={confirmDate}
+                  onClick={() => navigate(`/confirm-time/${eventID}`)}
                 >
                   Confirm Date
                 </Button>
