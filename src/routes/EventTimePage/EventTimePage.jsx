@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';

@@ -34,39 +34,56 @@ export default function Calendar({
       removeCell = schedule.filter((item) => !newSchedule.includes(item));
       // console.log('removeCell', removeCell);
     }
-    setSchedule(newSchedule);
 
     if (!priority) {
+      const arr = [];
+      for (let i = 0; i < removeCell.length; i += 1) {
+        arr[i] = removeCell[i].getTime();
+      }
       // rewrite
-      if (priorityDay.some((item) => removeCell.includes(item))) {
-        setPriorityDay(priorityDay.filter((item) => !removeCell.includes(item)));
-        const unduplicateRemoveNormal = removeCell.filter((i) => !normalDay.includes(i));
+      if (priorityDay.some((item) => arr.includes(item.getTime()))) {
+        const arr2 = [];
+        for (let i = 0; i < normalDay.length; i += 1) {
+          arr2[i] = normalDay[i].getTime();
+        }
+        setPriorityDay(priorityDay.filter((item) => !arr.includes(item.getTime())));
+        const unduplicateRemoveNormal = removeCell.filter((i) => !arr2.includes(i.getTime()));
         setNormalDay((normalDay) => normalDay.concat(unduplicateRemoveNormal));
-        setSchedule((schedule) => schedule.concat(removeCell));
       }
       // add
       else if (addCell.length !== 0) {
         setNormalDay((normalDay) => normalDay.concat(addCell));
+        setSchedule((schedule) => schedule.concat(addCell));
       }
       // remove
       else {
-        setNormalDay(normalDay.filter((item) => !removeCell.includes(item)));
+        setNormalDay(normalDay.filter((item) => !arr.includes(item.getTime())));
+        setSchedule(schedule.filter((item) => !arr.includes(item.getTime())));
       }
     } else {
+      const arr = [];
+      for (let i = 0; i < removeCell.length; i += 1) {
+        arr[i] = removeCell[i].getTime();
+      }
       // rewrite
-      if (normalDay.some((item) => removeCell.includes(item))) {
-        setNormalDay(normalDay.filter((item) => !removeCell.includes(item)));
-        const unduplicateRemovePriority = removeCell.filter((i) => !priorityDay.includes(i));
+      if (normalDay.some((item) => arr.includes(item.getTime()))) {
+        const arr2 = [];
+        for (let i = 0; i < priorityDay.length; i += 1) {
+          arr2[i] = priorityDay[i].getTime();
+        }
+        setNormalDay(normalDay.filter((item) => !arr.includes(item.getTime())));
+        const unduplicateRemovePriority = removeCell.filter((i) => !arr2.includes(i.getTime()));
         setPriorityDay((priorityDay) => priorityDay.concat(unduplicateRemovePriority));
-        setSchedule((schedule) => schedule.concat(removeCell));
       }
       // add
       else if (addCell.length !== 0) {
         setPriorityDay((priorityDay) => priorityDay.concat(addCell));
+        setSchedule((schedule) => schedule.concat(addCell));
       }
       // remove
       else {
-        setPriorityDay(priorityDay.filter((item) => !removeCell.includes(item)));
+        setPriorityDay(priorityDay.filter((item) => !arr.includes(item.getTime())));
+        setSchedule(schedule.filter((item) => !arr.includes(item.getTime())));
       }
     }
   };
@@ -81,11 +98,11 @@ export default function Calendar({
     setPriority(false);
   };
 
-  // useEffect(() => {
-  //   console.log('normal:', normalDay);
-  //   console.log('priority:', priorityDay);
-  //   // console.log('selected:', schedule);
-  // }, [normalDay, priorityDay]);
+  useEffect(() => {
+    console.log('normal:', normalDay);
+    console.log('priority:', priorityDay);
+    console.log('selected:', schedule);
+  }, [normalDay, priorityDay]);
 
   const arr = [];
   useEffect(() => {
