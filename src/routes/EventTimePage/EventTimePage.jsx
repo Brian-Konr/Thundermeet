@@ -258,7 +258,12 @@ export default function EventTimePage() {
             </div>
             <div className="container">
               <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} setClick={setClick} />
-              {rightLoading ? <Spin /> : <CalendarForDisplay startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} enablePriority={enablePriority} />}
+              {rightLoading ? (
+                <Spin style={{
+                  marginLeft: '21.3vw', marginRight: '21vw', marginTop: '25vh', backgroundColor: '#f8f8f8',
+                }}
+                />
+              ) : <CalendarForDisplay startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} enablePriority={enablePriority} />}
               {adminID === localStorage.getItem('userID')
                 && (
                 <Button
