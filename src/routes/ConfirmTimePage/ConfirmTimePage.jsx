@@ -38,6 +38,7 @@ export default function ConfirmTimePage() {
   const [copyLink, setCopyLink] = useState('');
   const [memberList, setMemberList] = useState([]);
   const [selectedList, setSelectedList] = useState({});
+  const [enablePriority, setEnablePriority] = useState(true); // creator enable priority or not
   // output
   const [schedule, setSchedule] = useState([]);
   // output for add to category
@@ -89,16 +90,16 @@ export default function ConfirmTimePage() {
   return (
     <>
       <Navbar />
-      {loading ? <Spin /> : (
+      {loading ? <Spin style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
         <div style={{ height: '92vh', background: '#F8F8F8' }}>
-          <span style={{ marginLeft: '65%' }}>
+          <span style={{ marginLeft: '60%' }}>
             <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
             <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
           </span>
           <div style={{ width: '92%', marginLeft: '4%' }}>
             <span>
               <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
-              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '85%' }} onClick={editButton} />
+              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} />
             </span>
             <div style={{
               background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
@@ -112,7 +113,7 @@ export default function ConfirmTimePage() {
             <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
           </div>
           <div className="container-confirm">
-            <CalendarForConfirm schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+            <CalendarForConfirm schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} enablePriority={enablePriority} />
             <Button
               style={{
                 marginTop: '510px', marginLeft: '210px',

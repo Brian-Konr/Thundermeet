@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-one-expression-per-line */
 import { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -10,7 +11,7 @@ import {
 
 import './EventCopyConfirmLink.css';
 
-export default function EventCopyConfirmLink({ eventName, schedule }) {
+export default function EventCopyConfirmLink({ eventName, schedule, copyLink }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const year = schedule[0].getFullYear();
@@ -31,7 +32,7 @@ export default function EventCopyConfirmLink({ eventName, schedule }) {
     timeString = `${year}/${month}/${date} ${hourStart}:0${minuteStart} - ${hourEnd}:0${minuteEnd}`;
   }
 
-  const copyText = `${eventName} 時間已經出爐囉！時間是 ${timeString}，請大家把這個時間加入行事曆～我們到時見！`;
+  const copyText = `${eventName} 時間已經出爐囉！最終時間連結：${copyLink}，請大家把這個時間加入行事曆～我們到時見！`;
 
   const clickButton = () => {
     setIsModalVisible(true);
@@ -59,7 +60,8 @@ export default function EventCopyConfirmLink({ eventName, schedule }) {
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
-          <p>{eventName} 時間已經出爐囉！時間是 {timeString}，</p>
+          <p>{eventName} 時間已經出爐囉！</p>
+          <p>最終時間連結：{copyLink}，</p>
           <p>請大家把這個時間加入行事曆～我們到時見！</p>
           <br />
           <Button type="primary" className="gotit-button" onClick={unClickButton}>

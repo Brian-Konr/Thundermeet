@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 import './CalendarForDisplay.css';
 
 export default function CalendarForDisplay({
-  startTime, endTime, startDate, numOfDays, memberList, selectedList,
+  startTime, endTime, startDate, numOfDays, memberList, selectedList, enablePriority,
 }) {
   const [removeList, setRemoveList] = useState([]);
   const [colorList, setColorList] = useState([]);
@@ -21,10 +21,13 @@ export default function CalendarForDisplay({
   const [styleBlock, setStyleBlock] = useState({ display: 'none' });
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
   const [switchPriority, setSwitchPriority] = useState(true);
+  const [displayPriority, setDisplayPriority] = useState('flex');
 
   useEffect(() => {
     console.log(selectedList);
     console.log(memberList);
+    if (enablePriority) setDisplayPriority('flex');
+    else setDisplayPriority('none');
   }, []);
 
   useEffect(() => {
@@ -78,17 +81,17 @@ export default function CalendarForDisplay({
           {memberList.length - removeList.length}
         </p>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: displayPriority, flexDirection: 'row' }}>
         <Switch
           defaultChecked
           onChange={switchChange}
           style={{
-            marginTop: '-260px',
+            marginTop: '-250px',
             marginLeft: '90px',
             ...(switchPriority ? { background: '#01A494' } : { background: '#B8B8B8' }),
           }}
         />
-        <h4 style={{ marginTop: '-260px', marginLeft: '10px' }}>Consider Preference</h4>
+        <h4 style={{ marginTop: '-250px', marginLeft: '10px' }}>Consider Preference</h4>
       </div>
       <div style={{
         width: '450px', height: '520px', overflow: 'auto', marginTop: '-27vh', marginLeft: '4vw',

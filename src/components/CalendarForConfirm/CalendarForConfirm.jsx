@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -14,7 +15,7 @@ import { format } from 'date-fns';
 import './CalendarForConfirm.css';
 
 export default function CalendarForConfirm({
-  schedule, setSchedule, startTime, endTime, startDate, numOfDays, memberList, selectedList,
+  schedule, setSchedule, startTime, endTime, startDate, numOfDays, memberList, selectedList, enablePriority,
 }) {
   const [removeList, setRemoveList] = useState([]);
   const [colorList, setColorList] = useState([]);
@@ -22,6 +23,12 @@ export default function CalendarForConfirm({
   const [styleBlock, setStyleBlock] = useState({ display: 'none' });
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
   const [switchPriority, setSwitchPriority] = useState(true);
+  const [displayPriority, setDisplayPriority] = useState('flex');
+
+  useEffect(() => {
+    if (enablePriority) setDisplayPriority('flex');
+    else setDisplayPriority('none');
+  }, []);
 
   useEffect(() => {
     setColorList([]);
@@ -90,7 +97,7 @@ export default function CalendarForConfirm({
       >
         Selected Time
       </p>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: displayPriority, flexDirection: 'row' }}>
         <Switch
           defaultChecked
           onChange={switchChange}

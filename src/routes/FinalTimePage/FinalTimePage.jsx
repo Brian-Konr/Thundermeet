@@ -25,6 +25,8 @@ export default function FinalTimePage() {
   const startDate = new Date(2022, 4, 2); // start date(if weekday, weekday switch to the nearest date)
   const numOfDays = 7; // continue number of days(for both weekday & date)
   const memberList = ['小陳', '小王', '小葉', '小郭'];
+  const [copyLink, setCopyLink] = useState('https://thundermeet');
+  const [enablePriority, setEnablePriority] = useState(true); // creator enable priority or not
   const selectedList = {};
   selectedList[new Date(2022, 4, 2, 0, 0, 0)] = {
     normal: ['小陳', '小王'],
@@ -70,7 +72,7 @@ export default function FinalTimePage() {
         <span style={{ marginLeft: '55%' }}>
           <ExportButton eventList={eventList} setExportToApple={setExportToApple} setExportToGoogle={setExportToGoogle} setExportToEvent={setExportToEvent} />
           <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
-          <EventCopyConfirmLink eventName={eventTitle} schedule={schedule} />
+          <EventCopyConfirmLink eventName={eventTitle} schedule={schedule} copyLink={copyLink} />
         </span>
         <div style={{ width: '92%', marginLeft: '4%' }}>
           <span>
@@ -88,7 +90,7 @@ export default function FinalTimePage() {
           <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
         </div>
         <div className="container-final">
-          <CalendarForFinal schedule={schedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} />
+          <CalendarForFinal schedule={schedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} enablePriority={enablePriority} />
         </div>
       </div>
     </>

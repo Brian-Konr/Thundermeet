@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import { format } from 'date-fns';
 
+import './Calendar.css';
+
 export default function Calendar({
   schedule, setSchedule, startTime, endTime, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList, setClick,
 }) {
@@ -125,16 +127,20 @@ export default function Calendar({
             />
             {priority
               ? (
-                <div style={{
-                  marginLeft: '1.5vw', marginTop: '1vh', width: '60px', paddingLeft: '10px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
-                }}
+                <div
+                  style={{
+                    marginLeft: '1.5vw', marginTop: '1vh', width: '60px', paddingLeft: '10px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
+                  }}
+                  className="pointer"
                 >
                   Prefer
                 </div>
               ) : (
-                <div style={{
-                  marginLeft: '1.5vw', marginTop: '1vh', width: '60px', paddingLeft: '10px',
-                }}
+                <div
+                  style={{
+                    marginLeft: '1.5vw', marginTop: '1vh', width: '60px', paddingLeft: '10px',
+                  }}
+                  className="pointer"
                 >
                   Prefer
                 </div>
@@ -148,16 +154,20 @@ export default function Calendar({
             />
             {priority
               ? (
-                <div style={{
-                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '9px',
-                }}
+                <div
+                  style={{
+                    marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '9px',
+                  }}
+                  className="pointer"
                 >
                   Not Prefer
                 </div>
               ) : (
-                <div style={{
-                  marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '9px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
-                }}
+                <div
+                  style={{
+                    marginLeft: '0.5vw', marginTop: '1vh', width: '85px', paddingLeft: '9px', borderRadius: '16px', background: '#ECFCFA', border: '1px solid #01A494',
+                  }}
+                  className="pointer"
                 >
                   Not Prefer
                 </div>
@@ -173,9 +183,11 @@ export default function Calendar({
               }}
               onClick={clickNormal}
             />
-            <div style={{
-              marginLeft: '1vw', marginTop: '1vh', width: '85px', paddingLeft: '9px',
-            }}
+            <div
+              style={{
+                marginLeft: '1vw', marginTop: '1vh', width: '85px', paddingLeft: '9px',
+              }}
+              className="pointer"
             >
               Available
             </div>

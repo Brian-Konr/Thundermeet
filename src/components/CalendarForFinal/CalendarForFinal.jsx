@@ -6,7 +6,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
 import { Switch } from 'antd';
 import { format } from 'date-fns';
@@ -14,13 +14,19 @@ import { format } from 'date-fns';
 import './CalendarForFinal.css';
 
 export default function CalendarForFinal({
-  schedule, startTime, endTime, startDate, numOfDays, memberList, selectedList,
+  schedule, startTime, endTime, startDate, numOfDays, memberList, selectedList, enablePriority,
 }) {
   const [removeList, setRemoveList] = useState([]);
   const [style, setStyle] = useState({ display: 'flex' });
   const [styleBlock, setStyleBlock] = useState({ display: 'none' });
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
   const [switchPriority, setSwitchPriority] = useState(true);
+  const [displayPriority, setDisplayPriority] = useState('flex');
+
+  useEffect(() => {
+    if (enablePriority) setDisplayPriority('flex');
+    else setDisplayPriority('none');
+  }, []);
 
   const crossMember = (member) => {
     console.log('cross member');
@@ -53,7 +59,7 @@ export default function CalendarForFinal({
       >
         Selected Time
       </p>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: displayPriority, flexDirection: 'row' }}>
         <Switch
           defaultChecked
           onChange={switchChange}
