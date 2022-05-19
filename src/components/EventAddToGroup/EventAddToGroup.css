@@ -1,4 +1,11 @@
 .button-round {
   margin-left: 1vw;
   margin-top: 3vh;
+  box-shadow: none;
+}
+
+.ant-btn.button-round:hover {
+  color: #56c7bc;
+  border: 1px solid #56c7bc;
+  box-shadow: none;
 }

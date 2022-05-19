@@ -125,7 +125,6 @@ export default function MyGroups() {
         <hr />
         <div className="groups">
           <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>已參與 Participated</Button>
-          <Button className="card default-card" type="primary" onClick={() => navigate('/group/confirmed')}>已確認 Confirmed</Button>
           <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>已發起 Created</Button>
           {groupList && groupList.map((group) => <Button className="card custom-card" type="primary" onClick={() => navigate(`/group/${group.group_id}`)}>{group.group_name}</Button>)}
         </div>
@@ -141,7 +140,6 @@ export default function MyGroups() {
       <hr />
       <div className="groups">
         <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>已參與 Participated</Button>
-        <Button className="card default-card" type="primary" onClick={() => navigate('/group/confirmed')}>已確認 Confirmed</Button>
         <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>已發起 Created</Button>
         {groupList && groupList.map((group) => <Button className="card custom-card" type="primary" onClick={() => navigate(`/group/${group.group_id}`)}>{group.group_name}</Button>)}
       </div>
