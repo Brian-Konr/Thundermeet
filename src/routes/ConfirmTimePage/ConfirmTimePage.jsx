@@ -81,12 +81,16 @@ export default function ConfirmTimePage() {
 
   const confirmAction = async () => {
     // API confirm timeblocks
-    const status = await confirmTime(eventID, schedule);
-    if (status === 'success') {
-      message.success('活動時間已確認！', 1.5);
-      navigate(`/final-time/${eventID}`);
+    if (schedule.length >= 1) {
+      const status = await confirmTime(eventID, schedule);
+      if (status === 'success') {
+        message.success('活動時間已確認！', 1.5);
+        navigate(`/final-time/${eventID}`);
+      } else {
+        message.error('無法確認時段！', 1.5);
+      }
     } else {
-      message.error('無法確認時段！', 1.5);
+      message.error('請至少選一個時間段', 1.5);
     }
   };
 
