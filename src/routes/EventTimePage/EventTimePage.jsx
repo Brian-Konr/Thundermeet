@@ -18,6 +18,7 @@ import EventCopyLink from '../../components/EventCopyLink/EventCopyLink';
 import HomeCard from '../../components/HomeCard/HomeCard';
 import ImportButton from '../../components/ImportButton/ImportButton';
 import Navbar from '../../components/Navbar/Navbar';
+import logo from '../../icons/logo.png';
 import calendarToTimeblocks from '../../utils/calendarToTimeblocks';
 import fillTimeBlocks from '../../utils/fillTimeBlocks';
 import getAllTimeBlocksInfo from '../../utils/getAllTimeBlocksInfo';
@@ -257,7 +258,7 @@ export default function EventTimePage() {
             <div style={{ width: '92%', marginLeft: '4%' }}>
               <span>
                 <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
-                <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} />
+                <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} className="pointer" />
               </span>
               <div style={{
                 background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
@@ -297,7 +298,10 @@ export default function EventTimePage() {
     ) : (
       <>
         {homeCardLoading && <Spin />}
-        <HomeCard loading={homeCardLoading} setLoading={setHomeCardLoading} atHome={false} />
+        <div style={{ width: '300px', paddingLeft: '35vw', paddingTop: '15vh' }}>
+          <img src={logo} alt="logo" style={{ width: '300px', marginLeft: '4vw' }} />
+          <HomeCard loading={homeCardLoading} setLoading={setHomeCardLoading} atHome={false} />
+        </div>
       </>
     )
   );

@@ -7,3 +7,6 @@
   flex-direction: row;
   margin-left: 350px;
 }
+.pointer:hover {
+  cursor: pointer;
+}

@@ -81,12 +81,16 @@ export default function ConfirmTimePage() {
 
   const confirmAction = async () => {
     // API confirm timeblocks
-    const status = await confirmTime(eventID, schedule);
-    if (status === 'success') {
-      message.success('活動時間已確認！', 1.5);
-      navigate(`/final-time/${eventID}`);
+    if (schedule.length >= 1) {
+      const status = await confirmTime(eventID, schedule);
+      if (status === 'success') {
+        message.success('活動時間已確認！', 1.5);
+        navigate(`/final-time/${eventID}`);
+      } else {
+        message.error('無法確認時段！', 1.5);
+      }
     } else {
-      message.error('無法確認時段！', 1.5);
+      message.error('請至少選一個時間段', 1.5);
     }
   };
 
@@ -106,7 +110,7 @@ export default function ConfirmTimePage() {
           <div style={{ width: '92%', marginLeft: '4%' }}>
             <span>
               <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
-              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} />
+              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} className="pointer" />
             </span>
             <div style={{
               background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
@@ -129,18 +133,14 @@ export default function ConfirmTimePage() {
             >
               Cancel
             </Button>
-            {schedule.length >= 1 ? (
-              <Button
-                style={{
-                  marginTop: '510px', marginLeft: '15px', background: '#01A494', color: 'white',
-                }}
-                onClick={confirmAction}
-              >
-                Confirm
-              </Button>
-            ) : (
-              <></>
-            )}
+            <Button
+              style={{
+                marginTop: '510px', marginLeft: '15px', background: '#01A494', color: 'white',
+              }}
+              onClick={confirmAction}
+            >
+              Confirm
+            </Button>
           </div>
         </div>
       )}

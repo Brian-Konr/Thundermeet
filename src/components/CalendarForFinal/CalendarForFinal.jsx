@@ -45,7 +45,7 @@ export default function CalendarForFinal({
 
   return (
     <div style={{
-      width: '580px', height: '520px', marginLeft: '80px', borderTop: '1px solid #F8F8F8', marginTop: '30px',
+      width: '580px', height: '520px', marginLeft: '80px', borderTop: '1px solid #F8F8F8', marginTop: '5vh', marginBottom: '5vh',
     }}
     >
       <div
