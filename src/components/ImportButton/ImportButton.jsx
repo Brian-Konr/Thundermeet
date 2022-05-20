@@ -20,7 +20,7 @@ import CalendarForImport from '../CalendarForImport/CalendarForImport';
 import './ImportButton.css';
 
 export default function ImportButton({
-  appleSchedule, googleSchedule, eventList, setEventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setEventConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm, enablePriority, eventID,
+  appleSchedule, googleSchedule, eventList, setEventList, startTime, endTime, type, startDate, numOfDays, setAppleConnect, setGoogleConnect, setAppleConfirm, setGoogleConfirm, setEventConfirm, enablePriority, eventID,
 }) {
   const [eventChosen, setEventChosen] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -86,7 +86,6 @@ export default function ImportButton({
       if (res.data.length > 0) {
         setIsModalVisible(false);
         setIsEventVisible(true);
-        setEventConnect(true);
       } else message.error('目前沒有其它活動的填寫狀況！', 1.5);
     }
   };

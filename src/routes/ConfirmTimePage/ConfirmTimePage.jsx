@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -15,6 +14,7 @@ import CalendarForConfirm from '../../components/CalendarForConfirm/CalendarForC
 import EventAddToGroup from '../../components/EventAddToGroup/EventAddToGroup';
 import EventCopyLink from '../../components/EventCopyLink/EventCopyLink';
 import Navbar from '../../components/Navbar/Navbar';
+import confirmTime from '../../utils/confirmTime';
 import getAllTimeBlocksInfo from '../../utils/getAllTimeBlocksInfo';
 import getEvent from '../../utils/getEvent';
 import getNumberOfDays from '../../utils/getNumberOfDays';
@@ -24,8 +24,8 @@ import './ConfirmTimePage.css';
 export default function ConfirmTimePage() {
   const navigate = useNavigate();
   const { eventID } = useParams();
+  const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [adminID, setAdminID] = useState('');
 
   // params
   const [eventTitle, setEventTitle] = useState('');
@@ -41,10 +41,6 @@ export default function ConfirmTimePage() {
   const [enablePriority, setEnablePriority] = useState(true); // creator enable priority or not
   // output
   const [schedule, setSchedule] = useState([]);
-  // output for add to category
-  const [selectedGroup, setSelectedGroup] = useState(''); // store selected group's name
-  // params for add to category
-  const [groupList, setGroupList] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -54,7 +50,11 @@ export default function ConfirmTimePage() {
         navigate(`/event-time/${eventID}`);
         return;
       }
+      if (data.is_confirmed) {
+        navigate(`/final-time/${eventID}`);
+      }
       console.log(data);
+      setEnablePriority(data.is_priority_enabled);
       setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
       setStartDate(new Date(data.start_date));
       setStartTime(Number(data.start_time.substring(0, 2)));
@@ -64,11 +64,11 @@ export default function ConfirmTimePage() {
       setCopyLink(`http://localhost:3000/event-time/${eventID}`);
       if (data.groups) {
         setTagList(data.groups.map((groupObj) => groupObj.GroupName));
+        setGroups(data.groups.map((groupObj) => groupObj.GroupId));
       }
-      setAdminID(data.admin_id);
       const timeblocksRes = await getAllTimeBlocksInfo(eventID);
       setLoading(false);
-      console.log(timeblocksRes.info);
+      // console.log(timeblocksRes.info);
       if (timeblocksRes.status === 'success') {
         setSelectedList(timeblocksRes.info);
         setMemberList(timeblocksRes.memberList);
@@ -76,14 +76,17 @@ export default function ConfirmTimePage() {
     })();
   }, []);
   const cancelAction = () => {
-    navigate('/event-time');
+    navigate(`/event-time/${eventID}`);
   };
 
-  const confirmAction = () => {
-    if (schedule.length >= 1) {
-      navigate('/final-time');
+  const confirmAction = async () => {
+    // API confirm timeblocks
+    const status = await confirmTime(eventID, schedule);
+    if (status === 'success') {
+      message.success('活動時間已確認！', 1.5);
+      navigate(`/final-time/${eventID}`);
     } else {
-      message.error('must select at least a period of time');
+      message.error('無法確認時段！', 1.5);
     }
   };
 
@@ -97,7 +100,7 @@ export default function ConfirmTimePage() {
       {loading ? <Spin style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
         <div style={{ height: '92vh', background: '#F8F8F8' }}>
           <span style={{ marginLeft: '60%' }}>
-            <EventAddToGroup setSelectedGroup={setSelectedGroup} groupList={groupList} />
+            <EventAddToGroup eventID={eventID} groupsAlreadyIn={groups} setTagList={setTagList} setGroups={setGroups} />
             <EventCopyLink eventName={eventTitle} copyLink={copyLink} />
           </span>
           <div style={{ width: '92%', marginLeft: '4%' }}>

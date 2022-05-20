@@ -14,12 +14,15 @@ import {
 } from 'antd';
 
 import logo from '../../icons/logo.png';
+import exportToGoogle from '../../utils/exportToGoogle';
+import getMyEvents from '../../utils/getMyEvents';
 
 import './ExportButton.css';
 
 export default function ExportButton({
-  eventList, setExportToApple, setExportToGoogle, setExportToEvent,
+  eventTitle, eventDescription, schedule, eventID,
 }) {
+  const [eventList, setEventList] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEventVisible, setIsEventVisible] = useState(false);
   const [form] = Form.useForm();
@@ -36,18 +39,35 @@ export default function ExportButton({
   const clickApple = () => {
     setIsModalVisible(false);
     message.success('export to apple calendar succeeded!');
-    setExportToApple(true);
   };
 
-  const clickGoogle = () => {
-    setIsModalVisible(false);
+  const exportGoogle = async () => {
+    const sortedTime = Object.values(schedule).sort((a, b) => new Date(a) - new Date(b));
+    const start = sortedTime[0].toISOString();
+    const end = new Date(sortedTime[sortedTime.length - 1].getTime() + 30 * 60000).toISOString();
+    await exportToGoogle(eventTitle, eventDescription, start, end);
     message.success('export to google calendar succeeded!');
-    setExportToGoogle(true);
+    setIsModalVisible(false);
   };
 
-  const clickEvent = () => {
+  const clickEvent = async () => {
+    // fetch all events
+    message.warning('正在取得活動資訊...', 1.5);
+    const res = await getMyEvents();
+    if (res.status === 'success') {
+      setEventList(res.data.filter((event) => !event.is_confirmed && event.event_id !== Number(eventID)).map((event) => ({
+        id: event.event_id,
+        name: event.event_name,
+      })));
+      // 只顯示還沒 confirm 且不是這個 event 的 events
+    }
     setIsModalVisible(false);
     setIsEventVisible(true);
+  };
+
+  const exportEvent = (exportEventID) => {
+    // 要跟後端確認怎麼傳，可能是傳 disable array 過去
+    console.log('export to event ', exportEventID);
   };
 
   return (
@@ -77,7 +97,7 @@ export default function ExportButton({
             style={{
               height: '150px', width: '25%', border: '1px solid #B8B8B8', marginLeft: '10px', borderRadius: '8px',
             }}
-            onClick={clickGoogle}
+            onClick={exportGoogle}
           >
             <Icon icon="flat-color-icons:google" width="50px" style={{ marginTop: '35px', marginLeft: '65px' }} />
             <p style={{ marginLeft: '36px' }}>Google Calendar</p>
@@ -100,10 +120,10 @@ export default function ExportButton({
         onCancel={() => {
           setIsEventVisible(false);
         }}
-        onOk={() => {
+        onOk={async () => {
           setIsEventVisible(false);
-          setExportToEvent(eventList[form.getFieldValue('selectEvent')]);
-          message.success(`export to event: ${eventList[form.getFieldValue('selectEvent')]} succeeded!`);
+          exportEvent(Number(form.getFieldValue('selectEvent')));
+          message.success(`export to event: ${eventList.filter((event) => event.id === Number(form.getFieldValue('selectEvent')))[0].name} succeeded!`);
         }}
         width={700}
       >
@@ -116,7 +136,7 @@ export default function ExportButton({
               style={{ width: '70%' }}
               placeholder="Select existing event"
             >
-              {eventOptionList}
+              {eventList.map((eventObj) => <Option key={eventObj.id}>{eventObj.name}</Option>)}
             </Select>
           </Form.Item>
         </Form>

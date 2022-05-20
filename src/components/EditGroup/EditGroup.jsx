@@ -1,5 +1,5 @@
 import {
-  Button,
+  Button, message,
 } from 'antd';
 
 import './EditGroup.css';
@@ -8,11 +8,15 @@ export default function EditGroup({
   isEdit, setIsEdit, editTitle, setGroupTitle, ongoingEvents, editOngoingEvents, setOngoingEvents,
   setEditOngoingEvents, decidedEvents, editDecidedEvents, setDecidedEvents, setEditDecidedEvents,
 }) {
-  function handleConfirmEdit() {
-    setGroupTitle(editTitle);
+  async function handleConfirmEdit() {
+    if (!editTitle.trim()) {
+      message.error('Group Name cannot be empty!', 1.5);
+      return;
+    }
+    setGroupTitle(editTitle.trim());
     setOngoingEvents(editOngoingEvents);
     setDecidedEvents(editDecidedEvents);
-    setIsEdit(false);
+    // setIsEdit(false);
   }
 
   function handeCancelEdit() {

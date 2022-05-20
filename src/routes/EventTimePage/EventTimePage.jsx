@@ -49,7 +49,6 @@ export default function EventTimePage() {
   const [copyLink, setCopyLink] = useState('');
   // params for left
   const [enablePriority, setEnablePriority] = useState(true); // creator enable priority or not
-  const [exportTime, setExportTime] = useState([new Date(2022, 4, 3, 0, 0, 0), new Date(2022, 4, 3, 0, 30, 0)]); // when user export other event's specific time here
   // output for left(2 arrays & user_id)
   const [click, setClick] = useState(false);
   const [normalDay, setNormalDay] = useState([]);
@@ -71,7 +70,6 @@ export default function EventTimePage() {
   const [googleSchedule, setGoogleSchedule] = useState([]);
   // params for import from event
   const [eventList, setEventList] = useState({});
-  const [eventConnect, setEventConnect] = useState(false); // set true when user click event import, @郭 接完以後設成 false
 
   const fetchRight = async () => {
     setRightLoading(true);
@@ -93,6 +91,9 @@ export default function EventTimePage() {
     if (localStorage.getItem('token')) {
       (async () => {
         const { data } = await getEvent(eventID);
+        if (data.is_confirmed) {
+          navigate(`/final-time/${eventID}`);
+        }
         console.log(data);
         setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
         setStartDateParam(data.start_date);
@@ -245,7 +246,6 @@ export default function EventTimePage() {
                 numOfDays={numOfDays}
                 setAppleConnect={setAppleConnect}
                 setGoogleConnect={setGoogleConnect}
-                setEventConnect={setEventConnect}
                 setAppleConfirm={setAppleConfirm}
                 setGoogleConfirm={setGoogleConfirm}
                 setEventConfirm={setEventConfirm}
@@ -272,7 +272,7 @@ export default function EventTimePage() {
               <h3 style={{ marginTop: '5px' }}>{eventDescription}</h3>
             </div>
             <div className="container">
-              <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} exportTime={exportTime} setTimeList={setTimeList} setClick={setClick} />
+              <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} setTimeList={setTimeList} setClick={setClick} />
               {rightLoading ? (
                 <Spin style={{
                   marginLeft: '21.3vw', marginRight: '21vw', marginTop: '25vh', backgroundColor: '#f8f8f8',

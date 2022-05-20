@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/personal" element={<PersonalPage />} />
         <Route exact path="/event-time/:eventID" element={<EventTimePage />} />
         <Route exact path="/confirm-time/:eventID" element={<ConfirmTimePage />} />
-        <Route exact path="/final-time" element={<FinalTimePage />} />
+        <Route exact path="/final-time/:eventID" element={<FinalTimePage />} />
         <Route exact path="/add-event" element={<AddEventPage />} />
         <Route exact path="/edit-event/:eventID" element={<EditEventPage />} />
         <Route exact path="/group/:groupID" element={<GroupPage />} />
