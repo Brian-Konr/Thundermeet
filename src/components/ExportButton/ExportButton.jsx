@@ -15,6 +15,7 @@ import {
 
 import logo from '../../icons/logo.png';
 import exportToGoogle from '../../utils/exportToGoogle';
+import exportToOtherEvent from '../../utils/exportToOtherEvent';
 import getMyEvents from '../../utils/getMyEvents';
 
 import './ExportButton.css';
@@ -54,10 +55,15 @@ export default function ExportButton({
     // fetch all events
     message.warning('正在取得活動資訊...', 1.5);
     const res = await getMyEvents();
+    console.log(res.data);
     if (res.status === 'success') {
       setEventList(res.data.filter((event) => !event.is_confirmed && event.event_id !== Number(eventID)).map((event) => ({
         id: event.event_id,
         name: event.event_name,
+        startDate: event.start_date,
+        startTime: Number(event.start_time.substring(0, 2)),
+        endDate: event.end_date,
+        endTime: Number(event.end_time.substring(0, 2)),
       })));
       // 只顯示還沒 confirm 且不是這個 event 的 events
     }
@@ -65,9 +71,15 @@ export default function ExportButton({
     setIsEventVisible(true);
   };
 
-  const exportEvent = (exportEventID) => {
+  const exportEvent = async (destEventID) => {
+    if (!destEventID) {
+      message.error('請選擇要匯出至哪一個活動！', 1.5);
+      return;
+    }
+    await exportToOtherEvent(eventID, destEventID, schedule, eventList.filter((event) => event.id === destEventID)[0]);
     // 要跟後端確認怎麼傳，可能是傳 disable array 過去
-    console.log('export to event ', exportEventID);
+    message.success(`export to event: ${eventList.filter((event) => event.id === destEventID)[0].name} succeeded!`);
+    setIsEventVisible(false);
   };
 
   return (
@@ -121,9 +133,7 @@ export default function ExportButton({
           setIsEventVisible(false);
         }}
         onOk={async () => {
-          setIsEventVisible(false);
           exportEvent(Number(form.getFieldValue('selectEvent')));
-          message.success(`export to event: ${eventList.filter((event) => event.id === Number(form.getFieldValue('selectEvent')))[0].name} succeeded!`);
         }}
         width={700}
       >
