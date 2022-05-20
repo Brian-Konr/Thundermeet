@@ -17,9 +17,9 @@ export default function GroupPage() {
   const [groupTitle, setGroupTitle] = useState('');
   const [editTitle, setEditTitle] = useState('');
   const [ongoingEvents, setOngoingEvents] = useState([]);
-  const [editOngoingEvents, setEditOngoingEvents] = useState(ongoingEvents);
+  const [editOngoingEvents, setEditOngoingEvents] = useState([]);
   const [decidedEvents, setDecidedEvents] = useState([]);
-  const [editDecidedEvents, setEditDecidedEvents] = useState(decidedEvents);
+  const [editDecidedEvents, setEditDecidedEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
 
   useEffect(() => {

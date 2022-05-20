@@ -12,17 +12,10 @@ export default function AddEventToGroup({
   setEditDecidedEvents,
 }) {
   const [allEvents, setAllEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
   useEffect(() => {
-    console.log(editOngoingEvents);
     (async () => {
       const res = await getMyEvents();
       setAllEvents(res.data.map((eventObj) => ({
-        key: eventObj.event_id,
-        title: eventObj.event_name,
-        isConfirmed: eventObj.is_confirmed,
-      })));
-      setFilteredEvents(res.data.map((eventObj) => ({
         key: eventObj.event_id,
         title: eventObj.event_name,
         isConfirmed: eventObj.is_confirmed,
@@ -32,7 +25,6 @@ export default function AddEventToGroup({
 
   const { Option } = Select;
   const [form] = Form.useForm();
-  // 有試著 filter 但沒成功 filter
 
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
@@ -41,11 +33,11 @@ export default function AddEventToGroup({
 
   const handleChange = (e) => {
     console.log(e);
-    setFilteredEvents(filteredEvents.filter((event) => !e.includes(event.key)));
   };
 
   const addEvents = (options) => {
     console.log(options.selectEvents);
+    // @王 這邊要根據 options 去找 eventID 的 isConfirmed 然後分類
     for (let i = 0; i < options.selectEvents.length; i += 1) {
       console.log(options.selectEvents[i]);
       if (!editOngoingEvents.includes(options.selectEvents[i])
@@ -108,7 +100,15 @@ export default function AddEventToGroup({
                 placeholder="Select events to add to the group"
                 onChange={(e) => handleChange(e)}
               >
-                {filteredEvents.map((option) => (
+                {allEvents.filter((event) => {
+                  if (Object.values(editOngoingEvents)
+                    .filter((editObj) => editObj.key === event.key)
+                    .length > 0) return false;
+                  if (Object.values(editDecidedEvents)
+                    .filter((editObj) => editObj.key === event.key)
+                    .length > 0) return false;
+                  return true;
+                }).map((option) => (
                   <Option key={option.key} value={option.key}>
                     {option.title}
                   </Option>
