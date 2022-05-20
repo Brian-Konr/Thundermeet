@@ -53,7 +53,7 @@ export default function ExportButton({
   return (
     <>
       <Button className="button-round" icon={<Icon icon="fe:export" width="15px" style={{ marginRight: '3%' }} />} onClick={clickButton}>
-        Export Calendar
+        Export Event
       </Button>
       <Modal
         visible={isModalVisible}

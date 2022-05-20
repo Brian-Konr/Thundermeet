@@ -113,7 +113,7 @@ export default function Calendar({
 
   return (
     <div style={{
-      width: '580px', height: '520px', marginLeft: '30px', borderTop: '1px solid #F8F8F8', marginTop: '30px',
+      width: '580px', height: '520px', marginLeft: '30px', borderTop: '1px solid #F8F8F8', marginTop: '5vh', marginBottom: '5vh',
     }}
     >
       {enablePriority
@@ -124,6 +124,7 @@ export default function Calendar({
                 width: '40px', height: '40px', background: '#FEDD02', marginTop: '7vh', marginLeft: '2vw',
               }}
               onClick={clickPriority}
+              className="pointer"
             />
             {priority
               ? (
@@ -151,6 +152,7 @@ export default function Calendar({
                 width: '40px', height: '40px', background: '#FFFADA', marginTop: '3vh', marginLeft: '2vw',
               }}
               onClick={clickNormal}
+              className="pointer"
             />
             {priority
               ? (
@@ -182,6 +184,7 @@ export default function Calendar({
                 width: '40px', height: '40px', background: '#FFFADA', marginTop: '15vh', marginLeft: '2vw',
               }}
               onClick={clickNormal}
+              className="pointer"
             />
             <div
               style={{

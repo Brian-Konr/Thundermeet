@@ -80,7 +80,11 @@ export default function ConfirmTimePage() {
   };
 
   const confirmAction = () => {
-    navigate('/final-time');
+    if (schedule.length >= 1) {
+      navigate('/final-time');
+    } else {
+      message.error('must select at least a period of time');
+    }
   };
 
   const editButton = () => {
@@ -99,7 +103,7 @@ export default function ConfirmTimePage() {
           <div style={{ width: '92%', marginLeft: '4%' }}>
             <span>
               <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
-              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} />
+              <Icon icon="akar-icons:edit" width="25px" style={{ marginLeft: '78%' }} onClick={editButton} className="pointer" />
             </span>
             <div style={{
               background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
@@ -122,18 +126,14 @@ export default function ConfirmTimePage() {
             >
               Cancel
             </Button>
-            {schedule.length >= 1 ? (
-              <Button
-                style={{
-                  marginTop: '510px', marginLeft: '15px', background: '#01A494', color: 'white',
-                }}
-                onClick={confirmAction}
-              >
-                Confirm
-              </Button>
-            ) : (
-              <></>
-            )}
+            <Button
+              style={{
+                marginTop: '510px', marginLeft: '15px', background: '#01A494', color: 'white',
+              }}
+              onClick={confirmAction}
+            >
+              Confirm
+            </Button>
           </div>
         </div>
       )}
