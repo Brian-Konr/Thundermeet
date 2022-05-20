@@ -147,7 +147,8 @@ export default function CalendarForConfirm({
                 .filter((i) => !removeList.includes(i)).length;
               const prioritySize = selectedList[date].priority
                 .filter((i) => !removeList.includes(i)).length;
-              size = normalSize + prioritySize;
+              if (switchPriority) size = prioritySize;
+              else size = normalSize + prioritySize;
             }
             return (
               (Object.keys(selectedList).findIndex(target) !== -1)

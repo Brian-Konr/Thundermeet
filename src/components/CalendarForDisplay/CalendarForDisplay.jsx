@@ -17,6 +17,7 @@ export default function CalendarForDisplay({
 }) {
   const [removeList, setRemoveList] = useState([]);
   const [colorList, setColorList] = useState([]);
+  // const [colorListPriority, setColorListPriority] = useState([]);
   const [style, setStyle] = useState({ display: 'flex' });
   const [styleBlock, setStyleBlock] = useState({ display: 'none' });
   const [chosenDate, setChosenDate] = useState(Object.keys(selectedList)[0]);
@@ -135,7 +136,8 @@ export default function CalendarForDisplay({
                 .filter((i) => !removeList.includes(i)).length;
               const prioritySize = selectedList[date].priority
                 .filter((i) => !removeList.includes(i)).length;
-              size = normalSize + prioritySize;
+              if (switchPriority) size = prioritySize;
+              else size = normalSize + prioritySize;
             }
             return (
               (Object.keys(selectedList).findIndex(target) !== -1)
