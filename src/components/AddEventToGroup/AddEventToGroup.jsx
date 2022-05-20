@@ -1,18 +1,38 @@
+import { useEffect, useState } from 'react';
 import {
   Form, Modal, Select,
 } from 'antd';
+
+import getMyEvents from '../../utils/getMyEvents';
 
 import './AddEventToGroup.css';
 
 export default function AddEventToGroup({
   isAddEvent, setIsAddEvent, editOngoingEvents, setEditOngoingEvents, editDecidedEvents,
-  setEditDecidedEvents, allEvents,
+  setEditDecidedEvents,
 }) {
+  const [allEvents, setAllEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  useEffect(() => {
+    console.log(editOngoingEvents);
+    (async () => {
+      const res = await getMyEvents();
+      setAllEvents(res.data.map((eventObj) => ({
+        key: eventObj.event_id,
+        title: eventObj.event_name,
+        isConfirmed: eventObj.is_confirmed,
+      })));
+      setFilteredEvents(res.data.map((eventObj) => ({
+        key: eventObj.event_id,
+        title: eventObj.event_name,
+        isConfirmed: eventObj.is_confirmed,
+      })));
+    })();
+  }, []);
+
   const { Option } = Select;
   const [form] = Form.useForm();
   // 有試著 filter 但沒成功 filter
-  const filteredEvents = allEvents.filter((option) => !editOngoingEvents.includes(option.title)
-    && !editDecidedEvents.includes(option.title));
 
   const onCreate = (values) => {
     console.log('Received values of form: ', values);
@@ -20,13 +40,13 @@ export default function AddEventToGroup({
   };
 
   const handleChange = (e) => {
-    console.log(`selected ${e.title}`);
+    console.log(e);
+    setFilteredEvents(filteredEvents.filter((event) => !e.includes(event.key)));
   };
 
   const addEvents = (options) => {
     console.log(options.selectEvents);
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < options.selectEvents.length; i++) {
+    for (let i = 0; i < options.selectEvents.length; i += 1) {
       console.log(options.selectEvents[i]);
       if (!editOngoingEvents.includes(options.selectEvents[i])
       && allEvents.find(
@@ -86,10 +106,10 @@ export default function AddEventToGroup({
                 mode="multiple"
                 style={{ width: '70%' }}
                 placeholder="Select events to add to the group"
-                onChange={(e) => { handleChange(e); }}
+                onChange={(e) => handleChange(e)}
               >
                 {filteredEvents.map((option) => (
-                  <Option key={option.key} value={option.title}>
+                  <Option key={option.key} value={option.key}>
                     {option.title}
                   </Option>
                 ))}

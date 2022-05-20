@@ -54,13 +54,13 @@ export default function CalendarForConfirm({
   };
 
   const switchChange = (checked) => {
-    console.log(checked);
+    // console.log(checked);
     setSwitchPriority(checked);
   };
 
   const handleChange = (newSchedule) => {
     setSchedule(newSchedule);
-    console.log(newSchedule);
+    // console.log(newSchedule);
   };
 
   return (

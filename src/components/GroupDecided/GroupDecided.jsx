@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import {
   Button, Card,
@@ -8,8 +9,9 @@ import './GroupDecided.css';
 export default function GroupDecided({
   isEdit, decidedEvents, editDecidedEvents, setEditDecidedEvents,
 }) {
+  const navigate = useNavigate();
   function enterEvent(e) {
-    console.log(`selected ${e.key}`);
+    navigate(`/final-time/${e.key}`);
   }
 
   function removeEvent(e) {

@@ -15,26 +15,27 @@ export default function GroupPage() {
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEvent, setIsAddEvent] = useState(false);
   const [groupTitle, setGroupTitle] = useState('');
-  const [editTitle, setEditTitle] = useState(groupTitle);
+  const [editTitle, setEditTitle] = useState('');
   const [ongoingEvents, setOngoingEvents] = useState([]);
   const [editOngoingEvents, setEditOngoingEvents] = useState(ongoingEvents);
   const [decidedEvents, setDecidedEvents] = useState([]);
   const [editDecidedEvents, setEditDecidedEvents] = useState(decidedEvents);
-  const [allEvents, setAllEvents] = useState([]);
+  const [myEvents, setMyEvents] = useState([]);
 
   useEffect(() => {
     (async () => {
       const { events, groupName, isDefault } = await getGroupEvents(groupID);
       console.log(events);
       setGroupTitle(groupName);
+      setEditTitle(groupName);
       if (isDefault) {
-        setAllEvents(events.map((event) => ({
+        setMyEvents(events.map((event) => ({
           title: event.event_name,
           key: event.event_id,
           isConfirmed: event.is_confirmed,
         })));
       } else {
-        setAllEvents(events.map((event) => ({
+        setMyEvents(events.map((event) => ({
           title: event.Event_name,
           key: event.Event_id,
           isConfirmed: event.Is_confirmed,
@@ -44,13 +45,17 @@ export default function GroupPage() {
   }, []);
 
   useEffect(() => {
-    if (allEvents.length > 0) {
-      setOngoingEvents(allEvents.filter((event) => !event.isConfirmed));
-      setEditOngoingEvents(allEvents.filter((event) => !event.isConfirmed));
-      setDecidedEvents(allEvents.filter((event) => event.isConfirmed));
-      setEditDecidedEvents(allEvents.filter((event) => event.isConfirmed));
+    if (myEvents.length > 0) {
+      setOngoingEvents(myEvents.filter((event) => !event.isConfirmed));
+      setEditOngoingEvents(myEvents.filter((event) => !event.isConfirmed));
+      setDecidedEvents(myEvents.filter((event) => event.isConfirmed));
+      setEditDecidedEvents(myEvents.filter((event) => event.isConfirmed));
     }
-  }, [allEvents]);
+  }, [myEvents]);
+
+  useEffect(() => {
+    console.log(groupTitle, ongoingEvents, decidedEvents);
+  }, [groupTitle, ongoingEvents, decidedEvents]);
 
   return (
     <div>
@@ -83,7 +88,7 @@ export default function GroupPage() {
             setEditOngoingEvents={setEditOngoingEvents}
             editDecidedEvents={editDecidedEvents}
             setEditDecidedEvents={setEditDecidedEvents}
-            allEvents={allEvents}
+            myEvents={myEvents}
           />
           <div style={{
             display: 'flex', flexDirection: 'column', paddingBottom: '16px', marginTop: '-10px',

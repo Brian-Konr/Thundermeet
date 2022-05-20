@@ -11,7 +11,7 @@ import { format } from 'date-fns';
 import './Calendar.css';
 
 export default function Calendar({
-  schedule, setSchedule, startTime, endTime, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, exportTime, setTimeList, setClick,
+  schedule, setSchedule, startTime, endTime, startDate, numOfDays, enablePriority, normalDay, setNormalDay, priorityDay, setPriorityDay, setTimeList, setClick,
 }) {
   const [priority, setPriority] = useState(false);
 
@@ -20,11 +20,6 @@ export default function Calendar({
       setPriority(true);
     }
   }, []);
-
-  useEffect(() => {
-    setPriorityDay(priorityDay.filter((item) => !exportTime.includes(item)));
-    setNormalDay(normalDay.filter((item) => !exportTime.includes(item)));
-  }, [exportTime]);
 
   const handleChange = (newSchedule) => {
     let addCell = [];
