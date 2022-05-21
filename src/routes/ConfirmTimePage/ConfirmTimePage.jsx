@@ -90,7 +90,7 @@ export default function ConfirmTimePage() {
         message.error('Fail to confirm time!', 1.5);
       }
     } else {
-      message.error('Please select at leaat one time slot!', 1.5);
+      message.error('Please select at least one time slot!', 1.5);
     }
   };
 

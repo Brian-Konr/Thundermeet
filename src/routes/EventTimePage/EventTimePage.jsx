@@ -238,7 +238,7 @@ export default function EventTimePage() {
     localStorage.getItem('token') ? (
       <>
         <Navbar />
-        {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
+        {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'transparent' }} /> : (
           <div style={{ minHeight: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '50%' }}>
               <ImportButton
@@ -302,13 +302,12 @@ export default function EventTimePage() {
         )}
       </>
     ) : (
-      <>
-        {homeCardLoading && <Spin />}
-        <div style={{ width: '300px', paddingLeft: '35vw', paddingTop: '15vh' }}>
-          <img src={logo} alt="logo" style={{ width: '300px', marginLeft: '4vw' }} />
+      <div style={{ width: '300px', paddingLeft: '35vw', paddingTop: '15vh' }}>
+        <img src={logo} alt="logo" style={{ width: '300px', marginLeft: '4vw' }} />
+        {homeCardLoading ? <Spin className="spin" style={{ marginLeft: '15vw', marginTop: '30vh', backgroundColor: 'transparent' }} /> : (
           <HomeCard loading={homeCardLoading} setLoading={setHomeCardLoading} atHome={false} />
-        </div>
-      </>
+        )}
+      </div>
     )
   );
 }
