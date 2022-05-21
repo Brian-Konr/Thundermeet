@@ -195,6 +195,8 @@ export default function EventTimePage() {
       for (let i = 0; i < appleSchedule.length; i += 1) {
         arr[i] = appleSchedule[i].getTime();
       }
+      setNormalDay([]);
+      setPriorityDay([]);
       setSchedule(timeList.filter((item) => !arr.includes(item.getTime())));
       if (enablePriority) setPriorityDay(timeList.filter((item) => !arr.includes(item.getTime())));
       else setNormalDay(timeList.filter((item) => !arr.includes(item.getTime())));
@@ -208,6 +210,8 @@ export default function EventTimePage() {
       for (let i = 0; i < googleSchedule.length; i += 1) {
         arr[i] = googleSchedule[i].getTime();
       }
+      setNormalDay([]);
+      setPriorityDay([]);
       setSchedule(timeList.filter((item) => !arr.includes(item.getTime())));
       if (enablePriority) setPriorityDay(timeList.filter((item) => !arr.includes(item.getTime())));
       else setNormalDay(timeList.filter((item) => !arr.includes(item.getTime())));
@@ -219,6 +223,8 @@ export default function EventTimePage() {
   useEffect(() => {
     console.log(eventConfirm);
     if (eventConfirm.length > 0) {
+      setNormalDay([]);
+      setPriorityDay([]);
       setSchedule(eventList[eventConfirm].normal.concat(eventList[eventConfirm].priority));
       if (enablePriority) {
         setPriorityDay(eventList[eventConfirm].priority);
