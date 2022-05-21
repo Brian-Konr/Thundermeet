@@ -160,7 +160,7 @@ export default function ImportButton({
         { enablePriority
           ? <CalendarForImport schedulePriority={appleSchedule} scheduleNormal={[]} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />
           : <CalendarForImport scheduleNormal={appleSchedule} schedulePriority={[]} startTime={startTime} endTime={endTime} type={type} startDate={startDate} numOfDays={numOfDays} />}
-        <p style={{ marginLeft: '400px' }}>coming soon...</p>
+        <p style={{ marginLeft: '400px', fontSize: '18px' }}>coming soon...</p>
       </Modal>
       <Modal
         visible={isGoogleVisible}

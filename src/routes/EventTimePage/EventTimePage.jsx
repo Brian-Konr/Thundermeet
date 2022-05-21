@@ -64,7 +64,7 @@ export default function EventTimePage() {
   // params for import from apple calendar
   const [appleConnect, setAppleConnect] = useState(false); // set true when user click apple import, @郭 接完以後設成 false
   // const appleSchedule = [new Date(2022, 4, 5, 2, 0, 0), new Date(2022, 4, 4, 1, 30, 0), new Date(2022, 4, 6, 1, 30, 0), new Date(2022, 4, 3, 2, 0, 0), new Date(2022, 4, 3, 2, 30, 0), new Date(2022, 4, 7, 2, 0, 0), new Date(2022, 4, 7, 2, 30, 0), new Date(2022, 4, 4, 3, 0, 0), new Date(2022, 4, 4, 3, 30, 0), new Date(2022, 4, 6, 3, 0, 0), new Date(2022, 4, 6, 3, 30, 0), new Date(2022, 4, 5, 4, 0, 0)]; // heart style
-  const appleSchedule = [new Date(2022, 4, 6, 1, 0, 0), new Date(2022, 4, 5, 1, 30, 0), new Date(2022, 4, 4, 2, 0, 0), new Date(2022, 4, 4, 2, 30, 0), new Date(2022, 4, 5, 2, 30, 0), new Date(2022, 4, 6, 2, 30, 0), new Date(2022, 4, 6, 3, 0, 0), new Date(2022, 4, 5, 3, 30, 0), new Date(2022, 4, 4, 4, 0, 0)];
+  const appleSchedule = [new Date(2022, 5, 4, 11, 0, 0), new Date(2022, 5, 3, 11, 30, 0), new Date(2022, 5, 2, 12, 0, 0), new Date(2022, 5, 2, 12, 30, 0), new Date(2022, 5, 3, 12, 30, 0), new Date(2022, 5, 4, 12, 30, 0), new Date(2022, 5, 4, 13, 0, 0), new Date(2022, 5, 3, 13, 30, 0), new Date(2022, 5, 2, 14, 0, 0)];
   // params for import from google calendar
   const [googleConnect, setGoogleConnect] = useState(false); // set true when user click google import, @郭 接完以後設成 false
   const [googleSchedule, setGoogleSchedule] = useState([]);
