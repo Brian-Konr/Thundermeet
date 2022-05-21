@@ -19,6 +19,7 @@ export default function EventAddToGroup({
   const { Option } = Select;
   const [myGroups, setMyGroups] = useState([]);
   const [selected, setSelected] = useState(-1);
+  const [isSelected, setIsSelected] = useState(false);
   // const groupOptionList = [];
   // for (let i = 0; i < groupList.length; i += 1) {
   //   groupOptionList.push(<Option key={i}>{groupList[i]}</Option>);
@@ -52,7 +53,7 @@ export default function EventAddToGroup({
         visible={isModalVisible}
         okText="Add"
         onOk={async () => {
-          if (selected === -1) {
+          if (!isSelected) {
             message.error('請至少選擇一個群組！', 1.5);
             return;
           }
@@ -68,6 +69,7 @@ export default function EventAddToGroup({
           setTagList(data.groups.map((groupObj) => groupObj.GroupName));
           setGroups(data.groups.map((groupObj) => groupObj.GroupId));
           setIsModalVisible(false);
+          setIsSelected(false);
           form.resetFields();
         }}
         onCancel={() => {
@@ -83,7 +85,10 @@ export default function EventAddToGroup({
             <Select
               style={{ width: '70%' }}
               placeholder="Select existing group"
-              onChange={(e) => setSelected(e)}
+              onChange={(e) => {
+                setSelected(e);
+                setIsSelected(true);
+              }}
             >
               {/* {groupOptionList} */}
               {myGroups.map((groupObj) => (
