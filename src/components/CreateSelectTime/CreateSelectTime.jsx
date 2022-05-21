@@ -1,5 +1,8 @@
 import {
-  DatePicker, Form, Select, Switch,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
+import {
+  DatePicker, Form, Select, Switch, Tooltip,
 } from 'antd';
 
 import './CreateSelectTime.css';
@@ -44,7 +47,12 @@ export default function CreateSelectTime({
             <Select className="inputTime" defaultValue={22} style={{ width: '75px' }} onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
           </div>
         </Form.Item>
-        <p className="header" style={{ marginTop: '-10px' }}>Priority</p>
+        <div style={{ display: 'flex', alignItems: 'start' }}>
+          <p className="header" style={{ marginTop: '-10px' }}>Priority</p>
+          <Tooltip title="Enable users to fill in Avaliable or Prefer">
+            <InfoCircleOutlined style={{ marginLeft: '10px', marginTop: '15px' }} />
+          </Tooltip>
+        </div>
         <Form.Item
           name="enablePriority"
         >

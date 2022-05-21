@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LockOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import {
-  Button, Card, Form, Input, message, Spin,
+  LockOutlined, QuestionCircleOutlined, UserOutlined,
+} from '@ant-design/icons';
+import {
+  Button, Card, Form, Input, message, Spin, Tooltip,
 } from 'antd';
 
 import login from '../../utils/login';
@@ -78,7 +80,15 @@ export default function HomeCard({
                 },
               ]}
             >
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="User ID" />
+              <Input
+                // prefix={<UserOutlined className="site-form-item-icon" />}
+                prefix={(
+                  <Tooltip title="For login, cannot change once set">
+                    <UserOutlined className="site-form-item-icon" />
+                  </Tooltip>
+                )}
+                placeholder="User ID"
+              />
             </Form.Item>
 
             {option === 'register' && (
@@ -88,7 +98,12 @@ export default function HomeCard({
                   name="userName"
                 >
                   <Input
-                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    // prefix={<UserOutlined className="site-form-item-icon" />}
+                    prefix={(
+                      <Tooltip title="Display name, can be changed">
+                        <UserOutlined className="site-form-item-icon" />
+                      </Tooltip>
+                    )}
                     placeholder="User Name"
                   />
                 </Form.Item>
@@ -130,8 +145,18 @@ export default function HomeCard({
                   ]}
                 >
                   <Input
-                    prefix={<QuestionCircleOutlined className="site-form-item-icon" />}
+                    // prefix={<QuestionCircleOutlined className="site-form-item-icon" />}
+                    prefix={(
+                      <Tooltip title="For password recovery usage">
+                        <QuestionCircleOutlined className="site-form-item-icon" />
+                      </Tooltip>
+                    )}
                     placeholder="Answer"
+                    // suffix={(
+                    //   <Tooltip title="For password recovery usage">
+                    //     <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                    //   </Tooltip>
+                    // )}
                   />
                 </Form.Item>
               </>
