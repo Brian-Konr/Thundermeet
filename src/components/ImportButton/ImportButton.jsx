@@ -118,7 +118,7 @@ export default function ImportButton({
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div
             style={{
-              height: '150px', width: '25%', border: '1px solid #B8B8B8', borderRadius: '8px',
+              height: '150px', width: '25%', border: '1px solid #B8B8B8', borderRadius: '8px', cursor: 'pointer',
             }}
             onClick={clickApple}
           >
@@ -127,7 +127,7 @@ export default function ImportButton({
           </div>
           <div
             style={{
-              height: '150px', width: '25%', border: '1px solid #B8B8B8', marginLeft: '10px', borderRadius: '8px',
+              height: '150px', width: '25%', border: '1px solid #B8B8B8', marginLeft: '10px', borderRadius: '8px', cursor: 'pointer',
             }}
             onClick={clickGoogle}
           >
@@ -136,7 +136,7 @@ export default function ImportButton({
           </div>
           <div
             style={{
-              height: '150px', width: '45%', border: '1px solid #B8B8B8', marginLeft: '10px', borderRadius: '8px',
+              height: '150px', width: '45%', border: '1px solid #B8B8B8', marginLeft: '10px', borderRadius: '8px', cursor: 'pointer',
             }}
             onClick={clickEvent}
           >

@@ -86,7 +86,7 @@ export default function CreateButton({
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
-          <p>Please fill in avaliable time for {eventName} in the follwing link! {`http://localhost:3000/event-time/${eventID}`}</p>
+          <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {`http://localhost:3000/event-time/${eventID}`}</p>
           <br />
           <Button
             type="primary"

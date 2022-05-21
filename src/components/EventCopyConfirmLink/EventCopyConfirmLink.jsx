@@ -44,7 +44,7 @@ export default function EventCopyConfirmLink({ eventName, schedule, copyLink }) 
           <br />
           <img src={logo} width="50px" alt="" />
           <br />
-          <p>Final time for {eventName} is decided! Check for more details in: {copyLink}</p>
+          <p style={{ textAlign: 'center' }}>Final time for {eventName} is decided! Check for more details in: {copyLink}</p>
           <br />
           <Button type="primary" className="gotit-button" onClick={unClickButton}>
             Got it!

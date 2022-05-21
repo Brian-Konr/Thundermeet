@@ -8,7 +8,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react';
 import ScheduleSelector from 'react-schedule-selector';
-import { Switch } from 'antd';
+import {
+  InfoCircleOutlined,
+} from '@ant-design/icons';
+import { Switch, Tooltip } from 'antd';
 import { format } from 'date-fns';
 
 import './CalendarForFinal.css';
@@ -139,10 +142,17 @@ export default function CalendarForFinal({
         className="name-block-final"
         style={style}
       >
+        <div style={{ fontWeight: 'bold', textDecoration: 'underline', marginBottom: '10px' }}>
+          member list
+          {' '}
+          <Tooltip title="You can crossover member for time checking">
+            <InfoCircleOutlined style={{ marginLeft: '5px' }} />
+          </Tooltip>
+        </div>
         {memberList.map((member) => (
           removeList.includes(member)
-            ? (<p onClick={() => unCrossMember(member)} style={{ textDecoration: 'line-through', color: 'gray' }}>{member}</p>)
-            : (<p onClick={() => crossMember(member)}>{member}</p>)
+            ? (<p onClick={() => unCrossMember(member)} style={{ textDecoration: 'line-through', color: 'gray', cursor: 'pointer' }}>{member}</p>)
+            : (<p onClick={() => crossMember(member)} style={{ cursor: 'pointer' }}>{member}</p>)
         ))}
       </div>
       <div
