@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <nav className="nav-bar">
       <div>
-        <Link to="/">
+        <Link to="/personal">
           <img className="logo" src={logo} alt="logo" />
         </Link>
         <Button onClick={() => navigate('/add-event')} className="add-event-button" size="large" icon={<PlusOutlined />} style={{ color: '#01A494', borderRadius: '10px', borderColor: '#01A494' }}>Create an Event</Button>
