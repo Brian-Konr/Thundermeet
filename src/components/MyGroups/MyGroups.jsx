@@ -48,7 +48,7 @@ export default function MyGroups() {
     (async () => {
       const res = await createGroup(selected, groupName);
       if (res.status === 'success') {
-        message.success('group created successfully!', 2);
+        message.success('Group created successfully!', 2);
         setIsFormVisible(false);
       } else {
         message.error(res.error.response.data.msg, 2);

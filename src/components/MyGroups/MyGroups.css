@@ -47,6 +47,7 @@
   margin-right: 44px;
   border-radius: 10px;
   border-color: transparent;
+  white-space: inherit;
 }
 
 .ant-btn.default-card {

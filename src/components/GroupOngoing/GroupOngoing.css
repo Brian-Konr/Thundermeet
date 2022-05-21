@@ -36,6 +36,7 @@
   display: inline-block;
   align-items: center; 
   display: flex;
+  white-space: inherit;
 }
 
 .ant-btn.ongoing-card:hover {

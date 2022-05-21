@@ -30,7 +30,7 @@ export default function AddEventPage() {
     localStorage.getItem('token') && (
     <div>
       <Navbar />
-      {loading && <Spin />}
+      {loading && <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} />}
       <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
         <div>
           <h1 style={{

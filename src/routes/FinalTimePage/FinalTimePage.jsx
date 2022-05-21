@@ -73,7 +73,7 @@ export default function FinalTimePage() {
     localStorage.getItem('token') ? (
       <>
         <Navbar />
-        {loading ? <Spin /> : (
+        {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
           <div style={{ minHeight: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '55%' }}>
               <ExportButton schedule={schedule} eventID={eventID} eventTitle={eventTitle} eventDescription={eventDescription} />
