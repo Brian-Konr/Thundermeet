@@ -63,7 +63,7 @@ export default function FinalTimePage() {
         // console.log(timeblocksRes.info);
         if (timeblocksRes.status === 'success') {
           setSelectedList(timeblocksRes.info);
-        } else message.error('無法取得各填寫者的填寫資訊！', 2);
+        } else message.error('Fail to get event info!', 2);
         setLoading(false);
       })();
     }
@@ -73,7 +73,7 @@ export default function FinalTimePage() {
       <>
         <Navbar />
         {loading ? <Spin /> : (
-          <div style={{ height: '92vh', background: '#F8F8F8' }}>
+          <div style={{ minHeight: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '55%' }}>
               <ExportButton schedule={schedule} eventID={eventID} eventTitle={eventTitle} eventDescription={eventDescription} />
               <EventAddToGroup eventID={eventID} groupsAlreadyIn={groups} setTagList={setTagList} setGroups={setGroups} />

@@ -35,14 +35,14 @@ export default function EditEvent({
 
   const submitChange = async () => {
     if (!eventName.trim()) {
-      message.error('Title 不得為空！', 1.5);
+      message.error('Title can\'t be changed to empty！', 1.5);
       return;
     }
     const status = await editEvent(eventID, eventName.trim() /* eventDescription */);
     if (status === 'success') {
-      message.success('成功更新！', 1.5);
+      message.success('Successfully updated！', 1.5);
       navigate(`/event-time/${eventID}`);
-    } else message.error('無法更新！', 2);
+    } else message.error('Fail to update！', 2);
   };
 
   return (
@@ -69,7 +69,7 @@ export default function EditEvent({
             },
           ]}
         >
-          <Input className="input" type="eventName" placeholder="Enter event name" style={{ width: '385px' }} onChange={handleChangeName} />
+          <Input className="input" type="eventName" placeholder="Enter event name" maxLength="30" style={{ width: '385px' }} onChange={handleChangeName} />
         </Form.Item>
         <p className="header">Description</p>
         <Form.Item

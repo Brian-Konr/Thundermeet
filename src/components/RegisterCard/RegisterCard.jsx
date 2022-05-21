@@ -26,7 +26,7 @@ export default function LoginCard() {
           rules={[
             {
               required: true,
-              message: 'Please input your user id!',
+              message: 'Please input your User ID!',
             },
           ]}
         >
@@ -60,7 +60,7 @@ export default function LoginCard() {
       <div style={{ textAlign: 'center', fontSize: '16px', marginTop: '1vh' }}>
         Or
         {' '}
-        <a href="/">register now!</a>
+        <a href="/">Register now!</a>
       </div>
     </Card>
   );

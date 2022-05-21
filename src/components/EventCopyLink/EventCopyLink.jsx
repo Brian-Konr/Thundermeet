@@ -40,8 +40,7 @@ export default function EventCopyLink({ eventName, copyLink }) {
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
-          <p>Please fill in avaliable time for {eventName} in the follwing link!</p>
-          <p>{copyLink}</p>
+          <p>Please fill in avaliable time for {eventName} in the follwing link! {copyLink}</p>
           <br />
           <Button type="primary" className="gotit-button" onClick={unClickButton}>
             Got it!

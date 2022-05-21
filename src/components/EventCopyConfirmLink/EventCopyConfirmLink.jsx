@@ -32,7 +32,7 @@ export default function EventCopyConfirmLink({ eventName, schedule, copyLink }) 
     timeString = `${year}/${month}/${date} ${hourStart}:0${minuteStart} - ${hourEnd}:0${minuteEnd}`;
   }
 
-  const copyText = `${eventName} 時間已經出爐囉！最終時間連結：${copyLink}，請大家把這個時間加入行事曆～我們到時見！`;
+  const copyText = `Final time for ${eventName} is decided! Check for more details in: ${copyLink}`;
 
   const clickButton = () => {
     setIsModalVisible(true);
@@ -60,9 +60,7 @@ export default function EventCopyConfirmLink({ eventName, schedule, copyLink }) 
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
-          <p>{eventName} 時間已經出爐囉！</p>
-          <p>最終時間連結：{copyLink}，</p>
-          <p>請大家把這個時間加入行事曆～我們到時見！</p>
+          <p>Final time for {eventName} is decided! Check for more details in: {copyLink}</p>
           <br />
           <Button type="primary" className="gotit-button" onClick={unClickButton}>
             Got it!

@@ -29,7 +29,7 @@ export default function AddEventPage() {
     localStorage.getItem('token') && (
     <div>
       <Navbar />
-      <div style={{ background: '#F8F8F8', height: '92vh' }}>
+      <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
         <div>
           <h1 style={{
             fontSize: '48px', fontWeight: 'bold', textAlign: 'center', paddingTop: '40px',

@@ -53,17 +53,17 @@ export default function EventAddToGroup({
         okText="Add"
         onOk={async () => {
           if (selected === -1) {
-            message.error('請至少選擇一個群組！', 1.5);
+            message.error('Please select at least one group!', 1.5);
             return;
           }
           console.log(selected);
           const res = await addEventToGroup(eventID, selected);
           if (res.status === 'error') {
-            message.error('無法新增活動到群組', 1.5);
+            message.error('Fail to add event to group!', 1.5);
             return;
           }
 
-          message.success('已成功新增活動到群組！', 1.5);
+          message.success('Successfully added event to group!', 1.5);
           const { data } = await getEvent(eventID);
           setTagList(data.groups.map((groupObj) => groupObj.GroupName));
           setGroups(data.groups.map((groupObj) => groupObj.GroupId));

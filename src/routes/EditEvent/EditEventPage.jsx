@@ -20,7 +20,7 @@ export default function EditEventPage() {
       setEventName(data.event_name);
       setEventDescription(data.event_description);
       if (data.admin_id !== localStorage.getItem('userID')) {
-        message.error('您並非活動的創建者！', 2);
+        message.error('You are not the creator of the event!', 2);
         navigate(`/event-time/${eventID}`);
       }
     })();

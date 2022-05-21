@@ -11,6 +11,7 @@
 
 .ant-switch.priority {
   background-color: #01a494;
+  height: 25px;
 }
 
 .day {
@@ -20,4 +21,40 @@
   box-shadow: none;
   border-style: none;
   background-color: white;
+}
+
+.inputDate
+  .ant-picker-cell-in-view.ant-picker-cell-range-start
+  .ant-picker-cell-inner {
+  background-color: #56c7bc;
+}
+
+.inputDate
+  .ant-picker-cell-in-view.ant-picker-cell-range-end
+  .ant-picker-cell-inner {
+  background-color: #56c7bc;
+}
+
+.inputDate
+  .ant-picker-cell-in-view.ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  border-color: #56c7bc;
+}
+
+.inputDate
+  .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+.inputDate
+  .ant-picker-cell-in-view.ant-picker-cell-in-range::before,
+.inputDate
+  .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before,
+.inputDate
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  background: #ecfcfa;
+}
+
+.inputDate .ant-btn-primary {
+  background-color: #ecfcfa;
+  border-color: #ecfcfa;
 }

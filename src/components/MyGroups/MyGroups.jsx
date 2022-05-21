@@ -97,7 +97,7 @@ export default function MyGroups() {
                   },
                 ]}
               >
-                <Input placeholder="Enter group name" type="groupName" />
+                <Input placeholder="Enter group name" type="groupName" maxLength="30" />
               </Form.Item>
               <Form.Item
                 label="Select Events"
@@ -124,8 +124,8 @@ export default function MyGroups() {
         </div>
         <hr />
         <div className="groups">
-          <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>已參與 Participated</Button>
-          <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>已發起 Created</Button>
+          <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>Participated</Button>
+          <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>Created</Button>
           {groupList && groupList.map((group) => <Button className="card custom-card" type="primary" onClick={() => navigate(`/group/${group.group_id}`)}>{group.group_name}</Button>)}
         </div>
       </div>
@@ -139,8 +139,8 @@ export default function MyGroups() {
       </div>
       <hr />
       <div className="groups">
-        <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>已參與 Participated</Button>
-        <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>已發起 Created</Button>
+        <Button className="card default-card" type="primary" onClick={() => navigate('/group/participated')}>Participated</Button>
+        <Button className="card default-card" type="primary" onClick={() => navigate('/group/created')}>Created</Button>
         {groupList && groupList.map((group) => <Button className="card custom-card" type="primary" onClick={() => navigate(`/group/${group.group_id}`)}>{group.group_name}</Button>)}
       </div>
     </div>

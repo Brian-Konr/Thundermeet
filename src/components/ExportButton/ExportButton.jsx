@@ -39,7 +39,7 @@ export default function ExportButton({
 
   const clickApple = () => {
     setIsModalVisible(false);
-    message.success('export to apple calendar succeeded!');
+    message.success('Export to Apple Calendar succeeded!');
   };
 
   const exportGoogle = async () => {
@@ -47,13 +47,13 @@ export default function ExportButton({
     const start = sortedTime[0].toISOString();
     const end = new Date(sortedTime[sortedTime.length - 1].getTime() + 30 * 60000).toISOString();
     await exportToGoogle(eventTitle, eventDescription, start, end);
-    message.success('export to google calendar succeeded!');
+    message.success('Export to Google Calendar succeeded!');
     setIsModalVisible(false);
   };
 
   const clickEvent = async () => {
     // fetch all events
-    message.warning('正在取得活動資訊...', 1.5);
+    message.warning('Getting event info...', 1.5);
     const res = await getMyEvents();
     console.log(res.data);
     if (res.status === 'success') {
@@ -73,12 +73,12 @@ export default function ExportButton({
 
   const exportEvent = async (destEventID) => {
     if (!destEventID) {
-      message.error('請選擇要匯出至哪一個活動！', 1.5);
+      message.error('Please choose which event to export!', 1.5);
       return;
     }
     await exportToOtherEvent(eventID, destEventID, schedule, eventList.filter((event) => event.id === destEventID)[0]);
     // 要跟後端確認怎麼傳，可能是傳 disable array 過去
-    message.success(`export to event: ${eventList.filter((event) => event.id === destEventID)[0].name} succeeded!`);
+    message.success(`Export to event: ${eventList.filter((event) => event.id === destEventID)[0].name} succeeded!`);
     setIsEventVisible(false);
   };
 

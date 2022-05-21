@@ -37,19 +37,17 @@ export default function AddEventToGroup({
 
   const addEvents = (options) => {
     console.log(options.selectEvents);
-    // @王 這邊要根據 options 去找 eventID 的 isConfirmed 然後分類
     for (let i = 0; i < options.selectEvents.length; i += 1) {
       console.log(options.selectEvents[i]);
-      if (!editOngoingEvents.includes(options.selectEvents[i])
-      && allEvents.find(
-        (e) => e.title === options.selectEvents[i],
-      ).key <= 5) {
+      if (allEvents.find(
+        (e) => e.key === options.selectEvents[i],
+      ).isConfirmed === false) {
         setEditOngoingEvents((oldArray) => [...oldArray, allEvents.find(
-          (e) => e.title === options.selectEvents[i],
+          (e) => e.key === options.selectEvents[i],
         )]);
-      } else if (!editDecidedEvents.includes(options.selectEvents[i])) {
+      } else {
         setEditDecidedEvents((oldArray) => [...oldArray, allEvents.find(
-          (e) => e.title === options.selectEvents[i],
+          (e) => e.key === options.selectEvents[i],
         )]);
       }
     }

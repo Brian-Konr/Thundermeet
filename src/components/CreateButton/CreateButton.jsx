@@ -46,7 +46,7 @@ export default function CreateButton({
       setIsModalVisible(true);
     } catch (error) {
       console.log(error);
-      message.error('failed to create event...', 2);
+      message.error('Failed to create event...', 2);
     }
   };
   const check = () => {
@@ -55,11 +55,11 @@ export default function CreateButton({
       return;
     }
     if (Number(startTime) >= Number(endTime)) {
-      message.error('start time cannot larger than end time!', 2);
+      message.error('Start time cannot be larger than end time!', 2);
       return;
     }
     if (eventDateRange.length === 0) {
-      message.error('please select date ranges!', 2);
+      message.error('Please select date ranges!', 2);
       return;
     }
     if (getNumberOfDays(eventDateRange[0], eventDateRange[1]) > 14) {
@@ -87,8 +87,7 @@ export default function CreateButton({
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
-          <p>Please fill in avaliable time for {eventName} in the follwing link!</p>
-          <p>{`http://localhost:3000/event-time/${eventID}`}</p>
+          <p>Please fill in avaliable time for {eventName} in the follwing link! {`http://localhost:3000/event-time/${eventID}`}</p>
           <br />
           <Button
             type="primary"
