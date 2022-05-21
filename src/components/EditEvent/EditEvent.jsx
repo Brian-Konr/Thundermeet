@@ -3,6 +3,7 @@ import {
   Button, Form, Input, message,
 } from 'antd';
 
+import deleteEvent from '../../utils/deleteEvent';
 import editEvent from '../../utils/editEvent';
 
 import './EditEvent.css';
@@ -11,6 +12,7 @@ const { TextArea } = Input;
 
 export default function EditEvent({
   eventName, setEventName, eventDescription, setEventDescription, eventID,
+  setEditLoading,
 }) {
   const navigate = useNavigate();
 
@@ -24,9 +26,17 @@ export default function EditEvent({
     console.log('Description:', e.target.value);
   };
 
-  const deleteEvent = () => {
-    console.log('Event deleted');
-    navigate('/personal');
+  const deleteAction = async () => {
+    setEditLoading(true);
+    const status = await deleteEvent(eventID);
+    setEditLoading(false);
+    if (status === 'success') {
+      message.success('Event has been deleted!', 1.5);
+      navigate('/personal');
+    } else {
+      message.error('Cannot delete event...', 1.5);
+      navigate(`/event-time/${eventID}`);
+    }
   };
 
   const goToEvent = () => {
@@ -35,14 +45,16 @@ export default function EditEvent({
 
   const submitChange = async () => {
     if (!eventName.trim()) {
-      message.error('Title can\'t be changed to empty！', 1.5);
+      message.error('Title can\'t be changed to empty!', 1.5);
       return;
     }
+    setEditLoading(true);
     const status = await editEvent(eventID, eventName.trim() /* eventDescription */);
+    setEditLoading(false);
     if (status === 'success') {
-      message.success('Successfully updated！', 1.5);
+      message.success('Successfully updated!', 1.5);
       navigate(`/event-time/${eventID}`);
-    } else message.error('Fail to update！', 2);
+    } else message.error('Fail to update!', 2);
   };
 
   return (
@@ -88,7 +100,7 @@ export default function EditEvent({
         <p className="deleteTitle">Delete Event</p>
         <p className="deleteContent">Once you delete the event, there&apos;s no going back. Please be certain.</p>
         <Form.Item>
-          <Button className="delete-button" type="primary" onClick={deleteEvent}>
+          <Button className="delete-button" type="primary" onClick={deleteAction}>
             Delete
           </Button>
         </Form.Item>

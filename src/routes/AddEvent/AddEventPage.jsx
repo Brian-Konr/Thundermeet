@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
 
 import CreateButton from '../../components/CreateButton/CreateButton';
 import CreateSelectTime from '../../components/CreateSelectTime/CreateSelectTime';
@@ -9,6 +9,7 @@ import Navbar from '../../components/Navbar/Navbar';
 
 export default function AddEventPage() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescirption] = useState('');
   const [eventPriority, setEventPriority] = useState(false);
@@ -29,6 +30,7 @@ export default function AddEventPage() {
     localStorage.getItem('token') && (
     <div>
       <Navbar />
+      {loading && <Spin />}
       <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
         <div>
           <h1 style={{
@@ -59,6 +61,7 @@ export default function AddEventPage() {
         <br />
         <div style={{ textAlign: 'center' }}>
           <CreateButton
+            setLoading={setLoading}
             eventName={eventName}
             eventDescription={eventDescription}
             eventPriority={eventPriority}

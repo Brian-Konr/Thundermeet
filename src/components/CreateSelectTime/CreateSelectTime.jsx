@@ -34,14 +34,14 @@ export default function CreateSelectTime({
         <Form.Item>
           <div style={{ display: 'flex', alignItems: 'start' }}>
             <p style={{ fontSize: '15px', marginRight: '15px', paddingTop: '2px' }}>From</p>
-            <Select className="inputTime" defaultValue="10" style={{ width: '75px' }} onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+            <Select className="inputTime" defaultValue={10} style={{ width: '75px' }} onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
             <p style={{
               fontSize: '15px', marginLeft: '15px', marginRight: '15px', paddingTop: '2px',
             }}
             >
               To
             </p>
-            <Select className="inputTime" defaultValue="22" style={{ width: '75px' }} onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+            <Select className="inputTime" defaultValue={22} style={{ width: '75px' }} onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
           </div>
         </Form.Item>
         <p className="header" style={{ marginTop: '-10px' }}>Priority</p>

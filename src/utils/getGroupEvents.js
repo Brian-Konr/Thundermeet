@@ -5,14 +5,14 @@ export default async (groupID) => {
     const res = await instance.get('/v1/events/');
     return {
       events: res.data,
-      groupName: '已參與',
+      groupName: 'Participated',
       isDefault: true,
     };
   } if (groupID === 'created') {
     const res = await instance.get('/v1/events/');
     return {
       events: res.data.filter((event) => event.admin_id === localStorage.getItem('userID')),
-      groupName: '已發起',
+      groupName: 'Created',
       isDefault: true,
     };
   } if (groupID === 'confirmed') {

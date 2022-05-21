@@ -14,6 +14,7 @@ import EventCopyConfirmLink from '../../components/EventCopyConfirmLink/EventCop
 import ExportButton from '../../components/ExportButton/ExportButton';
 import HomeCard from '../../components/HomeCard/HomeCard';
 import Navbar from '../../components/Navbar/Navbar';
+import logo from '../../icons/logo.png';
 import getAllTimeBlocksInfo from '../../utils/getAllTimeBlocksInfo';
 import getEvent from '../../utils/getEvent';
 import getNumberOfDays from '../../utils/getNumberOfDays';
@@ -103,7 +104,10 @@ export default function FinalTimePage() {
     ) : (
       <>
         {homeCardLoading && <Spin />}
-        <HomeCard loading={homeCardLoading} setLoading={setHomeCardLoading} atHome={false} />
+        <div style={{ width: '300px', paddingLeft: '35vw', paddingTop: '15vh' }}>
+          <img src={logo} alt="logo" style={{ width: '300px', marginLeft: '4vw' }} />
+          <HomeCard loading={homeCardLoading} setLoading={setHomeCardLoading} atHome={false} />
+        </div>
       </>
     )
   );

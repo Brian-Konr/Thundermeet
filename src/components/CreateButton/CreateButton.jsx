@@ -17,7 +17,7 @@ import './CreateButton.css';
 
 export default function CreateButton({
   eventName, eventDescription, eventPriority,
-  eventDateRange, startTime, endTime,
+  eventDateRange, startTime, endTime, setLoading,
 }) {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -25,9 +25,7 @@ export default function CreateButton({
 
   const submitEvent = async () => {
     // POST event
-
-    console.log(`${format(new Date(eventDateRange[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`);
-    console.log(`${format(new Date(eventDateRange[1]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`);
+    setLoading(true);
 
     try {
       const res = await instance.post('/v1/events/', {
@@ -40,6 +38,7 @@ export default function CreateButton({
         startDate: `${format(new Date(eventDateRange[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`,
         startTime: `${startTime}00`,
       });
+      setLoading(false);
       setEventID(res.data.event_id);
       setIsModalVisible(true);
       // store event id

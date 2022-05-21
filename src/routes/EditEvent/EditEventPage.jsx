@@ -10,6 +10,7 @@ export default function EditEventPage() {
   const navigate = useNavigate();
   const { eventID } = useParams();
   const [loading, setLoading] = useState(true);
+  const [editLoading, setEditLoading] = useState(false);
   const [eventName, setEventName] = useState('SAD Meeting');
   const [eventDescription, setEventDescription] = useState('hi');
 
@@ -35,7 +36,9 @@ export default function EditEventPage() {
             display: 'flex', flexDirection: 'row', marginLeft: '38px', marginRight: '38px', marginBottom: '38px', padding: '60px',
           }}
           >
+            {editLoading && <Spin />}
             <EditEvent
+              setEditLoading={setEditLoading}
               eventName={eventName}
               setEventName={setEventName}
               eventDescription={eventDescription}
