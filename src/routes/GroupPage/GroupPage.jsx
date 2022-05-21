@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { message } from 'antd';
 
 import AddEventToGroup from '../../components/AddEventToGroup/AddEventToGroup';
 import DeleteGroup from '../../components/DeleteGroup/DeleteGroup';
@@ -8,10 +9,13 @@ import GroupDecided from '../../components/GroupDecided/GroupDecided';
 import GroupOngoing from '../../components/GroupOngoing/GroupOngoing';
 import GroupTitle from '../../components/GroupTitle/GroupTitle';
 import Navbar from '../../components/Navbar/Navbar';
+import addEventsToGroup from '../../utils/addEventsToGroup';
+import deleteEventsFromGroup from '../../utils/deleteEventsFromGroup';
 import getGroupEvents from '../../utils/getGroupEvents';
 
 export default function GroupPage() {
   const { groupID } = useParams();
+  const [submit, setSubmit] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEvent, setIsAddEvent] = useState(false);
   const [groupTitle, setGroupTitle] = useState('');
@@ -22,26 +26,27 @@ export default function GroupPage() {
   const [editDecidedEvents, setEditDecidedEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
 
+  const fetchGroupInfo = async () => {
+    const { events, groupName, isDefault } = await getGroupEvents(groupID);
+    setGroupTitle(groupName);
+    setEditTitle(groupName);
+    if (isDefault) {
+      setMyEvents(events.map((event) => ({
+        title: event.event_name,
+        key: event.event_id,
+        isConfirmed: event.is_confirmed,
+      })));
+    } else {
+      setMyEvents(events.map((event) => ({
+        title: event.Event_name,
+        key: event.Event_id,
+        isConfirmed: event.Is_confirmed,
+      })));
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      const { events, groupName, isDefault } = await getGroupEvents(groupID);
-      console.log(events);
-      setGroupTitle(groupName);
-      setEditTitle(groupName);
-      if (isDefault) {
-        setMyEvents(events.map((event) => ({
-          title: event.event_name,
-          key: event.event_id,
-          isConfirmed: event.is_confirmed,
-        })));
-      } else {
-        setMyEvents(events.map((event) => ({
-          title: event.Event_name,
-          key: event.Event_id,
-          isConfirmed: event.Is_confirmed,
-        })));
-      }
-    })();
+    fetchGroupInfo();
   }, []);
 
   useEffect(() => {
@@ -54,8 +59,32 @@ export default function GroupPage() {
   }, [myEvents]);
 
   useEffect(() => {
-    console.log(groupTitle, ongoingEvents, decidedEvents);
-  }, [groupTitle, ongoingEvents, decidedEvents]);
+    if (submit) {
+      const eventIDAfterEdit = ongoingEvents.concat(decidedEvents).map((eventObj) => eventObj.key);
+      console.log('myEvents: ', myEvents.map((event) => event.key));
+      console.log('eventAfterEdit: ', eventIDAfterEdit);
+      const toDelete = myEvents
+        .filter((event) => !eventIDAfterEdit.includes(event.key))
+        .map((event) => event.key);
+      console.log('toDelete: ', toDelete);
+      const toAdd = eventIDAfterEdit
+        .filter((id) => !myEvents.map((e) => e.key).includes(id));
+      console.log('toAdd: ', toAdd);
+      (async () => {
+        const addRes = await addEventsToGroup(toAdd, groupID);
+        const deleteRes = await deleteEventsFromGroup(toDelete, groupID);
+        console.log(addRes, deleteRes);
+        if (addRes.status === 'success' && deleteRes.status === 'success') {
+          message.success('Update Successfully!', 1.5);
+          fetchGroupInfo();
+        } else message.error('Update failed...', 1.5);
+      })();
+      // console.log(ongoingEvents.concat(decidedEvents));
+      // console.log(groupTitle, ongoingEvents, decidedEvents);
+      // filter 哪些要刪，哪些要加
+      setSubmit(false);
+    }
+  }, [submit]);
 
   return (
     <div>
@@ -65,22 +94,25 @@ export default function GroupPage() {
           marginLeft: '38px', marginRight: '38px', marginBottom: '38px', paddingTop: '38px',
         }}
         >
-          <div style={{ textAlign: 'right' }}>
-            <EditGroup
-              isEdit={isEdit}
-              setIsEdit={setIsEdit}
-              editTitle={editTitle}
-              setGroupTitle={setGroupTitle}
-              ongoingEvents={ongoingEvents}
-              editOngoingEvents={editOngoingEvents}
-              setOngoingEvents={setOngoingEvents}
-              setEditOngoingEvents={setEditOngoingEvents}
-              decidedEvents={decidedEvents}
-              editDecidedEvents={editDecidedEvents}
-              setDecidedEvents={setDecidedEvents}
-              setEditDecidedEvents={setEditDecidedEvents}
-            />
-          </div>
+          {(groupID !== 'participated' && groupID !== 'created') && (
+            <div style={{ textAlign: 'right' }}>
+              <EditGroup
+                isEdit={isEdit}
+                setIsEdit={setIsEdit}
+                editTitle={editTitle}
+                setGroupTitle={setGroupTitle}
+                ongoingEvents={ongoingEvents}
+                editOngoingEvents={editOngoingEvents}
+                setOngoingEvents={setOngoingEvents}
+                setEditOngoingEvents={setEditOngoingEvents}
+                decidedEvents={decidedEvents}
+                editDecidedEvents={editDecidedEvents}
+                setDecidedEvents={setDecidedEvents}
+                setEditDecidedEvents={setEditDecidedEvents}
+                setSubmit={setSubmit}
+              />
+            </div>
+          )}
           <AddEventToGroup
             isAddEvent={isAddEvent}
             setIsAddEvent={setIsAddEvent}

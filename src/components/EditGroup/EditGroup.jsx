@@ -7,16 +7,19 @@ import './EditGroup.css';
 export default function EditGroup({
   isEdit, setIsEdit, editTitle, setGroupTitle, ongoingEvents, editOngoingEvents, setOngoingEvents,
   setEditOngoingEvents, decidedEvents, editDecidedEvents, setDecidedEvents, setEditDecidedEvents,
+  setSubmit,
 }) {
   async function handleConfirmEdit() {
     if (!editTitle.trim()) {
       message.error('Group Name cannot be empty!', 1.5);
       return;
     }
+    console.log(editOngoingEvents, editDecidedEvents);
     setGroupTitle(editTitle.trim());
     setOngoingEvents(editOngoingEvents);
     setDecidedEvents(editDecidedEvents);
     setIsEdit(false);
+    setSubmit(true);
   }
 
   function handeCancelEdit() {
