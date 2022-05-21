@@ -26,8 +26,12 @@ export default function CalendarForConfirm({
   const [displayPriority, setDisplayPriority] = useState('flex');
 
   useEffect(() => {
-    if (enablePriority) setDisplayPriority('flex');
-    else setDisplayPriority('none');
+    if (enablePriority) {
+      setDisplayPriority('flex');
+    } else {
+      setDisplayPriority('none');
+      setSwitchPriority(false);
+    }
   }, []);
 
   useEffect(() => {

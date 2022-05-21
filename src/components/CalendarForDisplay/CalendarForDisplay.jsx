@@ -34,6 +34,7 @@ export default function CalendarForDisplay({
     } else {
       setDisplayPriority('none');
       setPosition('-30vh');
+      setSwitchPriority(false);
     }
   }, []);
 
