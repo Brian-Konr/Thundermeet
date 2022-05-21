@@ -46,7 +46,7 @@ export default function ConfirmTimePage() {
     (async () => {
       const { data } = await getEvent(eventID);
       if (!localStorage.getItem('token') || data.admin_id !== localStorage.getItem('userID')) {
-        message.error('您並非該活動的創建者！', 2);
+        message.error('You are not the creator of the event!', 2);
         navigate(`/event-time/${eventID}`);
         return;
       }
@@ -72,7 +72,7 @@ export default function ConfirmTimePage() {
       if (timeblocksRes.status === 'success') {
         setSelectedList(timeblocksRes.info);
         setMemberList(timeblocksRes.memberList);
-      } else message.error('無法取得各填寫者的填寫資訊！', 2);
+      } else message.error('Fail to get event info!', 2);
     })();
   }, []);
   const cancelAction = () => {
@@ -84,13 +84,13 @@ export default function ConfirmTimePage() {
     if (schedule.length >= 1) {
       const status = await confirmTime(eventID, schedule);
       if (status === 'success') {
-        message.success('活動時間已確認！', 1.5);
+        message.success('Event time has been decided!', 1.5);
         navigate(`/final-time/${eventID}`);
       } else {
-        message.error('無法確認時段！', 1.5);
+        message.error('Fail to confirm time!', 1.5);
       }
     } else {
-      message.error('請至少選一個時間段', 1.5);
+      message.error('Please select at leaat one time slot!', 1.5);
     }
   };
 
@@ -102,7 +102,7 @@ export default function ConfirmTimePage() {
     <>
       <Navbar />
       {loading ? <Spin style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
-        <div style={{ height: '92vh', background: '#F8F8F8' }}>
+        <div style={{ minHeight: '92vh', background: '#F8F8F8' }}>
           <span style={{ marginLeft: '60%' }}>
             <EventAddToGroup eventID={eventID} groupsAlreadyIn={groups} setTagList={setTagList} setGroups={setGroups} />
             <EventCopyLink eventName={eventTitle} copyLink={copyLink} />

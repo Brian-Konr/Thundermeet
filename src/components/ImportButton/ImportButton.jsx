@@ -73,7 +73,7 @@ export default function ImportButton({
 
   const clickEvent = async () => {
     // 接後端所有 events preview 狀況並 setEventList
-    message.warning('正在取得各活動資訊...', 1);
+    message.warning('Getting event info...', 1);
     const res = await getImportEventsInfo();
     if (res.status === 'success') {
       setEventList(Object.assign({}, ...res.data.filter((event) => event.event_id !== Number(eventID)).map((event) => ({
@@ -86,7 +86,7 @@ export default function ImportButton({
       if (res.data.length > 0) {
         setIsModalVisible(false);
         setIsEventVisible(true);
-      } else message.error('目前沒有其它活動的填寫狀況！', 1.5);
+      } else message.error('There are currently no other events!', 1.5);
     }
   };
 

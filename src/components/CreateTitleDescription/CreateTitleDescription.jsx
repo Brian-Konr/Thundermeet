@@ -26,13 +26,22 @@ export default function CreateTitleDescription({ setEventName, setEventDescripti
             },
           ]}
         >
-          <Input className="input" type="eventName" placeholder="Enter event name" style={{ width: '385px' }} onChange={handleChangeName} />
+          <Input className="input" type="eventName" placeholder="Enter event name" maxLength="30" style={{ width: '385px' }} onChange={handleChangeName} />
         </Form.Item>
         <p className="header">Description</p>
         <Form.Item
           name="eventDescription"
         >
-          <TextArea className="input" type="eventDescription" placeholder="Enter event description (not required)" autoSize={{ minRows: 4, maxRows: 10 }} onChange={handleChangeDescription} />
+          <TextArea
+            className="input"
+            type="eventDescription"
+            placeholder="Enter event description (not required)"
+            autoSize={{ minRows: 4, maxRows: 10 }}
+            onChange={handleChangeDescription}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') e.preventDefault();
+            }}
+          />
         </Form.Item>
       </div>
     </Form>

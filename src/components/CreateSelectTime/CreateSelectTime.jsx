@@ -9,7 +9,7 @@ const { Option } = Select;
 
 const periodOptions = Array.from(Array(25).keys()).map((ele) => {
   if (ele < 10) return `0${ele}`;
-  return ele.toString();
+  return `${ele.toString()}`;
 });
 
 export default function CreateSelectTime({
@@ -31,20 +31,24 @@ export default function CreateSelectTime({
     <Form>
       <div className="all">
         <p className="header">Time Period</p>
-        {/* 5/15 15:53 下面是新改的 select time period 的 div，再麻煩 @王亭勻 修一下這邊的 css */}
         <Form.Item>
-          <div>
-            <p>Starting from ...</p>
-            <Select className="inputTime" defaultValue="10" onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
-            <p>No later than ...</p>
-            <Select className="inputTime" defaultValue="22" onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+          <div style={{ display: 'flex', alignItems: 'start' }}>
+            <p style={{ fontSize: '15px', marginRight: '15px', paddingTop: '2px' }}>From</p>
+            <Select className="inputTime" defaultValue="10" style={{ width: '75px' }} onChange={(value) => setStartTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
+            <p style={{
+              fontSize: '15px', marginLeft: '15px', marginRight: '15px', paddingTop: '2px',
+            }}
+            >
+              To
+            </p>
+            <Select className="inputTime" defaultValue="22" style={{ width: '75px' }} onChange={(value) => setEndTime(value)}>{periodOptions.map((period) => <Option key={period} value={period}>{period}</Option>)}</Select>
           </div>
         </Form.Item>
-        <p className="header">Priority</p>
+        <p className="header" style={{ marginTop: '-10px' }}>Priority</p>
         <Form.Item
           name="enablePriority"
         >
-          <Switch className="priority" checked={eventPriority} checkedChildren="Enabled" defaultChecked={eventPriority} onChange={onChangePriority} />
+          <Switch className="priority" checked={eventPriority} checkedChildren="Enabled" unCheckedChildren="Disabled" defaultChecked={eventPriority} onChange={onChangePriority} />
         </Form.Item>
         <p className="header">Date Range</p>
         <Form.Item
@@ -55,7 +59,7 @@ export default function CreateSelectTime({
             },
           ]}
         >
-          <RangePicker className="inputTime" style={{ width: '385px' }} defaultPickerValue={eventDateRange} onChange={onChangeDate} />
+          <RangePicker className="inputDate" dropdownClassName="inputDate" style={{ width: '385px' }} defaultPickerValue={eventDateRange} onChange={onChangeDate} />
         </Form.Item>
       </div>
     </Form>

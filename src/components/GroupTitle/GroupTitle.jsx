@@ -20,7 +20,7 @@ export default function GroupTitle({
         <h1 className="group-name">Group Name</h1>
       </div>
       <hr />
-      <Input className="edit-title" style={{ width: '35%' }} defaultValue={groupTitle} onChange={(e) => { setEditTitle(e.target.value); }} />
+      <Input className="edit-title" style={{ width: '35%' }} defaultValue={groupTitle} maxLength="30" onChange={(e) => { setEditTitle(e.target.value); }} />
     </div>
   );
 }

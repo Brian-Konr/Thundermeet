@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { Spin } from 'antd';
 
 import HomeCard from '../../components/HomeCard/HomeCard';
@@ -13,14 +14,14 @@ export default function Home() {
   return (
     <>
       {localStorage.getItem('token') && <Navbar />}
-      {loading && (
+      {/* {loading && (
       <Spin
         className="spin"
         style={{
-          position: 'fixed', backgroundColor: '#F2F3F4',
+          position: 'fixed', backgroundColor: '#F2F3F4', marginTop: '87vh', marginLeft: '90vh',
         }}
       />
-      )}
+      )} */}
       <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F2F3F4', minHeight: '100vh',
       }}

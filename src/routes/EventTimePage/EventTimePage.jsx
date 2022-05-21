@@ -78,7 +78,7 @@ export default function EventTimePage() {
     if (timeblocksRes.status === 'success') {
       setSelectedList(timeblocksRes.info);
       setMemberList(timeblocksRes.memberList);
-    } else message.error('無法取得各填寫者的填寫資訊！', 2);
+    } else message.error('Fail to get event info!', 2);
     setRightLoading(false);
   };
 
@@ -118,7 +118,7 @@ export default function EventTimePage() {
           if (res.normal.length > 0) setNormalDay(res.normal.map((timeblock) => new Date(timeblock)));
           if (data.is_priority_enabled && (res.priority.length > 0)) setPriorityDay(res.priority.map((timeblock) => new Date(timeblock)));
           setSchedule(res.concat.map((timeblock) => new Date(timeblock)));
-        } else message.error('無法取得最近一次填寫資訊！', 2);
+        } else message.error('Fail to get recent fill in info!', 2);
         fetchRight();
       })();
     }
@@ -133,7 +133,7 @@ export default function EventTimePage() {
           console.log('normal', normalDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
           console.log('priority', priorityDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
           fetchRight();
-        } else message.error('無法更新填寫狀況，請再嘗試！', 1.2);
+        } else message.error('Fail to update, please try again!', 1.2);
       })();
       setClick(false);
     }
@@ -233,7 +233,7 @@ export default function EventTimePage() {
       <>
         <Navbar />
         {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
-          <div style={{ height: '92vh', background: '#F8F8F8' }}>
+          <div style={{ minHeight: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '50%' }}>
               <ImportButton
                 appleSchedule={appleReverse}

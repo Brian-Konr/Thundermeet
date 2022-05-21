@@ -16,7 +16,7 @@ export default function EditGroup({
     setGroupTitle(editTitle.trim());
     setOngoingEvents(editOngoingEvents);
     setDecidedEvents(editDecidedEvents);
-    // setIsEdit(false);
+    setIsEdit(false);
   }
 
   function handeCancelEdit() {
