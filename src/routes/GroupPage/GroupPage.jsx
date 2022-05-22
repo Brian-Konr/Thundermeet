@@ -11,6 +11,7 @@ import GroupTitle from '../../components/GroupTitle/GroupTitle';
 import Navbar from '../../components/Navbar/Navbar';
 import addEventsToGroup from '../../utils/addEventsToGroup';
 import deleteEventsFromGroup from '../../utils/deleteEventsFromGroup';
+import editGroupName from '../../utils/editGroupName';
 import getGroupEvents from '../../utils/getGroupEvents';
 
 export default function GroupPage() {
@@ -71,10 +72,11 @@ export default function GroupPage() {
         .filter((id) => !myEvents.map((e) => e.key).includes(id));
       console.log('toAdd: ', toAdd);
       (async () => {
+        const editGroupNameRes = await editGroupName(groupID, groupTitle);
         const addRes = await addEventsToGroup(toAdd, groupID);
         const deleteRes = await deleteEventsFromGroup(toDelete, groupID);
         console.log(addRes, deleteRes);
-        if (addRes.status === 'success' && deleteRes.status === 'success') {
+        if (addRes.status === 'success' && deleteRes.status === 'success' && editGroupNameRes === 'success') {
           message.success('Update Successfully!', 1.5);
           fetchGroupInfo();
         } else message.error('Update failed...', 1.5);
@@ -147,6 +149,7 @@ export default function GroupPage() {
             />
             <DeleteGroup
               isEdit={isEdit}
+              groupID={groupID}
             />
           </div>
         </div>

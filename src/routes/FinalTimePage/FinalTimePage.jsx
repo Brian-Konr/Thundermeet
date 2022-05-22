@@ -46,7 +46,6 @@ export default function FinalTimePage() {
       (async () => {
         const { data } = await getEvent(eventID);
         console.log(data);
-        setMemberList(data.participants);
         setSchedule(data.confirmed_timeblocks.map((timeblock) => new Date(timeblock)));
         setEnablePriority(data.is_priority_enabled);
         setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
@@ -64,6 +63,7 @@ export default function FinalTimePage() {
         // console.log(timeblocksRes.info);
         if (timeblocksRes.status === 'success') {
           setSelectedList(timeblocksRes.info);
+          setMemberList(timeblocksRes.memberList);
         } else message.error('Fail to get event info!', 2);
         setLoading(false);
       })();
