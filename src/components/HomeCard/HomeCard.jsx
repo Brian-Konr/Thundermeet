@@ -7,14 +7,18 @@ import {
   Button, Card, Form, Input, message, Spin, Tooltip,
 } from 'antd';
 
+import checkPasswordAnswer from '../../utils/checkPasswordAnswer';
 import login from '../../utils/login';
 import register from '../../utils/register';
+import resetPassword from '../../utils/resetPassword';
 
 import './HomeCard.css';
 
 export default function HomeCard({
   loading, setLoading, atHome,
 }) {
+  const [tempToken, setTempToken] = useState('');
+  const [resetUserID, setResetUserID] = useState('');
   const [option, setOption] = useState('login');
   const navigate = useNavigate();
   const onFinish = async (values) => {
@@ -42,12 +46,25 @@ export default function HomeCard({
       }
     } else if (option === 'forget') {
       // handle forget password
+      const { status, token } = await checkPasswordAnswer(values);
+      setLoading(false);
+      if (status === 'error') {
+        message.error('User ID or answer is wrong...', 1.5);
+        return;
+      }
+      message.success('You can reset your new password now!', 1.5);
+      setResetUserID(values.userId);
+      setTempToken(token);
       setOption('reset');
-      console.log(values);
-      setLoading(false);
     } else if (option === 'reset') {
-      console.log('reset password');
+      const status = await resetPassword(tempToken, resetUserID, values.password);
       setLoading(false);
+      if (status === 'error') {
+        message.error('Password reset failed...', 1.5);
+        return;
+      }
+      message.success('Password reset successfully!', 1.5);
+      setOption('login');
     }
   };
 
