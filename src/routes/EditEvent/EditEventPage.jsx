@@ -10,6 +10,7 @@ export default function EditEventPage() {
   const navigate = useNavigate();
   const { eventID } = useParams();
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [editLoading, setEditLoading] = useState(false);
   const [eventName, setEventName] = useState('SAD Meeting');
   const [eventDescription, setEventDescription] = useState('hi');
@@ -36,7 +37,6 @@ export default function EditEventPage() {
             display: 'flex', flexDirection: 'row', marginLeft: '38px', marginRight: '38px', marginBottom: '38px', padding: '60px',
           }}
           >
-            {editLoading && <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} />}
             <EditEvent
               setEditLoading={setEditLoading}
               eventName={eventName}

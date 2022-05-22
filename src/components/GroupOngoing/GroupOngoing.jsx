@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import {
-  Button, Card,
+  Button, Card, Empty,
 } from 'antd';
 
 import './GroupOngoing.css';
@@ -16,7 +16,13 @@ export default function GroupOngoing({
     console.log(`removed ${e.key}`);
   }
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   function CustomEventGroup() {
+    if (ongoingEvents.length === 0) {
+      return (
+        <Empty className="empty" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      );
+    }
     return Object.values(ongoingEvents).map((group) => (
       <Button className="ongoing-card" type="primary" key={group.key} value={group.title} onClick={() => navigate(`/event-time/${group.key}`)}>
         {group.title}
@@ -24,7 +30,13 @@ export default function GroupOngoing({
     ));
   }
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   function CustomEventGroupEdit() {
+    if (editOngoingEvents.length === 0) {
+      return (
+        <Empty className="empty" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      );
+    }
     return Object.values(editOngoingEvents).map((group) => (
       <div>
         <Card className="ongoing-card-edit" type="primary" key={group.key} value={group.title}>

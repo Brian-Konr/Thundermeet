@@ -191,9 +191,9 @@ export default function CalendarForConfirm({
         style={style}
       >
         <div style={{ fontWeight: 'bold', textDecoration: 'underline', marginBottom: '10px' }}>
-          member list
+          Member List
           {' '}
-          <Tooltip title="You can crossover member for time checking">
+          <Tooltip title="You can hide specific users' available time by clicking their names">
             <InfoCircleOutlined style={{ marginLeft: '5px' }} />
           </Tooltip>
         </div>

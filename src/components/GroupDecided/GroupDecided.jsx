@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CloseOutlined } from '@ant-design/icons';
 import {
-  Button, Card,
+  Button, Card, Empty,
 } from 'antd';
 
 import './GroupDecided.css';
@@ -19,7 +19,13 @@ export default function GroupDecided({
     console.log(`removed ${e.key}`);
   }
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   function CustomEventGroup() {
+    if (decidedEvents.length === 0) {
+      return (
+        <Empty className="empty" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      );
+    }
     return Object.values(decidedEvents).map((group) => (
       <Button className="decided-card" type="primary" key={group.key} value={group.title} onClick={() => { enterEvent(group); }}>
         {group.title}
@@ -27,7 +33,13 @@ export default function GroupDecided({
     ));
   }
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   function CustomEventGroupEdit() {
+    if (editDecidedEvents.length === 0) {
+      return (
+        <Empty className="empty" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      );
+    }
     return Object.values(editDecidedEvents).map((group) => (
       <div>
         <Card className="decided-card-edit" type="primary" key={group.key} value={group.title}>

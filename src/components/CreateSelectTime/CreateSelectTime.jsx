@@ -49,7 +49,7 @@ export default function CreateSelectTime({
         </Form.Item>
         <div style={{ display: 'flex', alignItems: 'start' }}>
           <p className="header" style={{ marginTop: '-10px' }}>Priority</p>
-          <Tooltip title="Enable users to fill in Avaliable or Prefer">
+          <Tooltip title="Enable users to fill in available time with preference">
             <InfoCircleOutlined style={{ marginLeft: '10px', marginTop: '15px' }} />
           </Tooltip>
         </div>
