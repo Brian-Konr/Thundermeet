@@ -7,7 +7,7 @@ export default async (eventId, enablePriority, normal, priority, startDate, star
   const startTimeStr = startTime < 10 ? `0${startTime}` : `${startTime}`;
   const endTimeStr = endTime < 10 ? `0${endTime}` : `${endTime}`;
   const min = new Date(`${startDate.slice(0, 10)}T${startTimeStr}:00`);
-  const max = new Date(`${endDate.slice(0, 10)}T${endTimeStr}:01`);
+  const max = endTime !== 24 ? new Date(`${endDate.slice(0, 10)}T${endTimeStr}:01`) : new Date(`${endDate.slice(0, 10)}T23:59`);
   if (enablePriority) {
     try {
       await instance.post('/v1/timeblocks/', {
