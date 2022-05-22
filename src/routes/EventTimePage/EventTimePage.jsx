@@ -280,7 +280,14 @@ export default function EventTimePage() {
             </div>
             <div className="container">
               <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} setTimeList={setTimeList} setClick={setClick} />
-              {rightSpinLoading && <Spin />}
+              {rightSpinLoading && (
+              <Spin
+                className="spin"
+                style={{
+                  position: 'fixed', marginLeft: '82vw', marginTop: '5vh', backgroundColor: 'transparent',
+                }}
+              />
+              )}
               {!rightLoading && (
                 <CalendarForDisplay
                   startTime={startTime}

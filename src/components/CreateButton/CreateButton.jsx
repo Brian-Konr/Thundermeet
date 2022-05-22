@@ -3,9 +3,6 @@ import { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useNavigate } from 'react-router-dom';
 import {
-  CopyOutlined,
-} from '@ant-design/icons';
-import {
   Button, message, Modal,
 } from 'antd';
 import { format } from 'date-fns';
@@ -80,21 +77,20 @@ export default function CreateButton({
         closable={false}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <CopyToClipboard text={`Please fill in avaliable time for ${eventName} in the follwing link! ${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`}>
-            <Button className="copy" icon={<CopyOutlined />} onClick={() => message.success('successfully copied the text!', 2)} />
-          </CopyToClipboard>
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
           <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {`${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`}</p>
           <br />
-          <Button
-            type="primary"
-            className="gotit-button"
-            onClick={() => navigate(`/event-time/${eventID}`)}
-          >
-            Got it!
-          </Button>
+          <CopyToClipboard text={`Please fill in avaliable time for ${eventName} in the follwing link! ${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`}>
+            <Button
+              type="primary"
+              className="gotit-button"
+              onClick={() => navigate(`/event-time/${eventID}`)}
+            >
+              Copy above text
+            </Button>
+          </CopyToClipboard>
         </div>
       </Modal>
     </>

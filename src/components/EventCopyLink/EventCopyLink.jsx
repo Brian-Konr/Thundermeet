@@ -34,17 +34,19 @@ export default function EventCopyLink({ eventName, copyLink }) {
         closable={false}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <CopyToClipboard text={copyText}>
+          {/* <CopyToClipboard text={copyText}>
             <Button className="copy" icon={<CopyOutlined />} />
-          </CopyToClipboard>
+          </CopyToClipboard> */}
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
           <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {copyLink}</p>
           <br />
-          <Button type="primary" className="gotit-button" onClick={unClickButton}>
-            Got it!
-          </Button>
+          <CopyToClipboard text={copyText}>
+            <Button type="primary" className="gotit-button" onClick={unClickButton}>
+              Copy above text
+            </Button>
+          </CopyToClipboard>
         </div>
       </Modal>
     </>

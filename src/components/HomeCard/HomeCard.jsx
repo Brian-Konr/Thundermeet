@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  LockOutlined, QuestionCircleOutlined, UserOutlined,
+  InfoCircleOutlined, LockOutlined, QuestionCircleOutlined, UserOutlined,
 } from '@ant-design/icons';
 import {
   Button, Card, Form, Input, message, Spin, Tooltip,
@@ -79,7 +79,13 @@ export default function HomeCard({
           >
             {option !== 'reset' && (
               <>
-                <p style={{ fontSize: '20px' }}>User ID</p>
+                <div style={{ fontSize: '20px' }}>
+                  User ID
+                  {' '}
+                  {/* <Tooltip title="For login, cannot change once set">
+                    <InfoCircleOutlined style={{ fontSize: '16px', marginLeft: '8px' }} />
+                  </Tooltip> */}
+                </div>
                 <Form.Item
                   name="userId"
                   rules={[
@@ -90,12 +96,12 @@ export default function HomeCard({
                   ]}
                 >
                   <Input
-                    // prefix={<UserOutlined className="site-form-item-icon" />}
-                    prefix={(
-                      <Tooltip title="For login, cannot change once set">
-                        <UserOutlined className="site-form-item-icon" />
-                      </Tooltip>
-                    )}
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    // prefix={(
+                    //   <Tooltip title="For login, cannot change once set">
+                    //     <UserOutlined className="site-form-item-icon" />
+                    //   </Tooltip>
+                    // )}
                     placeholder="User ID"
                   />
                 </Form.Item>
@@ -104,7 +110,13 @@ export default function HomeCard({
 
             {option === 'forget' && (
               <>
-                <p style={{ fontSize: '20px' }}>Password Answer</p>
+                <div style={{ fontSize: '20px' }}>
+                  Password Recovery Answer
+                  {' '}
+                  <Tooltip title="What&apos;s the name of your college or senior high?">
+                    <InfoCircleOutlined style={{ fontSize: '16px', marginLeft: '8px' }} />
+                  </Tooltip>
+                </div>
                 <Form.Item
                   name="passwordAnswer"
                   rules={[
@@ -113,13 +125,15 @@ export default function HomeCard({
                       message: 'Please input your answer!',
                     },
                   ]}
+                  // style={{ marginTop: '-1.2vw' }}
                 >
                   <Input
-                    prefix={(
-                      <Tooltip title="For password recovery usage">
-                        <QuestionCircleOutlined className="site-form-item-icon" />
-                      </Tooltip>
-                    )}
+                    prefix={<QuestionCircleOutlined className="site-form-item-icon" />}
+                    // prefix={(
+                    //   <Tooltip title="For password recovery usage">
+                    //     <QuestionCircleOutlined className="site-form-item-icon" />
+                    //   </Tooltip>
+                    // )}
                     placeholder="Answer"
                   />
                 </Form.Item>
@@ -128,18 +142,24 @@ export default function HomeCard({
 
             {option === 'register' && (
               <>
-                <p style={{ fontSize: '20px' }}>User Name</p>
+                <div style={{ fontSize: '20px' }}>
+                  Nickname
+                  {' '}
+                  <Tooltip title="Display name, can be changed">
+                    <InfoCircleOutlined style={{ fontSize: '16px', marginLeft: '8px' }} />
+                  </Tooltip>
+                </div>
                 <Form.Item
                   name="userName"
                 >
                   <Input
-                    // prefix={<UserOutlined className="site-form-item-icon" />}
-                    prefix={(
-                      <Tooltip title="Display name, can be changed">
-                        <UserOutlined className="site-form-item-icon" />
-                      </Tooltip>
-                    )}
-                    placeholder="User Name"
+                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    // prefix={(
+                    //   <Tooltip title="Display name, can be changed">
+                    //     <UserOutlined className="site-form-item-icon" />
+                    //   </Tooltip>
+                    // )}
+                    placeholder="Nickname"
                   />
                 </Form.Item>
               </>
@@ -156,6 +176,7 @@ export default function HomeCard({
                       message: 'Please input your Password!',
                     },
                   ]}
+                  style={{ marginTop: '-1.2vw' }}
                 >
                   <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}
@@ -168,8 +189,14 @@ export default function HomeCard({
 
             {option === 'register' && (
               <>
-                <p style={{ fontSize: '20px' }}>What&apos;s your undergraduate name?</p>
-                <p style={{ fontSize: '13px', marginTop: '-2vh' }}>(in abbreviation)</p>
+                <div style={{ fontSize: '20px' }}>
+                  What&apos;s the name of your college or senior high?
+                  {' '}
+                  <Tooltip title="For password recovery usage">
+                    <InfoCircleOutlined style={{ fontSize: '16px', marginLeft: '8px' }} />
+                  </Tooltip>
+                </div>
+                <p style={{ fontSize: '13px' }}>(in abbreviation)</p>
                 <Form.Item
                   name="passwordAnswer"
                   rules={[
@@ -180,12 +207,12 @@ export default function HomeCard({
                   ]}
                 >
                   <Input
-                    // prefix={<QuestionCircleOutlined className="site-form-item-icon" />}
-                    prefix={(
-                      <Tooltip title="For password recovery usage">
-                        <QuestionCircleOutlined className="site-form-item-icon" />
-                      </Tooltip>
-                    )}
+                    prefix={<QuestionCircleOutlined className="site-form-item-icon" />}
+                    // prefix={(
+                    //   <Tooltip title="For password recovery usage">
+                    //     <QuestionCircleOutlined className="site-form-item-icon" />
+                    //   </Tooltip>
+                    // )}
                     placeholder="Answer"
                     // suffix={(
                     //   <Tooltip title="For password recovery usage">
