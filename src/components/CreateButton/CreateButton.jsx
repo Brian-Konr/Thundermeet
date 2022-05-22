@@ -80,13 +80,13 @@ export default function CreateButton({
         closable={false}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <CopyToClipboard text={`Please fill in avaliable time for ${eventName} in the follwing link! http://localhost:3000/event-time/${eventID}`}>
+          <CopyToClipboard text={`Please fill in avaliable time for ${eventName} in the follwing link! ${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`}>
             <Button className="copy" icon={<CopyOutlined />} onClick={() => message.success('successfully copied the text!', 2)} />
           </CopyToClipboard>
           <br />
           <img src="src/icons/thunder.png" width="50px" alt="" />
           <br />
-          <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {`http://localhost:3000/event-time/${eventID}`}</p>
+          <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {`${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`}</p>
           <br />
           <Button
             type="primary"

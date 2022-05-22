@@ -110,7 +110,7 @@ export default function EventTimePage() {
         setEndTime(Number(data.end_time.substring(0, 2)));
         setEventDescription(data.event_description);
         setEventTitle(data.event_name);
-        setCopyLink(`http://localhost:3000/event-time/${eventID}`);
+        setCopyLink(`${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`);
         setEnablePriority(data.is_priority_enabled);
         if (data.groups) {
           setTagList(data.groups.map((groupObj) => groupObj.GroupName));

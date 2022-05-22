@@ -61,7 +61,7 @@ export default function FinalTimePage() {
         setEndTime(Number(data.end_time.substring(0, 2)));
         setEventDescription(data.event_description);
         setEventTitle(data.event_name);
-        setCopyLink(`http://localhost:3000/final-time/${eventID}`);
+        setCopyLink(`${import.meta.env.VITE_FRONTEND_URL}/final-time/${eventID}`);
         if (data.groups) {
           setTagList(data.groups.map((groupObj) => groupObj.GroupName));
           setGroups(data.groups.map((groupObj) => groupObj.GroupId));
