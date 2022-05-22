@@ -35,6 +35,7 @@ export default function EventTimePage() {
   const [homeCardLoading, setHomeCardLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [rightLoading, setRightLoading] = useState(true);
+  const [rightSpinLoading, setRightSpinLoading] = useState(true);
   // params
   const [adminID, setAdminID] = useState('');
   const [groups, setGroups] = useState([]);
@@ -72,7 +73,7 @@ export default function EventTimePage() {
   const [eventList, setEventList] = useState({});
 
   const fetchRight = async () => {
-    setRightLoading(true);
+    setRightSpinLoading(true);
     const timeblocksRes = await getAllTimeBlocksInfo(eventID);
     console.log(timeblocksRes.info);
     if (timeblocksRes.status === 'success') {
@@ -80,6 +81,7 @@ export default function EventTimePage() {
       setMemberList(timeblocksRes.memberList);
     } else message.error('Fail to get event info!', 2);
     setRightLoading(false);
+    setRightSpinLoading(false);
   };
 
   // params for POST timeblocks check
@@ -285,12 +287,18 @@ export default function EventTimePage() {
             </div>
             <div className="container">
               <Calendar schedule={schedule} setSchedule={setSchedule} startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} enablePriority={enablePriority} normalDay={normalDay} setNormalDay={setNormalDay} priorityDay={priorityDay} setPriorityDay={setPriorityDay} setTimeList={setTimeList} setClick={setClick} />
-              {rightLoading ? (
-                <Spin style={{
-                  marginLeft: '21.3vw', marginRight: '21vw', marginTop: '25vh', backgroundColor: '#f8f8f8',
-                }}
+              {rightSpinLoading && <Spin />}
+              {!rightLoading && (
+                <CalendarForDisplay
+                  startTime={startTime}
+                  endTime={endTime}
+                  startDate={startDate}
+                  numOfDays={numOfDays}
+                  memberList={memberList}
+                  selectedList={selectedList}
+                  enablePriority={enablePriority}
                 />
-              ) : <CalendarForDisplay startTime={startTime} endTime={endTime} startDate={startDate} numOfDays={numOfDays} memberList={memberList} selectedList={selectedList} enablePriority={enablePriority} />}
+              )}
               {adminID === localStorage.getItem('userID')
                 && (
                 <Button
