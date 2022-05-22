@@ -38,7 +38,12 @@ export default function EventAddToGroup({
         const res = await getMyGroups();
         console.log(res.groups);
         console.log(groupsAlreadyIn);
-        setMyGroups(res.groups.filter((groupObj) => !groupsAlreadyIn.includes(groupObj.group_id)));
+        if (res.groups) {
+          setMyGroups(
+            res.groups
+              .filter((groupObj) => !groupsAlreadyIn.includes(groupObj.group_id)),
+          );
+        }
       })();
     }
   }, [isModalVisible]);
