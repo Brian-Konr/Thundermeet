@@ -105,7 +105,7 @@ export default function ImportButton({
   return (
     <>
       <Button className="button-round" icon={<DownloadOutlined />} onClick={clickButton}>
-        Import Calendar
+        Import from Calendar
       </Button>
       <Modal
         visible={isModalVisible}

@@ -37,7 +37,7 @@ export default function BasicInfo({
         <hr />
         <div className="content">
           <span className="item-name">
-            <p>User Name</p>
+            <p>Nickname</p>
             <p>User ID</p>
             <p>Question for Password Recovery</p>
             <p>Answer for Password Recovery</p>
@@ -49,7 +49,7 @@ export default function BasicInfo({
               <Button className="submit-button" type="primary" disabled={!revisedName || revisedName === userName} onClick={onSubmit}>Submit</Button>
             </Input.Group>
             <p>{userID}</p>
-            <p>What&apos;s your undergraduate name?</p>
+            <p>What&apos;s the name of your college or senior high?</p>
             <p>{passwordAnswer}</p>
           </span>
         </div>
@@ -65,7 +65,7 @@ export default function BasicInfo({
       <hr />
       <div className="content">
         <span className="item-name">
-          <p>User Name</p>
+          <p>Nickname</p>
           <p>User ID</p>
           <p>Question for Password Recovery</p>
           <p>Answer for Password Recovery</p>
@@ -73,7 +73,7 @@ export default function BasicInfo({
         <span className="item-content">
           <p style={{ textDecoration: 'underline 1px' }}>{userName}</p>
           <p>{userID}</p>
-          <p>What&apos;s your undergraduate name?</p>
+          <p>What&apos;s the name of your college or senior high?</p>
           <p>{passwordAnswer}</p>
         </span>
       </div>
