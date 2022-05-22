@@ -90,9 +90,15 @@ export default function EventTimePage() {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       (async () => {
-        const { data } = await getEvent(eventID);
+        const { status, data } = await getEvent(eventID);
+        if (status === 'error') {
+          message.error('Cannot find this event!', 1.5);
+          navigate('/personal');
+          return;
+        }
         if (data.is_confirmed) {
           navigate(`/final-time/${eventID}`);
+          return;
         }
         console.log(data);
         setNumOfDays(getNumberOfDays(data.start_date, data.end_date));

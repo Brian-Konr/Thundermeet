@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   message, Spin,
   Tag,
@@ -22,6 +22,7 @@ import getNumberOfDays from '../../utils/getNumberOfDays';
 import './FinalTimePage.css';
 
 export default function FinalTimePage() {
+  const navigate = useNavigate();
   const { eventID } = useParams();
   // params
   const [homeCardLoading, setHomeCardLoading] = useState(false);
@@ -44,7 +45,12 @@ export default function FinalTimePage() {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       (async () => {
-        const { data } = await getEvent(eventID);
+        const { status, data } = await getEvent(eventID);
+        if (status === 'error') {
+          message.error('Cannot find this event!', 1.5);
+          navigate('/personal');
+          return;
+        }
         console.log(data);
         setSchedule(data.confirmed_timeblocks.map((timeblock) => new Date(timeblock)));
         setEnablePriority(data.is_priority_enabled);

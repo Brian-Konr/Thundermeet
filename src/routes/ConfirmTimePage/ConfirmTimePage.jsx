@@ -44,14 +44,20 @@ export default function ConfirmTimePage() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await getEvent(eventID);
+      const { status, data } = await getEvent(eventID);
       if (!localStorage.getItem('token') || data.admin_id !== localStorage.getItem('userID')) {
         message.error('You are not the creator of the event!', 2);
         navigate(`/event-time/${eventID}`);
         return;
       }
+      if (status === 'error') {
+        message.error('Cannot find this event!', 1.5);
+        navigate('/personal');
+        return;
+      }
       if (data.is_confirmed) {
         navigate(`/final-time/${eventID}`);
+        return;
       }
       console.log(data);
       setEnablePriority(data.is_priority_enabled);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { message } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import { message, Spin } from 'antd';
 
 import AddEventToGroup from '../../components/AddEventToGroup/AddEventToGroup';
 import DeleteGroup from '../../components/DeleteGroup/DeleteGroup';
@@ -15,7 +15,9 @@ import editGroupName from '../../utils/editGroupName';
 import getGroupEvents from '../../utils/getGroupEvents';
 
 export default function GroupPage() {
+  const navigate = useNavigate();
   const { groupID } = useParams();
+  const [loading, setLoading] = useState(true);
   const [submit, setSubmit] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isAddEvent, setIsAddEvent] = useState(false);
@@ -28,7 +30,15 @@ export default function GroupPage() {
   const [myEvents, setMyEvents] = useState([]);
 
   const fetchGroupInfo = async () => {
-    const { events, groupName, isDefault } = await getGroupEvents(groupID);
+    const {
+      status, events, groupName, isDefault,
+    } = await getGroupEvents(groupID);
+    setLoading(false);
+    if (status === 'error') {
+      message.error('Cannot get group events...', 1.5);
+      navigate('/personal');
+      return;
+    }
     setGroupTitle(groupName);
     setEditTitle(groupName);
     if (isDefault) {
@@ -91,69 +101,71 @@ export default function GroupPage() {
   return (
     <div>
       <Navbar />
-      <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
-        <div style={{
-          marginLeft: '38px', marginRight: '38px', marginBottom: '38px', paddingTop: '38px',
-        }}
-        >
-          {(groupID !== 'participated' && groupID !== 'created') && (
-            <div style={{ textAlign: 'right' }}>
-              <EditGroup
-                isEdit={isEdit}
-                setIsEdit={setIsEdit}
-                editTitle={editTitle}
-                setGroupTitle={setGroupTitle}
-                ongoingEvents={ongoingEvents}
-                editOngoingEvents={editOngoingEvents}
-                setOngoingEvents={setOngoingEvents}
-                setEditOngoingEvents={setEditOngoingEvents}
-                decidedEvents={decidedEvents}
-                editDecidedEvents={editDecidedEvents}
-                setDecidedEvents={setDecidedEvents}
-                setEditDecidedEvents={setEditDecidedEvents}
-                setSubmit={setSubmit}
-              />
-            </div>
-          )}
-          <AddEventToGroup
-            isAddEvent={isAddEvent}
-            setIsAddEvent={setIsAddEvent}
-            editOngoingEvents={editOngoingEvents}
-            setEditOngoingEvents={setEditOngoingEvents}
-            editDecidedEvents={editDecidedEvents}
-            setEditDecidedEvents={setEditDecidedEvents}
-            myEvents={myEvents}
-          />
+      {loading ? <Spin /> : (
+        <div style={{ background: '#F8F8F8', minHeight: '92vh' }}>
           <div style={{
-            display: 'flex', flexDirection: 'column', paddingBottom: '16px', marginTop: '-10px',
+            marginLeft: '38px', marginRight: '38px', marginBottom: '38px', paddingTop: '38px',
           }}
           >
-            <GroupTitle
-              isEdit={isEdit}
-              groupTitle={groupTitle}
-              setEditTitle={setEditTitle}
-            />
-            <br />
-            <GroupOngoing
-              isEdit={isEdit}
-              ongoingEvents={ongoingEvents}
+            {(groupID !== 'participated' && groupID !== 'created') && (
+              <div style={{ textAlign: 'right' }}>
+                <EditGroup
+                  isEdit={isEdit}
+                  setIsEdit={setIsEdit}
+                  editTitle={editTitle}
+                  setGroupTitle={setGroupTitle}
+                  ongoingEvents={ongoingEvents}
+                  editOngoingEvents={editOngoingEvents}
+                  setOngoingEvents={setOngoingEvents}
+                  setEditOngoingEvents={setEditOngoingEvents}
+                  decidedEvents={decidedEvents}
+                  editDecidedEvents={editDecidedEvents}
+                  setDecidedEvents={setDecidedEvents}
+                  setEditDecidedEvents={setEditDecidedEvents}
+                  setSubmit={setSubmit}
+                />
+              </div>
+            )}
+            <AddEventToGroup
+              isAddEvent={isAddEvent}
+              setIsAddEvent={setIsAddEvent}
               editOngoingEvents={editOngoingEvents}
               setEditOngoingEvents={setEditOngoingEvents}
-              setIsAddEvent={setIsAddEvent}
-            />
-            <GroupDecided
-              isEdit={isEdit}
-              decidedEvents={decidedEvents}
               editDecidedEvents={editDecidedEvents}
               setEditDecidedEvents={setEditDecidedEvents}
+              myEvents={myEvents}
             />
-            <DeleteGroup
-              isEdit={isEdit}
-              groupID={groupID}
-            />
+            <div style={{
+              display: 'flex', flexDirection: 'column', paddingBottom: '16px', marginTop: '-10px',
+            }}
+            >
+              <GroupTitle
+                isEdit={isEdit}
+                groupTitle={groupTitle}
+                setEditTitle={setEditTitle}
+              />
+              <br />
+              <GroupOngoing
+                isEdit={isEdit}
+                ongoingEvents={ongoingEvents}
+                editOngoingEvents={editOngoingEvents}
+                setEditOngoingEvents={setEditOngoingEvents}
+                setIsAddEvent={setIsAddEvent}
+              />
+              <GroupDecided
+                isEdit={isEdit}
+                decidedEvents={decidedEvents}
+                editDecidedEvents={editDecidedEvents}
+                setEditDecidedEvents={setEditDecidedEvents}
+              />
+              <DeleteGroup
+                isEdit={isEdit}
+                groupID={groupID}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

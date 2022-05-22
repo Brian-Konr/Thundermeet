@@ -24,10 +24,20 @@ export default async (groupID) => {
     };
   }
 
-  const res = await instance.get(`/v1/groups/${groupID}`);
-  return {
-    events: res.data.event_ids ? res.data.event_ids : [],
-    groupName: res.data.group_name,
-    isDefault: false,
-  };
+  try {
+    const res = await instance.get(`/v1/groups/${groupID}`);
+    return {
+      status: 'success',
+      events: res.data.event_ids ? res.data.event_ids : [],
+      groupName: res.data.group_name,
+      isDefault: false,
+    };
+  } catch (error) {
+    return {
+      events: [],
+      groupName: '',
+      isDefault: false,
+      status: 'error',
+    };
+  }
 };

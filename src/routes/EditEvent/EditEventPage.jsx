@@ -17,7 +17,12 @@ export default function EditEventPage() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await getEvent(eventID);
+      const { status, data } = await getEvent(eventID);
+      if (status === 'error') {
+        message.error('Cannot find this event!', 1.5);
+        navigate('/personal');
+        return;
+      }
       setLoading(false);
       setEventName(data.event_name);
       setEventDescription(data.event_description);
