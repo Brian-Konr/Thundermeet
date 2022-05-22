@@ -27,6 +27,7 @@ export default function FinalTimePage() {
   // params
   const [homeCardLoading, setHomeCardLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [exportLoading, setExportLoading] = useState(false);
   const [eventTitle, setEventTitle] = useState('');
   const [tagList, setTagList] = useState([]);
   const [eventDescription, setEventDescription] = useState('');
@@ -79,10 +80,18 @@ export default function FinalTimePage() {
     localStorage.getItem('token') ? (
       <>
         <Navbar />
+        {exportLoading && (
+          <Spin
+            className="spin"
+            style={{
+              position: 'fixed', marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'transparent',
+            }}
+          />
+        )}
         {loading ? <Spin className="spin" style={{ marginLeft: '50vw', marginTop: '40vh', backgroundColor: 'white' }} /> : (
           <div style={{ minHeight: '92vh', background: '#F8F8F8' }}>
             <span style={{ marginLeft: '55%' }}>
-              <ExportButton schedule={schedule} eventID={eventID} eventTitle={eventTitle} eventDescription={eventDescription} />
+              <ExportButton setExportLoading={setExportLoading} schedule={schedule} eventID={eventID} eventTitle={eventTitle} eventDescription={eventDescription} />
               <EventAddToGroup eventID={eventID} groupsAlreadyIn={groups} setTagList={setTagList} setGroups={setGroups} />
               <EventCopyConfirmLink eventName={eventTitle} schedule={schedule} copyLink={copyLink} />
             </span>

@@ -42,6 +42,12 @@ export default function HomeCard({
       }
     } else if (option === 'forget') {
       // handle forget password
+      setOption('reset');
+      console.log(values);
+      setLoading(false);
+    } else if (option === 'reset') {
+      console.log('reset password');
+      setLoading(false);
     }
   };
 
@@ -59,6 +65,7 @@ export default function HomeCard({
                   case 'login': return 'Login';
                   case 'register': return 'Register';
                   case 'forget': return 'Forgot Password';
+                  case 'reset': return 'Reset Password';
                   default: return 'Login Form';
                 }
               })()}
@@ -70,26 +77,54 @@ export default function HomeCard({
             className="login-form"
             onFinish={onFinish}
           >
-            <p style={{ fontSize: '20px' }}>User ID</p>
-            <Form.Item
-              name="userId"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your User ID!',
-                },
-              ]}
-            >
-              <Input
-                // prefix={<UserOutlined className="site-form-item-icon" />}
-                prefix={(
-                  <Tooltip title="For login, cannot change once set">
-                    <UserOutlined className="site-form-item-icon" />
-                  </Tooltip>
-                )}
-                placeholder="User ID"
-              />
-            </Form.Item>
+            {option !== 'reset' && (
+              <>
+                <p style={{ fontSize: '20px' }}>User ID</p>
+                <Form.Item
+                  name="userId"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your User ID!',
+                    },
+                  ]}
+                >
+                  <Input
+                    // prefix={<UserOutlined className="site-form-item-icon" />}
+                    prefix={(
+                      <Tooltip title="For login, cannot change once set">
+                        <UserOutlined className="site-form-item-icon" />
+                      </Tooltip>
+                    )}
+                    placeholder="User ID"
+                  />
+                </Form.Item>
+              </>
+            )}
+
+            {option === 'forget' && (
+              <>
+                <p style={{ fontSize: '20px' }}>Password Answer</p>
+                <Form.Item
+                  name="passwordAnswer"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your answer!',
+                    },
+                  ]}
+                >
+                  <Input
+                    prefix={(
+                      <Tooltip title="For password recovery usage">
+                        <QuestionCircleOutlined className="site-form-item-icon" />
+                      </Tooltip>
+                    )}
+                    placeholder="Answer"
+                  />
+                </Form.Item>
+              </>
+            )}
 
             {option === 'register' && (
               <>
@@ -112,7 +147,7 @@ export default function HomeCard({
 
             {option !== 'forget' && (
               <>
-                <p style={{ fontSize: '20px' }}>Password</p>
+                <p style={{ fontSize: '20px' }}>{option === 'reset' ? 'New Password' : 'Password'}</p>
                 <Form.Item
                   name="password"
                   rules={[
@@ -174,6 +209,7 @@ export default function HomeCard({
                     case 'login': return 'Login';
                     case 'register': return 'Register';
                     case 'forget': return 'Submit';
+                    case 'reset': return 'Reset';
                     default: return 'Login';
                   }
                 })()}

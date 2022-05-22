@@ -14,14 +14,15 @@ import {
 } from 'antd';
 
 import logo from '../../icons/logo.png';
-import exportToGoogle from '../../utils/exportToGoogle';
+import exportToGooGle from '../../utils/exportToGoogle';
 import exportToOtherEvent from '../../utils/exportToOtherEvent';
 import getMyEvents from '../../utils/getMyEvents';
+import split from '../../utils/splitMultipleConfirmedTimeblocks';
 
 import './ExportButton.css';
 
 export default function ExportButton({
-  eventTitle, eventDescription, schedule, eventID,
+  setExportLoading, eventTitle, eventDescription, schedule, eventID,
 }) {
   const [eventList, setEventList] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -44,11 +45,12 @@ export default function ExportButton({
 
   const exportGoogle = async () => {
     const sortedTime = Object.values(schedule).sort((a, b) => new Date(a) - new Date(b));
-    const start = sortedTime[0].toISOString();
-    const end = new Date(sortedTime[sortedTime.length - 1].getTime() + 30 * 60000).toISOString();
-    await exportToGoogle(eventTitle, eventDescription, start, end);
-    message.success('Export to Google Calendar succeeded!');
+    console.log(sortedTime);
+    const multiPeriods = split(sortedTime);
     setIsModalVisible(false);
+    await exportToGooGle(eventTitle, eventDescription, multiPeriods, setExportLoading);
+    setExportLoading(false);
+    message.success('Export to Google Calendar succeeded!');
   };
 
   const clickEvent = async () => {

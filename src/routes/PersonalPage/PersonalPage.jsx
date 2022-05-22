@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Spin } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { message, Spin } from 'antd';
 
 import Avatar from '../../components/Avatar/Avatar';
 import BasicInfo from '../../components/BasicInfo/BasicInfo';
@@ -9,6 +10,7 @@ import getInfo from '../../utils/getInfo';
 // import getMyEvents from '../utils/getMyEvents';
 
 export default function PersonalPage() {
+  const navigate = useNavigate();
   const [passwordAnswer, setPasswordAnswer] = useState('');
   const [userID, setUserID] = useState('');
   const [userName, setUserName] = useState('');
@@ -22,6 +24,9 @@ export default function PersonalPage() {
         setPasswordAnswer(res.data.password_answer);
         setUserID(res.data.user_id);
         setUserName(res.data.username);
+      } else {
+        message.error('Please login first!');
+        navigate('/');
       }
     })();
   }, []);
