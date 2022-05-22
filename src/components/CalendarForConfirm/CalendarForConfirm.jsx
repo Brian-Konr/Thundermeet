@@ -51,23 +51,19 @@ export default function CalendarForConfirm({
   }, [removeList]);
 
   const crossMember = (member) => {
-    console.log('cross member');
     setRemoveList((oldRemoveList) => oldRemoveList.concat(member));
   };
 
   const unCrossMember = (member) => {
-    console.log('unCross member');
     setRemoveList(removeList.filter((item) => item !== member));
   };
 
   const switchChange = (checked) => {
-    // console.log(checked);
     setSwitchPriority(checked);
   };
 
   const handleChange = (newSchedule) => {
     setSchedule(newSchedule);
-    // console.log(newSchedule);
   };
 
   return (

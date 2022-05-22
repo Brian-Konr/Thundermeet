@@ -59,7 +59,6 @@ export default function ConfirmTimePage() {
         navigate(`/final-time/${eventID}`);
         return;
       }
-      console.log(data);
       setEnablePriority(data.is_priority_enabled);
       setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
       setStartDate(new Date(data.start_date));
@@ -74,7 +73,6 @@ export default function ConfirmTimePage() {
       }
       const timeblocksRes = await getAllTimeBlocksInfo(eventID);
       setLoading(false);
-      // console.log(timeblocksRes.info);
       if (timeblocksRes.status === 'success') {
         setSelectedList(timeblocksRes.info);
         setMemberList(timeblocksRes.memberList);

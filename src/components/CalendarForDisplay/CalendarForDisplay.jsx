@@ -29,8 +29,6 @@ export default function CalendarForDisplay({
   const [position, setPosition] = useState('-27vh');
 
   useEffect(() => {
-    console.log(selectedList);
-    console.log(memberList);
     if (enablePriority) {
       setDisplayPriority('flex');
       setPosition('-27vh');
@@ -55,17 +53,14 @@ export default function CalendarForDisplay({
   }, [removeList]);
 
   const crossMember = (member) => {
-    console.log('cross member');
     setRemoveList((oldRemoveList) => oldRemoveList.concat(member));
   };
 
   const unCrossMember = (member) => {
-    console.log('unCross member');
     setRemoveList(removeList.filter((item) => item !== member));
   };
 
   const switchChange = (checked) => {
-    console.log(checked);
     setSwitchPriority(checked);
   };
 

@@ -52,7 +52,6 @@ export default function FinalTimePage() {
           navigate('/personal');
           return;
         }
-        console.log(data);
         setSchedule(data.confirmed_timeblocks.map((timeblock) => new Date(timeblock)));
         setEnablePriority(data.is_priority_enabled);
         setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
@@ -67,7 +66,6 @@ export default function FinalTimePage() {
           setGroups(data.groups.map((groupObj) => groupObj.GroupId));
         }
         const timeblocksRes = await getAllTimeBlocksInfo(eventID);
-        // console.log(timeblocksRes.info);
         if (timeblocksRes.status === 'success') {
           setSelectedList(timeblocksRes.info);
           setMemberList(timeblocksRes.memberList);

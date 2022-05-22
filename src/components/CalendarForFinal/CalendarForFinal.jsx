@@ -36,17 +36,14 @@ export default function CalendarForFinal({
   }, []);
 
   const crossMember = (member) => {
-    console.log('cross member');
     setRemoveList((oldRemoveList) => oldRemoveList.concat(member));
   };
 
   const unCrossMember = (member) => {
-    console.log('unCross member');
     setRemoveList(removeList.filter((item) => item !== member));
   };
 
   const switchChange = (checked) => {
-    console.log(checked);
     setSwitchPriority(checked);
   };
 

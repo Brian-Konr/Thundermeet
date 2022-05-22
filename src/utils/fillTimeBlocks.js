@@ -10,12 +10,11 @@ export default async (eventId, enablePriority, normal, priority, startDate, star
   const max = new Date(`${endDate.slice(0, 10)}T${endTimeStr}:01`);
   if (enablePriority) {
     try {
-      const res = await instance.post('/v1/timeblocks/', {
+      await instance.post('/v1/timeblocks/', {
         eventId,
         normal: normal.filter((timeblock) => timeblock >= min && timeblock <= max && timeblock.getHours() >= startTime && timeblock.getHours() < endTime).map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`),
         priority: priority.filter((timeblock) => timeblock >= min && timeblock <= max && timeblock.getHours() >= startTime && timeblock.getHours() < endTime).map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`),
       });
-      console.log(res);
       return {
         status: 'success',
       };
@@ -27,11 +26,10 @@ export default async (eventId, enablePriority, normal, priority, startDate, star
     }
   } else {
     try {
-      const res = await instance.post('/v1/timeblocks/', {
+      await instance.post('/v1/timeblocks/', {
         eventId,
         normal: normal.filter((timeblock) => timeblock >= min && timeblock <= max && timeblock.getHours() >= startTime && timeblock.getHours() < endTime).map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`),
       });
-      console.log(res);
       return {
         status: 'success',
       };

@@ -34,15 +34,6 @@ export default function ImportButton({
   const [textColorList, setTextColorList] = useState(colorList);
 
   useEffect(() => {
-    setEventList({
-      'SAD-1': {
-        normal: [new Date()],
-        priority: [new Date()],
-      },
-    });
-  }, []);
-
-  useEffect(() => {
     if (Object.keys(eventList).length > 0) {
       setEventScheduleNormal(eventList[Object.keys(eventList)[0]].normal);
       setEventSchedulePriority(eventList[Object.keys(eventList)[0]].priority);
@@ -91,7 +82,6 @@ export default function ImportButton({
   };
 
   const changeEvent = (event) => {
-    console.log(event, eventList[event].normal, eventList[event].priority);
     setEventScheduleNormal(eventList[event].normal);
     setEventSchedulePriority(eventList[event].priority);
     for (let i = 0; i < Object.keys(eventList).length; i += 1) {

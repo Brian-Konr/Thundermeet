@@ -10,7 +10,6 @@ export default async (eventID, groupID) => {
       msg: res,
     };
   } catch (error) {
-    console.log(error);
     return {
       status: 'error',
       error,

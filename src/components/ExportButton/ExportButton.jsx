@@ -45,7 +45,6 @@ export default function ExportButton({
 
   const exportGoogle = async () => {
     const sortedTime = Object.values(schedule).sort((a, b) => new Date(a) - new Date(b));
-    console.log(sortedTime);
     const multiPeriods = split(sortedTime);
     setIsModalVisible(false);
     await exportToGooGle(eventTitle, eventDescription, multiPeriods, setExportLoading);
@@ -57,7 +56,6 @@ export default function ExportButton({
     // fetch all events
     message.warning('Getting event info...', 1.5);
     const res = await getMyEvents();
-    console.log(res.data);
     if (res.status === 'success') {
       setEventList(res.data.filter((event) => !event.is_confirmed && event.event_id !== Number(eventID)).map((event) => ({
         id: event.event_id,

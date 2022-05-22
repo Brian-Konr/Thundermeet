@@ -72,27 +72,20 @@ export default function GroupPage() {
   useEffect(() => {
     if (submit) {
       const eventIDAfterEdit = ongoingEvents.concat(decidedEvents).map((eventObj) => eventObj.key);
-      console.log('myEvents: ', myEvents.map((event) => event.key));
-      console.log('eventAfterEdit: ', eventIDAfterEdit);
       const toDelete = myEvents
         .filter((event) => !eventIDAfterEdit.includes(event.key))
         .map((event) => event.key);
-      console.log('toDelete: ', toDelete);
       const toAdd = eventIDAfterEdit
         .filter((id) => !myEvents.map((e) => e.key).includes(id));
-      console.log('toAdd: ', toAdd);
       (async () => {
         const editGroupNameRes = await editGroupName(groupID, groupTitle);
         const addRes = await addEventsToGroup(toAdd, groupID);
         const deleteRes = await deleteEventsFromGroup(toDelete, groupID);
-        console.log(addRes, deleteRes);
         if (addRes.status === 'success' && deleteRes.status === 'success' && editGroupNameRes === 'success') {
           message.success('Update Successfully!', 1.5);
           fetchGroupInfo();
         } else message.error('Update failed...', 1.5);
       })();
-      // console.log(ongoingEvents.concat(decidedEvents));
-      // console.log(groupTitle, ongoingEvents, decidedEvents);
       // filter 哪些要刪，哪些要加
       setSubmit(false);
     }

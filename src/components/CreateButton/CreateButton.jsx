@@ -38,7 +38,6 @@ export default function CreateButton({
         startDate: `${format(new Date(eventDateRange[0]), "yyyy-MM-dd'T'HH:mm:ss")}+08:00`,
         startTime: `${startTime}00`,
       });
-      setLoading(false);
       setEventID(res.data.event_id);
       setIsModalVisible(true);
       // store event id
@@ -47,6 +46,7 @@ export default function CreateButton({
       console.log(error);
       message.error('Failed to create event...', 2);
     }
+    setLoading(false);
   };
   const check = () => {
     if (!eventName.trim()) {

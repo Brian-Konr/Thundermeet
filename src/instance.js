@@ -4,8 +4,6 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-console.log(import.meta.env.VITE_BACKEND_URL);
-
 instance.interceptors.request.use(
   (config) => {
     // get token from local storage

@@ -26,19 +26,8 @@ export default function AddEventToGroup({
   const { Option } = Select;
   const [form] = Form.useForm();
 
-  const onCreate = (values) => {
-    console.log('Received values of form: ', values);
-    setIsAddEvent(false);
-  };
-
-  const handleChange = (e) => {
-    console.log(e);
-  };
-
   const addEvents = (options) => {
-    console.log(options.selectEvents);
     for (let i = 0; i < options.selectEvents.length; i += 1) {
-      console.log(options.selectEvents[i]);
       if (allEvents.find(
         (e) => e.key === options.selectEvents[i],
       ).isConfirmed === false) {
@@ -65,7 +54,7 @@ export default function AddEventToGroup({
               .validateFields()
               .then((values) => {
                 form.resetFields();
-                onCreate(values);
+                setIsAddEvent(false);
                 addEvents(values);
               })
               .catch((info) => {
@@ -96,7 +85,6 @@ export default function AddEventToGroup({
                 mode="multiple"
                 style={{ width: '70%' }}
                 placeholder="Select events to add to the group"
-                onChange={(e) => handleChange(e)}
               >
                 {allEvents.filter((event) => {
                   if (Object.values(editOngoingEvents)

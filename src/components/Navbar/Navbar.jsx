@@ -30,7 +30,6 @@ export default function Navbar() {
   const userOnclick = (e) => {
     if (e.key === 'profile') navigate('/personal');
     else if (e.key === 'logout') {
-      console.log(location);
       // clear jwt token and back to home screen
       localStorage.removeItem('token');
       if (location.pathname === '/') window.location.reload();

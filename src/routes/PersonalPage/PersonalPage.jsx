@@ -20,7 +20,6 @@ export default function PersonalPage() {
       const res = await getInfo();
       if (res.status === 'success') {
         setLoading(false);
-        console.log(res.data);
         setPasswordAnswer(res.data.password_answer);
         setUserID(res.data.user_id);
         setUserName(res.data.username);

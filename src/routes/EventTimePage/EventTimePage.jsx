@@ -9,7 +9,6 @@ import { Icon } from '@iconify/react';
 import {
   Button, message, Spin, Tag,
 } from 'antd';
-import { format } from 'date-fns';
 
 import Calendar from '../../components/Calendar/Calendar';
 import CalendarForDisplay from '../../components/CalendarForDisplay/CalendarForDisplay';
@@ -75,7 +74,6 @@ export default function EventTimePage() {
   const fetchRight = async () => {
     setRightSpinLoading(true);
     const timeblocksRes = await getAllTimeBlocksInfo(eventID);
-    console.log(timeblocksRes.info);
     if (timeblocksRes.status === 'success') {
       setSelectedList(timeblocksRes.info);
       setMemberList(timeblocksRes.memberList);
@@ -102,7 +100,6 @@ export default function EventTimePage() {
           navigate(`/final-time/${eventID}`);
           return;
         }
-        console.log(data);
         setNumOfDays(getNumberOfDays(data.start_date, data.end_date));
         setStartDateParam(data.start_date);
         setStartDate(new Date(data.start_date));
@@ -134,18 +131,15 @@ export default function EventTimePage() {
 
   // POST when user fills timeblocks
   useEffect(() => {
-    if (click && (normalDay.length > 0 || priorityDay.length > 0)) {
+    if (click) {
       (async () => {
         const res = await fillTimeBlocks(Number(eventID), enablePriority, normalDay, priorityDay, startDateParam, startTime, endDateParam, endTime);
         if (res.status === 'success') {
-          console.log('normal', normalDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
-          console.log('priority', priorityDay.map((ele) => `${format(ele, "yyyy-MM-dd'T'HH:mm:ss")}+08:00`));
           fetchRight();
         } else message.error('Fail to update, please try again!', 1.2);
       })();
       setClick(false);
     }
-    // console.log('selected:', schedule);
   }, [normalDay, priorityDay]);
 
   const editButton = () => {
@@ -162,13 +156,13 @@ export default function EventTimePage() {
   const [timeList, setTimeList] = useState([]);
 
   useEffect(() => {
-    console.log(googleConnect);
     if (googleConnect) {
       (async () => {
-        const res = await getGoogleCalendarResponse(startDate.toISOString(), endDate.toISOString()); // 要傳 min, max 日期
-        console.log('original google response: ', res);
-        console.log('after transformation: ', calendarToTimeblocks(res));
-        setGoogleSchedule(calendarToTimeblocks(res));
+        const wideRangeStart = new Date(startDate.getTime() - 86400000);
+        const wideRangeEnd = new Date(endDate.getTime() + 86400000);
+        const res = await getGoogleCalendarResponse(wideRangeStart.toISOString(), wideRangeEnd.toISOString()); // 要傳 min, max 日期
+        const resAfterTransform = calendarToTimeblocks(res, startDateParam, startTime, endDateParam, endTime);
+        setGoogleSchedule(resAfterTransform);
       })();
       // @ 郭 接在這裡(用 setGoogleSchedule)
     }
@@ -229,7 +223,6 @@ export default function EventTimePage() {
   }, [googleConfirm]);
 
   useEffect(() => {
-    console.log(eventConfirm);
     if (eventConfirm.length > 0) {
       setNormalDay([]);
       setPriorityDay([]);

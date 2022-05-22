@@ -13,7 +13,6 @@ export default function GroupOngoing({
 
   function removeEvent(e) {
     setEditOngoingEvents(editOngoingEvents.filter((event) => event.key !== e.key));
-    console.log(`removed ${e.key}`);
   }
 
   // eslint-disable-next-line react/no-unstable-nested-components

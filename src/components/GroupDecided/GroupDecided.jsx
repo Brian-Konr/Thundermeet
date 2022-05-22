@@ -16,7 +16,6 @@ export default function GroupDecided({
 
   function removeEvent(e) {
     setEditDecidedEvents(editDecidedEvents.filter((event) => event.key !== e.key));
-    console.log(`removed ${e.key}`);
   }
 
   // eslint-disable-next-line react/no-unstable-nested-components

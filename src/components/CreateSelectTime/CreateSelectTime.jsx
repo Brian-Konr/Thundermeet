@@ -20,13 +20,10 @@ export default function CreateSelectTime({
   eventDateRange, setEventDateRange, setStartTime, setEndTime,
 }) {
   const onChangePriority = (e) => {
-    console.log('Event Priority:', e);
     setEventPriority(e);
   };
 
   const onChangeDate = (value, dateString) => {
-    // console.log('Selected Date Range1:', value);
-    console.log('Selected Date Range:', dateString);
     setEventDateRange(dateString);
   };
 

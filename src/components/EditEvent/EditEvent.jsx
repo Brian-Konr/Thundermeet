@@ -18,12 +18,10 @@ export default function EditEvent({
 
   const handleChangeName = (e) => {
     setEventName(e.target.value);
-    console.log('Title:', e.target.value);
   };
 
   const handleChangeDescription = (e) => {
     setEventDescription(e.target.value);
-    console.log('Description:', e.target.value);
   };
 
   const deleteAction = async () => {

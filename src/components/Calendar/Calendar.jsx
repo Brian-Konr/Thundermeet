@@ -26,10 +26,8 @@ export default function Calendar({
     let removeCell = [];
     if (newSchedule.length >= schedule.length) {
       addCell = newSchedule.filter((item) => !schedule.includes(item));
-      // console.log('addCell', addCell);
     } else {
       removeCell = schedule.filter((item) => !newSchedule.includes(item));
-      // console.log('removeCell', removeCell);
     }
 
     if (!priority) {
@@ -86,20 +84,12 @@ export default function Calendar({
   };
 
   const clickPriority = () => {
-    console.log('priority brush');
     setPriority(true);
   };
 
   const clickNormal = () => {
-    console.log('normal brush');
     setPriority(false);
   };
-
-  // useEffect(() => {
-  //   console.log('normal:', normalDay);
-  //   console.log('priority:', priorityDay);
-  //   console.log('selected:', schedule);
-  // }, [normalDay, priorityDay]);
 
   const arr = [];
   useEffect(() => {

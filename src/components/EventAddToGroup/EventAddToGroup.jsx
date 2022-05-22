@@ -36,8 +36,6 @@ export default function EventAddToGroup({
       // fetch all groups the user have
       (async () => {
         const res = await getMyGroups();
-        console.log(res.groups);
-        console.log(groupsAlreadyIn);
         if (res.groups) {
           setMyGroups(
             res.groups
@@ -62,7 +60,6 @@ export default function EventAddToGroup({
             message.error('Please select at least one group!', 1.5);
             return;
           }
-          console.log(selected);
           const res = await addEventToGroup(eventID, selected);
           if (res.status === 'error') {
             message.error('Fail to add event to group!', 1.5);
