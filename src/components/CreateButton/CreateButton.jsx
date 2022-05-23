@@ -15,6 +15,7 @@ import './CreateButton.css';
 export default function CreateButton({
   eventName, eventDescription, eventPriority,
   eventDateRange, startTime, endTime, setLoading,
+  loading,
 }) {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -67,7 +68,7 @@ export default function CreateButton({
 
   return (
     <>
-      <Button type="primary" className="submit-button" onClick={check}>
+      <Button type="primary" className="submit-button" onClick={check} loading={loading}>
         Create
       </Button>
       <Modal

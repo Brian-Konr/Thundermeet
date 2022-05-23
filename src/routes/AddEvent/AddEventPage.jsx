@@ -75,6 +75,7 @@ export default function AddEventPage() {
             eventDateRange={eventDateRange}
             startTime={startTime}
             endTime={endTime}
+            loading={loading}
           />
         </div>
       </div>
