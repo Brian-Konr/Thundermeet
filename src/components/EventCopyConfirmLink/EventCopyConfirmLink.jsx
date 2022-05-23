@@ -38,17 +38,19 @@ export default function EventCopyConfirmLink({ eventName, schedule, copyLink }) 
         closable={false}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <CopyToClipboard text={copyText}>
+          {/* <CopyToClipboard text={copyText}>
             <Button className="copy" icon={<CopyOutlined />} />
-          </CopyToClipboard>
+          </CopyToClipboard> */}
           <br />
           <img src={logo} width="50px" alt="" />
           <br />
           <p style={{ textAlign: 'center' }}>Final time for {eventName} is decided! Check for more details in: {copyLink}</p>
           <br />
-          <Button type="primary" className="gotit-button" onClick={unClickButton}>
-            Got it!
-          </Button>
+          <CopyToClipboard text={copyText}>
+            <Button type="primary" className="gotit-button" onClick={unClickButton}>
+              Copy above text
+            </Button>
+          </CopyToClipboard>
         </div>
       </Modal>
     </>
