@@ -4,8 +4,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  InfoCircleOutlined,
+} from '@ant-design/icons';
+import {
   message, Spin,
-  Tag,
+  Tag, Tooltip,
 } from 'antd';
 
 import CalendarForFinal from '../../components/CalendarForFinal/CalendarForFinal';
@@ -96,6 +99,12 @@ export default function FinalTimePage() {
             <div style={{ width: '92%', marginLeft: '4%' }}>
               <span>
                 <h1 style={{ fontWeight: 'bold', display: 'inline-block' }}>{eventTitle}</h1>
+                <Tag color="orange" style={{ marginLeft: '2%' }}>
+                  Final decided time
+                  <Tooltip title="You cannot edit your available time for the event anymore">
+                    <InfoCircleOutlined style={{ marginLeft: '5px' }} />
+                  </Tooltip>
+                </Tag>
               </span>
               <div style={{
                 background: '#B8B8B8', width: '100%', height: '1px', marginTop: '-14px', marginBottom: '5px',
