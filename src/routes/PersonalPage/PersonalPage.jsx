@@ -7,6 +7,7 @@ import BasicInfo from '../../components/BasicInfo/BasicInfo';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import Navbar from '../../components/Navbar/Navbar';
 import getInfo from '../../utils/getInfo';
+import getMyGroups from '../../utils/getMyGroups';
 // import getMyEvents from '../utils/getMyEvents';
 
 export default function PersonalPage() {
@@ -15,10 +16,13 @@ export default function PersonalPage() {
   const [userID, setUserID] = useState('');
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(true);
+  const [groupList, setGroupList] = useState([]);
   useEffect(() => {
     (async () => {
       const res = await getInfo();
-      if (res.status === 'success') {
+      const { groups } = await getMyGroups();
+      if (res.status === 'success' && groups) {
+        setGroupList(groups);
         setLoading(false);
         setPasswordAnswer(res.data.password_answer);
         setUserID(res.data.user_id);
@@ -46,7 +50,7 @@ export default function PersonalPage() {
               userID={userID}
               userName={userName}
             />
-            <MyGroups />
+            <MyGroups groupList={groupList} setGroupList={setGroupList} />
           </div>
         </div>
       )}

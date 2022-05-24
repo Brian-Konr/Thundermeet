@@ -11,12 +11,11 @@ import getMyGroups from '../../utils/getMyGroups';
 
 import './MyGroups.css';
 
-export default function MyGroups() {
+export default function MyGroups({ groupList, setGroupList }) {
   const navigate = useNavigate();
   const { Option } = Select;
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [eventList, setEventList] = useState([]);
-  const [groupList, setGroupList] = useState([]);
   const [selected, setSelected] = useState([]);
   const [form] = Form.useForm();
 
@@ -36,7 +35,6 @@ export default function MyGroups() {
           {event.event_name}
         </Option>
       )));
-      fetchGroups();
     })();
   }, []);
 

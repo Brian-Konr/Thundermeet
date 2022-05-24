@@ -161,7 +161,9 @@ export default function EventTimePage() {
         const wideRangeStart = new Date(startDate.getTime() - 86400000);
         const wideRangeEnd = new Date(endDate.getTime() + 86400000);
         const res = await getGoogleCalendarResponse(wideRangeStart.toISOString(), wideRangeEnd.toISOString()); // 要傳 min, max 日期
+        console.log(res);
         const resAfterTransform = calendarToTimeblocks(res, startDateParam, startTime, endDateParam, endTime);
+        console.log(resAfterTransform);
         setGoogleSchedule(resAfterTransform);
       })();
       // @ 郭 接在這裡(用 setGoogleSchedule)
