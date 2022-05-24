@@ -8,6 +8,8 @@ import {
   Button, Modal,
 } from 'antd';
 
+import logo from '../../icons/thunder.png';
+
 import './EventCopyLink.css';
 
 export default function EventCopyLink({ eventName, copyLink }) {
@@ -38,7 +40,7 @@ export default function EventCopyLink({ eventName, copyLink }) {
             <Button className="copy" icon={<CopyOutlined />} />
           </CopyToClipboard> */}
           <br />
-          <img src="src/icons/thunder.png" width="50px" alt="" />
+          <img src={logo} width="50px" alt="" />
           <br />
           <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {copyLink}</p>
           <br />

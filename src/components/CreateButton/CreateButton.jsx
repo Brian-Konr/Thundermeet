@@ -7,6 +7,7 @@ import {
 } from 'antd';
 import { format } from 'date-fns';
 
+import logo from '../../icons/thunder.png';
 import instance from '../../instance';
 import getNumberOfDays from '../../utils/getNumberOfDays';
 
@@ -79,7 +80,7 @@ export default function CreateButton({
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <br />
-          <img src="src/icons/thunder.png" width="50px" alt="" />
+          <img src={logo} width="50px" alt="" />
           <br />
           <p style={{ textAlign: 'center' }}>Please fill in avaliable time for {eventName} in the follwing link! {`${import.meta.env.VITE_FRONTEND_URL}/event-time/${eventID}`}</p>
           <br />
