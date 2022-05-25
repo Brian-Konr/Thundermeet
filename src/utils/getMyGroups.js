@@ -5,7 +5,7 @@ export default async () => {
     const res = await instance.get('/v1/groups/');
     return {
       status: 'success',
-      groups: res.data.data,
+      groups: res.data.data || [],
     };
   } catch (error) {
     return {

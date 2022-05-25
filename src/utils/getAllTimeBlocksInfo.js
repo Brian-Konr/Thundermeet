@@ -6,9 +6,9 @@ export default async (eventID) => {
     const ans = {};
     const res = await instance.get(`/v1/timeblocks/${eventID}`);
     let memberList = [];
-    if (res.data[0].normal) memberList = memberList.concat(res.data[0].normal.map((userObj) => userObj.UserName));
-    if (res.data[0].priority) memberList = memberList.concat(res.data[0].priority.map((userObj) => userObj.UserName));
-    if (res.data[0].not_available) memberList = memberList.concat(res.data[0].not_available.map((userObj) => userObj.UserName));
+    if (res.data[0].normal) memberList = memberList.concat(res.data[0].normal.map((userObj) => userObj.UserName || userObj.UserId));
+    if (res.data[0].priority) memberList = memberList.concat(res.data[0].priority.map((userObj) => userObj.UserName || userObj.UserId));
+    if (res.data[0].not_available) memberList = memberList.concat(res.data[0].not_available.map((userObj) => userObj.UserName || userObj.UserId));
 
     res.data.forEach((timeblock) => {
       ans[new Date(timeblock.time)] = {

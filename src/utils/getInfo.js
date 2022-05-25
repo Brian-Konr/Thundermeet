@@ -7,6 +7,7 @@ export default async () => {
         accept: 'application/json',
       },
     });
+    console.log(res);
     localStorage.setItem('userID', res.data.user_id);
     return {
       status: 'success',
