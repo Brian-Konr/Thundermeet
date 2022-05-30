@@ -23,7 +23,7 @@ motivation...
 5. In the same terminal, run `yarn dev` to run the app in the development mode
 6. voilà! you should see a brand new Thundermeet running in your localhost
 
-  > Notice: If the terminal reports error about the dependency problem after you execute `yarn dev`, you may fix it by commenting the 3rd line on `node modules/react-schedule-selector/dist/ScheduleSelector.js`
+  > Notice: If the terminal reports error about the dependency problem after you execute `yarn dev`, you may fix it by commenting the 3rd line on `node_modules/react-schedule-selector/dist/ScheduleSelector.js`
 ## Features
 features...
 
