@@ -29,5 +29,5 @@ gapi, Google OAuth 2.0
 資管三 B08705004 王亭勻
 > [Christine Wang](https://github.com/christine891225), User Interface / User Experience
 
-資管三 B09705024 陳沛妤
+資管三 B08705024 陳沛妤
 > [Peifish Chen](https://github.com/peifish1124), User Interface / User Experience
