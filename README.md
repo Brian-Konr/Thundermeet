@@ -43,7 +43,7 @@ features...
 ## Contributors
 
 資管三 B08705038 郭子麟 
-> [Brian Konr](https://github.com/Brian-Konr), Web Services / Project Manager
+> [Brian Konr](https://github.com/Brian-Konr), User Interface / Web Services / Project Manager
 
 資管三 B08705004 王亭勻
 > [Christine Wang](https://github.com/christine891225), User Interface / User Experience
