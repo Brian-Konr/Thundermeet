@@ -1,5 +1,5 @@
 # Thundermeet
-summary...
+Thundermeet 是針對有相約時間需求的用戶，我們提供 Google 行事曆和內部活動間的匯入匯出、參與時間優先度區分、簡便篩選特定參與者或時間優先度、個人頁面活動整合等功能，透過 Thundermeet 的平台，我們希望能有效解決使用者在相約時間時會遇到的困擾，給用戶在過程中更好的使用者體驗。
 
 ## Motivation
 motivation...
