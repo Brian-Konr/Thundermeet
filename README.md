@@ -25,7 +25,7 @@ Thundermeet 是針對有相約時間需求的用戶，我們提供 Google 行事
 
   > Notice: If the terminal reports error about the dependency problem after you execute `yarn dev`, you may fix it by commenting the 3rd line on `node_modules/react-schedule-selector/dist/ScheduleSelector.js`
 ## Features
-### Register / Login / Restore Password
+### Register / Login / Password Recovery
 使用者以不重複的使用者 ID 作為註冊帳號、並輸入參與活動時顯示名稱。註冊時亦會要求填寫忘記密碼時驗證用的問題（自己就讀的高中或大學校名縮寫），忘記密碼修復機制為輸入使用者 ID 搭配正確驗證問題答案，即可進行密碼更改。
 ### Personal Page
 個人頁面可瀏覽使用者 ID、顯示名稱、忘記密碼驗證問題與答案，亦可修改顯示名稱或登出系統。頁面同時會顯示內建的分類列表及客製的分類列表，同時允許使用者於此新增列表，以便於分類不同類型活動。分類列表詳細說明可參考下一點。
